@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wine_API", "Wine_API\Wine_API.csproj", "{E90EDED2-5037-4741-8EA9-726DAE91937A}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Wine_DB", "Wine_DB\Wine_DB.sqlproj", "{59A74742-75E0-4C15-A858-B2A750092E1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Support", "Support\Support.csproj", "{C0347285-B79B-45F2-8CBE-21980BB08AA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{E90EDED2-5037-4741-8EA9-726DAE91937A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E90EDED2-5037-4741-8EA9-726DAE91937A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E90EDED2-5037-4741-8EA9-726DAE91937A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A74742-75E0-4C15-A858-B2A750092E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A74742-75E0-4C15-A858-B2A750092E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A74742-75E0-4C15-A858-B2A750092E1D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{59A74742-75E0-4C15-A858-B2A750092E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A74742-75E0-4C15-A858-B2A750092E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A74742-75E0-4C15-A858-B2A750092E1D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C0347285-B79B-45F2-8CBE-21980BB08AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0347285-B79B-45F2-8CBE-21980BB08AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0347285-B79B-45F2-8CBE-21980BB08AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0347285-B79B-45F2-8CBE-21980BB08AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
