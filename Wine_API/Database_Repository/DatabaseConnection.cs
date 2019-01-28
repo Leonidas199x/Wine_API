@@ -15,17 +15,12 @@ namespace Database_Repository
                 connection.ConnectionString = connectionString;
 
                 connection.Open();
-
-                Console.WriteLine("State: {0}", connection.State);
-                Console.WriteLine("ConnectionString: {0}",
-                    connection.ConnectionString);
             }
         }
 
         static private string GetConnectionString()
         {
-            //return ConfigurationManager.AppSettings[];
-            return string.Empty;
+            return ConfigurationManager.ConnectionStrings["WineDatabase"].ConnectionString;
         }
 
     }
