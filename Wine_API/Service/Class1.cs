@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Support
+namespace Service
 {
     public class Class1
     {
