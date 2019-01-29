@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Database_Repository.Models
+namespace Database_Models
 {
-    class Models
+    public class Models
     {
         public class Country
         {

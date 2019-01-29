@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Configuration;
+using Database_Repository.Interfaces;
 
 namespace Database_Repository
 {
-    public class DatabaseConnection
+    public class DatabaseConnection : IDatabaseConnection
     {
-        private static void OpenSqlConnection()
+        public SqlConnection OpenSqlConnection()
         {
             string connectionString = GetConnectionString();
 
@@ -15,10 +16,13 @@ namespace Database_Repository
                 connection.ConnectionString = connectionString;
 
                 connection.Open();
+
+                return connection;
             }
+          
         }
 
-        static private string GetConnectionString()
+        private string GetConnectionString()
         {
             return ConfigurationManager.ConnectionStrings["WineDatabase"].ConnectionString;
         }
