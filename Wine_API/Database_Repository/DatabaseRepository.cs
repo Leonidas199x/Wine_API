@@ -1,39 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Database_Models;
 using System.Data.SqlClient;
-using System.Data;
+using Dapper;
 
 namespace Database_Repository
 {
-    public class DatabaseRepository
+    public class DatabaseRepository : IDatabaseRepository
     {
-        DatabaseConnection DatabaseConnect = new DatabaseConnection();
+        private readonly string _connectionString;
 
-        public List<Models.Country> GetCountries()
+        public DatabaseRepository(string connectionString)
         {
-            var countriesList = new List<Models.Country>();
+            _connectionString = connectionString;
+        }
 
-            using (var conn = DatabaseConnect.OpenSqlConnection())
-            using (var command = new SqlCommand("spGetAllCountries", conn)
+        public IEnumerable<Models.Country> GetCountries()
+        {
+            IEnumerable<Models.Country> countries = null;
+
+            using (var connection = new SqlConnection(_connectionString))
             {
-                CommandType = CommandType.StoredProcedure
-            })
-            {
-                SqlDataReader reader = command.ExecuteReader();
-
-                while(reader.Read())
-                {
-                    var countryModel = new Models.Country();
-                    countryModel.CountryId = Int32.Parse(reader["CountryID"].ToString());
-                    countryModel.CountryName = reader["CountryName"].ToString();
-
-                    countriesList.Add(countryModel);
-                }
+                countries = connection.Query<Models.Country>("spGetAllCountries");
             }
 
-            return countriesList;
+            return countries;
         }
     }
 }

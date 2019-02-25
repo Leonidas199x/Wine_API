@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
+using Database_Repository;
+using Service;
 
 namespace Wine_API
 {
@@ -23,6 +22,13 @@ namespace Wine_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            var config = builder.Build();
+
+            services.AddTransient<IDatabaseRepository>(x => new DatabaseRepository(config["Wine_DB"]));
+            services.AddScoped<IDatabaseRepository, DatabaseRepository>();
+            services.AddScoped<IWineService, WineService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -61,6 +67,7 @@ namespace Wine_API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wine API");
+                c.RoutePrefix = string.Empty;
             });
         }
     }
