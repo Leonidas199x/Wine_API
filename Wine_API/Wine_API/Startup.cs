@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 using Database_Repository;
 using Service;
+using Wine_API.Models;
 
 namespace Wine_API
 {
@@ -30,7 +31,9 @@ namespace Wine_API
         {
             services.AddMvc();
 
-            services.AddTransient<IDatabaseRepository>(x => new DatabaseRepository(Configuration["ConnectionStrings:Wine_DB"]));         
+            services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
+
+            services.AddTransient<IDatabaseRepository>(x => new DatabaseRepository(Configuration.GetConnectionString("Wine_DB")));         
             services.AddScoped<IWineService, WineService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
