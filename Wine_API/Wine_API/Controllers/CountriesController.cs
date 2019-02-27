@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service;
+using System.Linq;
 
 namespace Wine_API.Controllers
 {
@@ -18,14 +19,26 @@ namespace Wine_API.Controllers
         {
             var countries = _wineService.GetAllCountries();
 
-            if (countries != null)
+            if (!countries.Any())
             {
-                return Ok(countries);
+                return NotFound(); 
             }
-            else
+            
+            return Ok(countries);
+        }
+
+        [Route("countries/{CountryId}")]
+        [HttpGet]
+        public IActionResult GetCountry(int countryId)
+        {
+            var country = _wineService.GetCountry(countryId);
+
+            if(country == null)
             {
-              return   NotFound();
+                return NotFound();
             }
+
+            return Ok(country);
         }
     }
 }

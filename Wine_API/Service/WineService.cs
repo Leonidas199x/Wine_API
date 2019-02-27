@@ -20,5 +20,12 @@ namespace Service
 
             return (countries != null) ? countries : null; 
         }
+
+        public IEnumerable<Models.FullCountry> GetCountry(int countryId)
+        {
+            var country = _databaseRepository.GetCountry(countryId);
+
+            return (country != null) ? country : null;
+        }
     }
 }
