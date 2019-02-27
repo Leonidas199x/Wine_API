@@ -20,7 +20,7 @@ namespace Database_Repository
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                countries = connection.Query<Models.Country>("spGetAllCountries");
+                countries = connection.Query<Models.Country>("[dbo].[spGetAllCountries]");
             }
 
             return countries;

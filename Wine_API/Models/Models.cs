@@ -10,8 +10,11 @@ namespace Database_Models
         {
             public int CountryId { get; set; }
 
-            public string CountryName { get; set; }
+            public string CountryName { get; set; }       
+        }
 
+        public class FullCountry : Country
+        {
             public string CountryNote { get; set; }
 
             public DateTime DateCreated { get; set; }
