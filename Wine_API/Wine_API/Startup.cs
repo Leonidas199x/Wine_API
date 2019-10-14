@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System.IO;
-using Database_Repository;
-using Service;
+using DataRepository;
+using WineService.Countries;
 using Wine_API.Models;
 
 namespace Wine_API
@@ -33,8 +32,8 @@ namespace Wine_API
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddTransient<IDatabaseRepository>(x => new DatabaseRepository(Configuration.GetConnectionString("Wine_DB")));         
-            services.AddScoped<IWineService, WineService>();
+            services.AddTransient<IRepository>(x => new Repository(Configuration.GetConnectionString("Wine_DB")));         
+            services.AddScoped<ICountryService, CountryService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

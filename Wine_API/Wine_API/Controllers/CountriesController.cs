@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Service;
+using WineService.Countries;
 using System.Linq;
 
 namespace Wine_API.Controllers
 {
     public class CountriesController : Controller
     {
-        private IWineService _wineService;
+        private ICountryService _countryService;
 
-        public CountriesController(IWineService wineService)
+        public CountriesController(CountryService countryService)
         {
-            _wineService = wineService;
+            _countryService = countryService;
         }
 
         [Route("countries")]
         [HttpGet]
         public IActionResult GetAllCountries()
         {
-            var countries = _wineService.GetAllCountries();
+            var countries = _countryService.GetAllCountries();
 
             if (!countries.Any())
             {
@@ -31,7 +31,7 @@ namespace Wine_API.Controllers
         [HttpGet]
         public IActionResult GetCountry(int countryId)
         {
-            var country = _wineService.GetCountry(countryId);
+            var country = _countryService.GetCountry(countryId);
 
             if(country == null)
             {

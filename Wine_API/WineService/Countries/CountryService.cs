@@ -2,13 +2,13 @@
 using DataContract.Country;
 using DataRepository;
 
-namespace Service
+namespace WineService.Countries
 {
-    public class WineService : IWineService
+    public class CountryService : ICountryService
     {
         private IRepository _databaseRepository;
 
-        public WineService(IRepository databaseRepository)
+        public CountryService(IRepository databaseRepository)
         {
             _databaseRepository = databaseRepository;
         }

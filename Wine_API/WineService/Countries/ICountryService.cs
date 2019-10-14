@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using DataContract.Country;
 
-namespace Service
+namespace WineService.Countries
 {
-    public interface IWineService
+    public interface ICountryService
     {
         IEnumerable<Country> GetAllCountries();
 
