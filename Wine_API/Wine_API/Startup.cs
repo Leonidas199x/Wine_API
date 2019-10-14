@@ -73,7 +73,6 @@ namespace Wine_API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wine API");
-                c.RoutePrefix = string.Empty;
             });
         }
     }
