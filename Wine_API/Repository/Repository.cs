@@ -1,42 +1,42 @@
 ﻿using System.Collections.Generic;
-using Database_Models;
 using System.Data.SqlClient;
-using Dapper;
 using System.Data;
+using Dapper;
+using DataContract.Country;
 
-namespace Database_Repository
+namespace DataRepository
 {
-    public class DatabaseRepository : IDatabaseRepository
+    public class Repository : IRepository
     {
         private readonly string _connectionString;
 
-        public DatabaseRepository(string connectionString)
+        public Repository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public IEnumerable<Models.Country> GetCountries()
+        public IEnumerable<Country> GetCountries()
         {
-            IEnumerable<Models.Country> countries = null;
+            IEnumerable<Country> countries = null;
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                countries = connection.Query<Models.Country>("[dbo].[spGetAllCountries]");
+                countries = connection.Query<Country>("[dbo].[spGetAllCountries]");
             }
 
             return countries;
         }
 
-        public IEnumerable<Models.FullCountry> GetCountry(int countryId)
+        public IEnumerable<FullCountry> GetCountry(int countryId)
         {
-            IEnumerable<Models.FullCountry> country = null;
+            IEnumerable<FullCountry> country = null;
 
             var parameters = new DynamicParameters();
             parameters.Add("@intCountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                country = connection.Query<Models.FullCountry>("[dbo].[spGetCountry]",
+                country = connection.Query<FullCountry>("[dbo].[spGetCountry]",
                     parameters,
                     commandType: CommandType.StoredProcedure);
             }

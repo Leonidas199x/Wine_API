@@ -1,31 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Service;
+using WineService.Countries;
+using System.Linq;
 
 namespace Wine_API.Controllers
 {
     public class CountriesController : Controller
     {
-        private IWineService _wineService;
+        private ICountryService _countryService;
 
-        public CountriesController(IWineService wineService)
+        public CountriesController(ICountryService countryService)
         {
-            _wineService = wineService;
+            _countryService = countryService;
         }
 
         [Route("countries")]
         [HttpGet]
         public IActionResult GetAllCountries()
         {
-            var countries = _wineService.GetAllCountries();
+            var countries = _countryService.GetAllCountries();
 
-            if (countries != null)
+            if (!countries.Any())
             {
-                return Ok(countries);
+                return NotFound(); 
             }
-            else
+            
+            return Ok(countries);
+        }
+
+        [Route("countries/{CountryId}")]
+        [HttpGet]
+        public IActionResult GetCountry(int countryId)
+        {
+            var country = _countryService.GetCountry(countryId);
+
+            if(!country.Any())
             {
-              return   NotFound();
+                return NotFound();
             }
+
+            return Ok(country);
         }
     }
 }

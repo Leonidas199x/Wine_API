@@ -8,7 +8,9 @@ BEGIN
 
     SELECT		C.CountryID			,
 				C.CountryName		,
-				C.CountryNote 		
+				C.CountryNote 		,
+				C.DateCreated		,
+				C.DateUpdated
 	FROM		Country				AS	C
 	WHERE		C.CountryID			=	@intCountryID;
 END

@@ -3,32 +3,37 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System.IO;
-using Database_Repository;
-using Service;
+using DataRepository;
+using WineService.Countries;
+using Wine_API.Models;
 
 namespace Wine_API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; set; }
+
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
-            var config = builder.Build();
+            services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddTransient<IDatabaseRepository>(x => new DatabaseRepository(config["Wine_DB"]));
-            services.AddScoped<IDatabaseRepository, DatabaseRepository>();
-            services.AddScoped<IWineService, WineService>();
+            services.AddTransient<IRepository>(x => new Repository(Configuration.GetConnectionString("Wine_DB")));         
+            services.AddScoped<ICountryService, CountryService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -67,7 +72,6 @@ namespace Wine_API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wine API");
-                c.RoutePrefix = string.Empty;
             });
         }
     }
