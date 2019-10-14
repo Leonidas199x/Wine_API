@@ -8,7 +8,7 @@ namespace Wine_API.Controllers
     {
         private ICountryService _countryService;
 
-        public CountriesController(CountryService countryService)
+        public CountriesController(ICountryService countryService)
         {
             _countryService = countryService;
         }
@@ -33,7 +33,7 @@ namespace Wine_API.Controllers
         {
             var country = _countryService.GetCountry(countryId);
 
-            if(country == null)
+            if(!country.Any())
             {
                 return NotFound();
             }
