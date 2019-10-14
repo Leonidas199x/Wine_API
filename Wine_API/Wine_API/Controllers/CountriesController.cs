@@ -13,8 +13,7 @@ namespace Wine_API.Controllers
             _countryService = countryService;
         }
 
-        [Route("countries")]
-        [HttpGet]
+        [HttpGet("countries")]
         public IActionResult GetAllCountries()
         {
             var countries = _countryService.GetAllCountries();
@@ -27,8 +26,7 @@ namespace Wine_API.Controllers
             return Ok(countries);
         }
 
-        [Route("countries/{CountryId}")]
-        [HttpGet]
+        [HttpGet("countries/{CountryId}")]
         public IActionResult GetCountry(int countryId)
         {
             var country = _countryService.GetCountry(countryId);
