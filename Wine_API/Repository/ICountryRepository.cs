@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using DataContract.Country;
 
-namespace WineService.Countries
+namespace DataRepository
 {
-    public interface ICountryService
+    public interface ICountryRepository
     {
         Task<IEnumerable<Country>> GetAll();
 

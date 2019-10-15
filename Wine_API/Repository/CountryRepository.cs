@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
 using Dapper;
 using DataContract.Country;
 using System.Threading.Tasks;
 
 namespace DataRepository
 {
-    public class Repository : IRepository
+    public class CountryRepository : ICountryRepository
     {
         private readonly string _connectionString;
 
-        public Repository(string connectionString)
+        public CountryRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Country>> GetCountries()
+        public async Task<IEnumerable<Country>> GetAll()
         {
             IEnumerable<Country> countries = null;
 
@@ -29,7 +28,7 @@ namespace DataRepository
             return countries;
         }
 
-        public async Task<IEnumerable<FullCountry>> GetCountry(int countryId)
+        public async Task<IEnumerable<FullCountry>> Get(int countryId)
         {
             IEnumerable<FullCountry> country = null;
 
@@ -48,7 +47,7 @@ namespace DataRepository
             return country;
         }
 
-        public async Task<bool> DeleteCountry(int countryId)
+        public async Task<bool> Delete(int countryId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@intCountryId", countryId, DbType.Int32, ParameterDirection.Input);
@@ -65,7 +64,7 @@ namespace DataRepository
             return true;
         }
 
-        public async Task<(bool, FullCountry)> InsertCountry(FullCountry country)
+        public async Task<(bool, FullCountry)> Insert(FullCountry country)
         {
             bool result;
 

@@ -2,6 +2,7 @@
 using WineService.Countries;
 using System.Linq;
 using System.Threading.Tasks;
+using DataContract.Country;
 
 namespace Wine_API.Controllers
 {
@@ -18,7 +19,7 @@ namespace Wine_API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCountries()
         {
-            var countries = await _countryService.GetAllCountries().ConfigureAwait(false);
+            var countries = await _countryService.GetAll().ConfigureAwait(false);
 
             if (!countries.Any())
             {
@@ -31,7 +32,7 @@ namespace Wine_API.Controllers
         [HttpGet("{CountryId}")]
         public async Task<IActionResult> GetCountry(int countryId)
         {
-            var country = await _countryService.GetCountry(countryId).ConfigureAwait(false);
+            var country = await _countryService.Get(countryId).ConfigureAwait(false);
 
             if(!country.Any())
             {
@@ -44,14 +45,14 @@ namespace Wine_API.Controllers
         [HttpDelete("{CountryId}")]
         public async Task<IActionResult> DeleteCountry(int countryId)
         {
-            var country = await _countryService.GetCountry(countryId).ConfigureAwait(false);
+            var country = await _countryService.Get(countryId).ConfigureAwait(false);
 
             if(!country.Any())
             {
                 return NotFound();
             }
 
-            var updated = await _countryService.DeleteCountry(countryId).ConfigureAwait(false);
+            var updated = await _countryService.Delete(countryId).ConfigureAwait(false);
 
             if(!updated)
             {
@@ -61,18 +62,17 @@ namespace Wine_API.Controllers
             return NoContent();
         }
 
-        [HttpPut("{CountryId}")]
-        public async Task<IActionResult> UpdateCountry(int countryId)
+        [HttpPost("{CountryId}")]
+        public async Task<IActionResult> InsertCountry([FromBody]FullCountry country)
         {
-            var country = await _countryService.GetCountry(countryId).ConfigureAwait(false);
+            var (exists, updatedCountry) = await _countryService.Insert(country).ConfigureAwait(false);
 
-            if (!country.Any())
+            if(exists)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var updated
-
+            return NoContent();
         }
     }
 }

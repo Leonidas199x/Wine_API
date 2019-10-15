@@ -7,30 +7,35 @@ namespace WineService.Countries
 {
     public class CountryService : ICountryService
     {
-        private IRepository _databaseRepository;
+        private ICountryRepository _countryRepository;
 
-        public CountryService(IRepository databaseRepository)
+        public CountryService(ICountryRepository countryRepository)
         {
-            _databaseRepository = databaseRepository;
+            _countryRepository = countryRepository;
         }
 
-        public async Task<IEnumerable<Country>> GetAllCountries()
+        public async Task<IEnumerable<Country>> GetAll()
         {
-            var countries = await _databaseRepository.GetCountries().ConfigureAwait(false);
+            var countries = await _countryRepository.GetAll().ConfigureAwait(false);
 
             return (countries != null) ? countries : null; 
         }
 
-        public async Task<IEnumerable<FullCountry>> GetCountry(int countryId)
+        public async Task<IEnumerable<FullCountry>> Get(int countryId)
         {
-            var country = await _databaseRepository.GetCountry(countryId).ConfigureAwait(false);
+            var country = await _countryRepository.Get(countryId).ConfigureAwait(false);
 
             return (country != null) ? country : null;
         }
 
-        public async Task<bool> DeleteCountry(int countryId)
+        public async Task<bool> Delete(int countryId)
         {
-            return await _databaseRepository.DeleteCountry(countryId).ConfigureAwait(false);
+            return await _countryRepository.Delete(countryId).ConfigureAwait(false);
+        }
+
+        public async Task<(bool, FullCountry)> Insert(FullCountry country)
+        {
+            return await _countryRepository.Insert(country).ConfigureAwait(false);
         }
     }
 }

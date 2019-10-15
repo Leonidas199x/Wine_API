@@ -32,7 +32,7 @@ namespace Wine_API
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddTransient<IRepository>(x => new Repository(Configuration.GetConnectionString("Wine_DB")));         
+            services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString("Wine_DB")));         
             services.AddScoped<ICountryService, CountryService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
