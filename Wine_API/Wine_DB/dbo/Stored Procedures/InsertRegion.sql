@@ -1,9 +1,4 @@
-﻿-- =============================================
--- Author:		Toby Prince
--- Create date: 20/02/2017
--- Description:	Inserts a new region into the database. LIKE A BOSS.
--- =============================================
-CREATE PROCEDURE [dbo].[spInsertRegion] 
+﻿CREATE PROCEDURE [dbo].[InsertRegion] 
 
 	@strRegionName	NVARCHAR(50),
 	@strRegionNote	NVARCHAR(500),

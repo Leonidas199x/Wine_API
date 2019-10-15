@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spGetRegions]
+﻿CREATE PROCEDURE [dbo].[GetRegions]
 	
 AS
 BEGIN

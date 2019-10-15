@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spGetGrape]
+﻿CREATE PROCEDURE [dbo].[GetGrape]
 
 @intGrapeID	INT
 

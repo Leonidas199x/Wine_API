@@ -1,9 +1,4 @@
-﻿-- =============================================
--- Author:		Toby Prince
--- Create date: 25/02/2017
--- Description:	Inserts a new producer
--- =============================================
-CREATE PROCEDURE [dbo].[spInsertProducer]
+﻿CREATE PROCEDURE [dbo].[InsertProducer]
 
 	@strProducerNote NVARCHAR(MAX),
 	@strProducerName NVARCHAR(50)	

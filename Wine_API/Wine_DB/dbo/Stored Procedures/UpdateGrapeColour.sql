@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spUpdateGrapeColour]
+﻿CREATE PROCEDURE [dbo].[UpdateGrapeColour]
 	
 	@strGrapeColour		NVARCHAR(50)		,
 	@intGrapeColourID	INT

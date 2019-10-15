@@ -1,13 +1,14 @@
-﻿CREATE PROCEDURE [dbo].[spDeleteGrapeColour]
+﻿CREATE PROCEDURE [dbo].[GetGrapeColour]
 	
 	@intGrapeColourID	INT
 AS
+
 BEGIN
 	
 	SET NOCOUNT ON;
 
-    DELETE		GC
+    SELECT		GC.GrapeColourID	,
+				GC.GrapeColour
 	FROM		GrapeColour			AS	GC
 	WHERE		GC.GrapeColourID	=	@intGrapeColourID;
-
 END

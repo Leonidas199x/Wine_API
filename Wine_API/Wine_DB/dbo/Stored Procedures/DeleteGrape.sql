@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spDeleteGrape]
+﻿CREATE PROCEDURE [dbo].[DeleteGrape]
 	
 	@intGrapeID	INT
 AS

@@ -1,9 +1,4 @@
-﻿-- =============================================
--- Author:		Toby Prince
--- Create date: 31st January 2017
--- Description:	Get wine
--- =============================================
-CREATE PROCEDURE [dbo].[spGetWine]
+﻿CREATE PROCEDURE [dbo].[GetWine]
 
 	@intWineID INT
 AS

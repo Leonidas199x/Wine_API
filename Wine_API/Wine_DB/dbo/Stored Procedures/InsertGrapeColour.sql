@@ -1,9 +1,4 @@
-﻿-- =============================================
--- Author:		Toby Prince
--- Create date: 01.02.2017
--- Description:	Inserts a new grape colour
--- =============================================
-CREATE PROCEDURE [dbo].[spInsertGrapeColour]
+﻿CREATE PROCEDURE [dbo].[InsertGrapeColour]
 
 	@strGrapeColour		NVARCHAR(20)	,
 	@bitExists			INT	OUTPUT

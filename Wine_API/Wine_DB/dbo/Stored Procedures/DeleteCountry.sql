@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spDeleteCountry]
+﻿CREATE PROCEDURE [dbo].[DeleteCountry]
 	
 	@intCountryID	INT
 AS

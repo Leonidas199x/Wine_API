@@ -1,9 +1,4 @@
-﻿/*=============================================
- Author:		Toby Prince
- Create date:   24/02/2017
- Description:	Inserts a new grape
-=============================================*/
-CREATE PROCEDURE [dbo].[spInsertGrape]
+﻿CREATE PROCEDURE [dbo].[InsertGrape]
 	
 	@strGrapeName			NVARCHAR(25)	,
 	@strGrapeNote			NVARCHAR(MAX)	,

@@ -1,9 +1,4 @@
-﻿-- =============================================
--- Author:		Toby Prince
--- Create date: 20/02/2017
--- Description:	Inserts a new country into the database. LIKE A BOSS.
--- =============================================
-CREATE PROCEDURE [dbo].[spInsertCountry] 
+﻿CREATE PROCEDURE [dbo].[InsertCountry] 
 
 	@strCountryName NVARCHAR(50)	,
 	@strCountryNote	NVARCHAR(500)	,

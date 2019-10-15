@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spGetCountry]
+﻿CREATE PROCEDURE [dbo].[GetCountry]
 	
 	@intCountryID	INT
 AS

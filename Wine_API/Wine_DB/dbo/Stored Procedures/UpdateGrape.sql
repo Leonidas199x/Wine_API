@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spUpdateGrape]
+﻿CREATE PROCEDURE [dbo].[UpdateGrape]
 	
 	@intGrapeID				INT					,
 	@strGrapeName			NVARCHAR(50)		,

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spGetGrapes]
+﻿CREATE PROCEDURE [dbo].[GetGrapes]
 
 AS
 BEGIN

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spUpdateCountry]
+﻿CREATE PROCEDURE [dbo].[UpdateCountry]
 	
 	@strCountryName	NVARCHAR(50)		,
 	@strCountryNote	NVARCHAR(500)		,
