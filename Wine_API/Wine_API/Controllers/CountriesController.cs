@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Wine_API.Controllers
 {
+    [Route("[controller]")]
     public class CountriesController : Controller
     {
         private ICountryService _countryService;
@@ -13,7 +14,7 @@ namespace Wine_API.Controllers
             _countryService = countryService;
         }
 
-        [HttpGet("countries")]
+        [HttpGet]
         public IActionResult GetAllCountries()
         {
             var countries = _countryService.GetAllCountries();
@@ -26,7 +27,7 @@ namespace Wine_API.Controllers
             return Ok(countries);
         }
 
-        [HttpGet("countries/{CountryId}")]
+        [HttpGet("{CountryId}")]
         public IActionResult GetCountry(int countryId)
         {
             var country = _countryService.GetCountry(countryId);

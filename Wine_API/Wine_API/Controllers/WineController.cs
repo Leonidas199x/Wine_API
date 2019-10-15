@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Wine_API.Controllers
 {
+    [Route("[controller]")]
     public class WineController : Controller
     {
         [Route("{id}")]
