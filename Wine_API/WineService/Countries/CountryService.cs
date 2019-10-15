@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DataContract.Country;
 using DataRepository;
 
@@ -13,18 +14,23 @@ namespace WineService.Countries
             _databaseRepository = databaseRepository;
         }
 
-        public IEnumerable<Country> GetAllCountries()
+        public async Task<IEnumerable<Country>> GetAllCountries()
         {
-            var countries = _databaseRepository.GetCountries();
+            var countries = await _databaseRepository.GetCountries().ConfigureAwait(false);
 
             return (countries != null) ? countries : null; 
         }
 
-        public IEnumerable<FullCountry> GetCountry(int countryId)
+        public async Task<IEnumerable<FullCountry>> GetCountry(int countryId)
         {
-            var country = _databaseRepository.GetCountry(countryId);
+            var country = await _databaseRepository.GetCountry(countryId).ConfigureAwait(false);
 
             return (country != null) ? country : null;
+        }
+
+        public async Task<bool> DeleteCountry(int countryId)
+        {
+            return await _databaseRepository.DeleteCountry(countryId).ConfigureAwait(false);
         }
     }
 }

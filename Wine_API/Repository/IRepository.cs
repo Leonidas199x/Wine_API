@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using DataContract.Country;
 
 namespace DataRepository
 {
     public interface IRepository
     {
-        IEnumerable<DataContract.Country.Country> GetCountries();
+        Task<IEnumerable<Country>> GetCountries();
 
-        IEnumerable<DataContract.Country.FullCountry> GetCountry(int countryId);
+        Task<IEnumerable<FullCountry>> GetCountry(int countryId);
+
+        Task<bool> DeleteCountry(int countryId);
+
+        Task<(bool, FullCountry)> InsertCountry(FullCountry country);
     }
 }
