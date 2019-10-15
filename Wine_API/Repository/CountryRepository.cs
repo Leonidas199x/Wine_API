@@ -75,7 +75,7 @@ namespace DataRepository
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                result = await connection.Query<bool>(
+                result = await connection.QueryFirstAsync<bool>(
                     "[dbo].[InsertCountry]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
