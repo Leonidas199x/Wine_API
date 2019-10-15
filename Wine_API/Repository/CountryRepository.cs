@@ -70,12 +70,12 @@ namespace DataRepository
 
             var parameters = new DynamicParameters();
             parameters.Add("@strCountryName", country.CountryName, DbType.String, ParameterDirection.Input);
-            parameters.Add("@strCountryNote", country.CountryName, DbType.String, ParameterDirection.Input);
-            parameters.Add("@bitExists", country.CountryName, DbType.String, ParameterDirection.Output);
+            parameters.Add("@strCountryNote", country.CountryNote, DbType.String, ParameterDirection.Input);
+            parameters.Add("@bitExists", DbType.Boolean, direction: ParameterDirection.Output);
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                result = await connection.QueryFirstAsync<bool>(
+                result = await connection.QueryFirstOrDefaultAsync<bool>(
                     "[dbo].[InsertCountry]",
                     parameters,
                     commandType: CommandType.StoredProcedure)

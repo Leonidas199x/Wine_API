@@ -62,7 +62,7 @@ namespace Wine_API.Controllers
             return NoContent();
         }
 
-        [HttpPost("{CountryId}")]
+        [HttpPost]
         public async Task<IActionResult> InsertCountry([FromBody]FullCountry country)
         {
             var (exists, updatedCountry) = await _countryService.Insert(country).ConfigureAwait(false);
