@@ -2,7 +2,6 @@
 using WineService.Countries;
 using System.Linq;
 using System.Threading.Tasks;
-using DataContract.Country;
 
 namespace Wine_API.Controllers
 {
