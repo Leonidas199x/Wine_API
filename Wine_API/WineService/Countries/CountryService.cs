@@ -14,9 +14,9 @@ namespace WineService.Countries
             _countryRepository = countryRepository;
         }
 
-        public async Task<IEnumerable<CountryLookup>> GetAll()
+        public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
         {
-            var countries = await _countryRepository.GetAll().ConfigureAwait(false);
+            var countries = await _countryRepository.GetCountryLookup().ConfigureAwait(false);
 
             return (countries != null) ? countries : null; 
         }

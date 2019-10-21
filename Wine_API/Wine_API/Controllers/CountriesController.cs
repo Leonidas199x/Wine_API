@@ -17,9 +17,9 @@ namespace Wine_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCountries()
+        public async Task<IActionResult> GetCountryLookup()
         {
-            var countries = await _countryService.GetAll().ConfigureAwait(false);
+            var countries = await _countryService.GetCountryLookup().ConfigureAwait(false);
 
             if (!countries.Any())
             {

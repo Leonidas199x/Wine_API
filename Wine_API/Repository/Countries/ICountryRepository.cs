@@ -6,7 +6,7 @@ namespace DataRepository
 {
     public interface ICountryRepository
     {
-        Task<IEnumerable<CountryLookup>> GetAll();
+        Task<IEnumerable<CountryLookup>> GetCountryLookup();
 
         Task<IEnumerable<Country>> Get(int countryId);
 

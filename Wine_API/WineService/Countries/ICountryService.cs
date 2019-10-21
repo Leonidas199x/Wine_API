@@ -6,7 +6,7 @@ namespace WineService.Countries
 {
     public interface ICountryService
     {
-        Task<IEnumerable<CountryLookup>> GetAll();
+        Task<IEnumerable<CountryLookup>> GetCountryLookup();
 
         Task<IEnumerable<Country>> Get(int countryId);
 

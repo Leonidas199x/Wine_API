@@ -16,7 +16,7 @@ namespace DataRepository
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<CountryLookup>> GetAll()
+        public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
         {
             IEnumerable<CountryLookup> countries = null;
 
