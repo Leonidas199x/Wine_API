@@ -16,28 +16,28 @@ namespace DataRepository
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<IEnumerable<CountryLookup>> GetAll()
         {
-            IEnumerable<Country> countries = null;
+            IEnumerable<CountryLookup> countries = null;
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                countries =  await connection.QueryAsync<Country>("[dbo].[GetAllCountries]").ConfigureAwait(false);
+                countries =  await connection.QueryAsync<CountryLookup>("[dbo].[GetAllCountries]").ConfigureAwait(false);
             }
 
             return countries;
         }
 
-        public async Task<IEnumerable<FullCountry>> Get(int countryId)
+        public async Task<IEnumerable<Country>> Get(int countryId)
         {
-            IEnumerable<FullCountry> country = null;
+            IEnumerable<Country> country = null;
 
             var parameters = new DynamicParameters();
             parameters.Add("@intCountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                country = await connection.QueryAsync<FullCountry>(
+                country = await connection.QueryAsync<Country>(
                     "[dbo].[GetCountry]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
@@ -54,7 +54,7 @@ namespace DataRepository
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                await connection.QueryAsync<FullCountry>(
+                await connection.QueryAsync<Country>(
                     "[dbo].[DeleteCountry]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
@@ -64,7 +64,7 @@ namespace DataRepository
             return true;
         }
 
-        public async Task<(bool, FullCountry)> Insert(FullCountry country)
+        public async Task<(bool, Country)> Insert(Country country)
         {
             bool result;
 

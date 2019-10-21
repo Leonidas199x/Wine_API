@@ -6,12 +6,12 @@ namespace WineService.Countries
 {
     public interface ICountryService
     {
-        Task<IEnumerable<Country>> GetAll();
+        Task<IEnumerable<CountryLookup>> GetAll();
 
-        Task<IEnumerable<FullCountry>> Get(int countryId);
+        Task<IEnumerable<Country>> Get(int countryId);
 
         Task<bool> Delete(int countryId);
 
-        Task<(bool, FullCountry)> Insert(FullCountry country);
+        Task<(bool, Country)> Insert(Country country);
     }
 }

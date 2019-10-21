@@ -14,14 +14,14 @@ namespace WineService.Countries
             _countryRepository = countryRepository;
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<IEnumerable<CountryLookup>> GetAll()
         {
             var countries = await _countryRepository.GetAll().ConfigureAwait(false);
 
             return (countries != null) ? countries : null; 
         }
 
-        public async Task<IEnumerable<FullCountry>> Get(int countryId)
+        public async Task<IEnumerable<Country>> Get(int countryId)
         {
             var country = await _countryRepository.Get(countryId).ConfigureAwait(false);
 
@@ -33,7 +33,7 @@ namespace WineService.Countries
             return await _countryRepository.Delete(countryId).ConfigureAwait(false);
         }
 
-        public async Task<(bool, FullCountry)> Insert(FullCountry country)
+        public async Task<(bool, Country)> Insert(Country country)
         {
             return await _countryRepository.Insert(country).ConfigureAwait(false);
         }

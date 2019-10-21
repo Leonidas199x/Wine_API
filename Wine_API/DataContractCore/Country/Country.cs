@@ -1,9 +1,13 @@
-﻿namespace DataContract.Country
-{
-    public class Country
-    {
-        public int CountryId { get; set; }
+﻿using System;
 
-        public string CountryName { get; set; }
+namespace DataContract.Country
+{
+    public class Country : CountryLookup
+    {
+        public string CountryNote { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateUpdated { get; set; }
     }
 }
