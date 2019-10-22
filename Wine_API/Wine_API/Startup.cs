@@ -5,9 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using DataRepository;
 using WineService.Countries;
-using Wine_API.Models;
+using WineService.Grapes;
+using WineAPI.Models;
+using System;
 
-namespace Wine_API
+namespace WineAPI
 {
     public class Startup
     {
@@ -34,6 +36,7 @@ namespace Wine_API
 
             services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString("Wine_DB")));         
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IGrapeService, GrapeService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -43,7 +46,7 @@ namespace Wine_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

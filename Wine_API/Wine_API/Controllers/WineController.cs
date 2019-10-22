@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Wine_API.Controllers
+namespace WineAPI.Controllers
 {
     [Route("[controller]")]
     public class WineController : Controller

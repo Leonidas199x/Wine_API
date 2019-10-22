@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Wine_API
+namespace WineAPI
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Wine_API.Models
+namespace WineAPI.Models
 {
     public class ErrorViewModel
     {

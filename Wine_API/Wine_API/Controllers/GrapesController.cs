@@ -1,19 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WineService.Countries;
-using System.Linq;
-using System.Threading.Tasks;
-using DataContract.Country;
+using WineService.Grapes;
 
-namespace Wine_API.Controllers
+namespace WineAPI.Controllers
 {
     [Route("[controller]")]
     public class GrapesController : Controller
     {
-        private ICountryService _countryService;
+        private IGrapeService _grapeService;
 
-        public GrapesController(ICountryService countryService)
+        public GrapesController(IGrapeService grapeService)
         {
-            _countryService = countryService;
+            _grapeService = grapeService;
         }
 
         

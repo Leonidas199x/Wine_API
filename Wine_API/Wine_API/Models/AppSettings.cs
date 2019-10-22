@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Wine_API.Models
+namespace WineAPI.Models
 {
     public class AppSettings
     {

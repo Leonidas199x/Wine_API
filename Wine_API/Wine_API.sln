@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wine_API", "Wine_API\Wine_API.csproj", "{E90EDED2-5037-4741-8EA9-726DAE91937A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WineAPI", "Wine_API\WineAPI.csproj", "{E90EDED2-5037-4741-8EA9-726DAE91937A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Wine_DB", "Wine_DB\Wine_DB.sqlproj", "{59A74742-75E0-4C15-A858-B2A750092E1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{96CE56BD-C8C7-4EF6-BE30-EBB17FB0F237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{96CE56BD-C8C7-4EF6-BE30-EBB17FB0F237}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContract", "DataContractCore\DataContract.csproj", "{8C1EDB6F-9D9D-4F8C-B70A-D794E315248A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContract", "DataContractCore\DataContract.csproj", "{8C1EDB6F-9D9D-4F8C-B70A-D794E315248A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineService", "WineService\WineService.csproj", "{7B1D2600-98ED-458F-92F4-8475A4104ED5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WineService", "WineService\WineService.csproj", "{7B1D2600-98ED-458F-92F4-8475A4104ED5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Wine_API": {
+    "WineAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

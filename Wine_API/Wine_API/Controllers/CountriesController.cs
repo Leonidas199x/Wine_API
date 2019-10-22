@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataContract.Country;
 
-namespace Wine_API.Controllers
+namespace WineAPI.Controllers
 {
     [Route("[controller]")]
     public class CountriesController : Controller
@@ -14,19 +14,6 @@ namespace Wine_API.Controllers
         public CountriesController(ICountryService countryService)
         {
             _countryService = countryService;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetCountryLookup()
-        {
-            var countries = await _countryService.GetCountryLookup().ConfigureAwait(false);
-
-            if (!countries.Any())
-            {
-                return NotFound(); 
-            }
-            
-            return Ok(countries);
         }
 
         [HttpGet("{CountryId}")]

@@ -3,7 +3,7 @@ using WineService.Countries;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Wine_API.Controllers
+namespace WineAPI.Controllers
 {
     [Route("[controller]")]
     public class LookupsController : Controller
