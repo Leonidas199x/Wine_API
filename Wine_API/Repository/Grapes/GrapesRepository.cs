@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
@@ -26,6 +27,25 @@ namespace Repository.Grapes
             }
 
             return grapes;
+        }
+
+        public async Task<IEnumerable<Grape>> Get(int grapeId)
+        {
+            IEnumerable<Grape> grape = null;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@intGrapeId", grapeId, DbType.Int32, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                grape = await connection.QueryAsync<Grape>(
+                    "[dbo].[GetGrape]",
+                    parameters,
+                    commandType: CommandType.StoredProcedure)
+                    .ConfigureAwait(false);
+            }
+
+            return grape;
         }
     }
 }

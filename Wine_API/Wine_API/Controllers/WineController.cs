@@ -10,7 +10,7 @@ namespace WineAPI.Controllers
     [Route("[controller]")]
     public class WineController : Controller
     {
-        [Route("{id}")]
+        [Route("{Id}")]
         [HttpGet]
         public ActionResult GetWine(int WineId)
         {
@@ -19,7 +19,7 @@ namespace WineAPI.Controllers
 
         // POST: Wine/Create
         //[HttpPost]
-        //[ValidateAntiForgeryToken]
+        //[ValIdateAntiForgeryToken]
         //public ActionResult Create(IFormCollection collection)
         //{
         //    try
@@ -35,15 +35,15 @@ namespace WineAPI.Controllers
         //}
 
         //// GET: Wine/Edit/5
-        //public ActionResult Edit(int id)
+        //public ActionResult Edit(int Id)
         //{
         //    return View();
         //}
 
         //// POST: Wine/Edit/5
         //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
+        //[ValIdateAntiForgeryToken]
+        //public ActionResult Edit(int Id, IFormCollection collection)
         //{
         //    try
         //    {
@@ -58,15 +58,15 @@ namespace WineAPI.Controllers
         //}
 
         //// GET: Wine/Delete/5
-        //public ActionResult Delete(int id)
+        //public ActionResult Delete(int Id)
         //{
         //    return View();
         //}
 
         //// POST: Wine/Delete/5
         //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
+        //[ValIdateAntiForgeryToken]
+        //public ActionResult Delete(int Id, IFormCollection collection)
         //{
         //    try
         //    {

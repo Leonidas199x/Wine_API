@@ -5,7 +5,7 @@ using Dapper;
 using DataContract.Country;
 using System.Threading.Tasks;
 
-namespace DataRepository
+namespace Repository.Countries
 {
     public class CountryRepository : ICountryRepository
     {

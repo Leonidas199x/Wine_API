@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using DataContract.Country;
 
-namespace DataRepository
+namespace Repository.Countries
 {
     public interface ICountryRepository
     {
