@@ -22,7 +22,7 @@ namespace WineAPI.Controllers
 
             if (!countries.Any())
             {
-                return NotFound(); 
+                return NoContent(); 
             }
             
             return Ok(countries);

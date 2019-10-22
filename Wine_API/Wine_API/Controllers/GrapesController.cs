@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using WineService.Grapes;
 
@@ -7,7 +8,7 @@ namespace WineAPI.Controllers
     [Route("[controller]")]
     public class GrapesController : Controller
     {
-        private IGrapeService _grapeService;
+        private readonly IGrapeService _grapeService;
 
         public GrapesController(IGrapeService grapeService)
         {

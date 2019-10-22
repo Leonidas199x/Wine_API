@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using DataRepository;
+using Repository.Countries;
+using Repository.Grapes;
 using WineService.Countries;
 using WineService.Grapes;
 using WineAPI.Models;
@@ -33,7 +34,8 @@ namespace WineAPI
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString("Wine_DB")));         
+            services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString("Wine_DB")));
+            services.AddTransient<IGrapesRepository>(x => new GrapesRepository(Configuration.GetConnectionString("Wine_DB")));
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IGrapeService, GrapeService>();
 
@@ -45,7 +47,7 @@ namespace WineAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

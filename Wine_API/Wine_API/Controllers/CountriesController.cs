@@ -9,7 +9,7 @@ namespace WineAPI.Controllers
     [Route("[controller]")]
     public class CountriesController : Controller
     {
-        private ICountryService _countryService;
+        private readonly ICountryService _countryService;
 
         public CountriesController(ICountryService countryService)
         {
