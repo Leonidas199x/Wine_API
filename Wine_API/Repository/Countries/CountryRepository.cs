@@ -22,7 +22,7 @@ namespace DataRepository
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                countries =  await connection.QueryAsync<CountryLookup>("[dbo].[GetAllCountries]").ConfigureAwait(false);
+                countries = await connection.QueryAsync<CountryLookup>("[dbo].[GetAllCountries]").ConfigureAwait(false);
             }
 
             return countries;
