@@ -9,5 +9,7 @@ namespace Repository.Grapes
         Task<IEnumerable<GrapeLookup>> GetGrapeLookup();
 
         Task<IEnumerable<Grape>> Get(int grapeId);
+
+        Task<IEnumerable<Grape>> GetAll();
     }
 }

@@ -14,11 +14,18 @@ namespace WineService.Grapes
             _grapeRepository = grapeRepository;
         }
 
+        public async Task<IEnumerable<Grape>> GetAll()
+        {
+            var grapes = await _grapeRepository.GetAll().ConfigureAwait(false);
+
+            return grapes;
+        }
+
         public async Task<IEnumerable<Grape>> Get(int grapeId)
         {
             var country = await _grapeRepository.Get(grapeId).ConfigureAwait(false);
 
-            return (country != null) ? country : null;
+            return country;
         }
     }
 }

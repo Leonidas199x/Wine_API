@@ -17,6 +17,18 @@ namespace Repository.Grapes
             _connectionString = connectionString;
         }
 
+        public async Task<IEnumerable<Grape>> GetAll()
+        {
+            IEnumerable<Grape> grapes = null;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                grapes = await connection.QueryAsync<Grape>("[dbo].[GetGrapes]").ConfigureAwait(false);
+            }
+
+            return grapes;
+        }
+
         public async Task<IEnumerable<GrapeLookup>> GetGrapeLookup()
         {
             IEnumerable<GrapeLookup> grapes = null;
