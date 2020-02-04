@@ -8,6 +8,7 @@ using Repository.Grapes;
 using WineService.Countries;
 using WineService.Grapes;
 using WineAPI.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace WineAPI
 {
@@ -15,7 +16,7 @@ namespace WineAPI
     {
         public IConfiguration Configuration { get; set; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -38,6 +39,7 @@ namespace WineAPI
             services.AddTransient<IGrapesRepository>(x => new GrapesRepository(Configuration.GetConnectionString("Wine_DB")));
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IGrapeService, GrapeService>();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -47,7 +49,7 @@ namespace WineAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
