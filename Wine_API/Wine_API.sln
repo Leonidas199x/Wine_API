@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContract", "DataContrac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WineService", "WineService\WineService.csproj", "{7B1D2600-98ED-458F-92F4-8475A4104ED5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controller Unit Tests", "Controller Unit Tests\Controller Unit Tests.csproj", "{1F01BD2E-79F6-40A1-8361-F0F7D731BBCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineAPI.UnitTests", "Controller Unit Tests\WineAPI.UnitTests.csproj", "{1F01BD2E-79F6-40A1-8361-F0F7D731BBCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
