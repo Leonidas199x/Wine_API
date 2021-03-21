@@ -29,7 +29,9 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(country);
+            var outboundCountry = _countryMapper.Map<DataContract.Country>(country);
+
+            return Ok(outboundCountry);
         }
 
         [HttpDelete("{countryId}")]
