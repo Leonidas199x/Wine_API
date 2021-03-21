@@ -18,7 +18,7 @@ namespace Domain.Countries
 
         public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
         {
-            var connection = new SqlConnection(_connectionString);
+            using var connection = new SqlConnection(_connectionString);
 
             return await connection.QueryAsync<CountryLookup>(
                 "[dbo].[Lookup_Country]",
@@ -30,7 +30,7 @@ namespace Domain.Countries
             var parameters = new DynamicParameters();
             parameters.Add("@CountryId", Id, DbType.Int32, ParameterDirection.Input);
 
-            var connection = new SqlConnection(_connectionString);
+            using var connection = new SqlConnection(_connectionString);
 
             return await connection.QuerySingleAsync<Country>(
                 "[dbo].[Country_GetById]",
@@ -44,7 +44,7 @@ namespace Domain.Countries
             var parameters = new DynamicParameters();
             parameters.Add("@CountryName", name, DbType.String, ParameterDirection.Input);
 
-            var connection = new SqlConnection(_connectionString);
+            using var connection = new SqlConnection(_connectionString);
 
             return await connection.QueryAsync<Country>(
                 "[dbo].[Country_GetByName]",
@@ -58,7 +58,7 @@ namespace Domain.Countries
             var parameters = new DynamicParameters();
             parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
-            var connection = new SqlConnection(_connectionString);
+            using var connection = new SqlConnection(_connectionString);
 
             await connection.QueryAsync<Country>(
                 "[dbo].[Country_Delete]",
