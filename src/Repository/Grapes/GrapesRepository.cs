@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -35,7 +34,7 @@ namespace Repository.Grapes
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                grapes = await connection.QueryAsync<GrapeLookup>("[dbo].[Grape_GetAll]").ConfigureAwait(false);
+                grapes = await connection.QueryAsync<GrapeLookup>("[dbo].[Lookup_Grape]").ConfigureAwait(false);
             }
 
             return grapes;
