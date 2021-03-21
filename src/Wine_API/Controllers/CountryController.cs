@@ -3,6 +3,8 @@ using Domain.Countries;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WineAPI.Controllers
 {
@@ -32,6 +34,20 @@ namespace WineAPI.Controllers
             var outboundCountry = _countryMapper.Map<DataContract.Country>(country);
 
             return Ok(outboundCountry);
+        }
+
+        [HttpGet("countries")]
+        public async Task<IActionResult> GetAllCountries()
+        {
+            var countries = await _countryService.GetCountryLookup().ConfigureAwait(false);
+            if (!countries.Any())
+            {
+                return NoContent();
+            }
+
+            var outboundCountries = _countryMapper.Map<IEnumerable<DataContract.CountryLookup>>(countries);
+
+            return Ok(outboundCountries);
         }
 
         [HttpDelete("{countryId}")]
