@@ -25,16 +25,23 @@ namespace Domain.Countries
             return (countries != null) ? countries : null; 
         }
 
-        public async Task<IEnumerable<Country>> Get(int countryId)
+        public async Task<Country> Get(int countryId)
         {
             var country = await _countryRepository.Get(countryId).ConfigureAwait(false);
 
-            return (country != null) ? country : null;
+            return country;
         }
 
-        public async Task<bool> Delete(int countryId)
+        public async Task<IEnumerable<Country>> GetByName(string name)
         {
-            return await _countryRepository.Delete(countryId).ConfigureAwait(false);
+            var country = await _countryRepository.GetByName(name).ConfigureAwait(false);
+
+            return country;
+        }
+
+        public async Task Delete(int countryId)
+        {
+            await _countryRepository.Delete(countryId).ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> Insert(Country country)

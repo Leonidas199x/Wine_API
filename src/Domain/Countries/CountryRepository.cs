@@ -18,50 +18,53 @@ namespace Domain.Countries
 
         public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
         {
-            IEnumerable<CountryLookup> countries = null;
+            var connection = new SqlConnection(_connectionString);
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                countries = await connection.QueryAsync<CountryLookup>("[dbo].[Lookup_Country]").ConfigureAwait(false);
-            }
-
-            return countries;
+            return await connection.QueryAsync<CountryLookup>(
+                "[dbo].[Lookup_Country]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Country>> Get(int countryId)
+        public async Task<Country> Get(int Id)
         {
-            IEnumerable<Country> country = null;
+            var parameters = new DynamicParameters();
+            parameters.Add("@CountryId", Id, DbType.Int32, ParameterDirection.Input);
 
+            var connection = new SqlConnection(_connectionString);
+
+            return await connection.QuerySingleAsync<Country>(
+                "[dbo].[Country_GetById]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<Country>> GetByName(string name)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@CountryName", name, DbType.String, ParameterDirection.Input);
+
+            var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<Country>(
+                "[dbo].[Country_GetByName]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
+        public async Task Delete(int countryId)
+        {
             var parameters = new DynamicParameters();
             parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                country = await connection.QueryAsync<Country>(
-                    "[dbo].[Country_GetById]",
-                    parameters,
-                    commandType: CommandType.StoredProcedure)
-                    .ConfigureAwait(false);
-            }
+            var connection = new SqlConnection(_connectionString);
 
-            return country;
-        }
-
-        public async Task<bool> Delete(int countryId)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.QueryAsync<Country>(
-                    "[dbo].[Country_Delete]",
-                    parameters,
-                    commandType: CommandType.StoredProcedure)
-                    .ConfigureAwait(false);
-            }
-
-            return true;
+            await connection.QueryAsync<Country>(
+                "[dbo].[Country_Delete]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> Insert(Country country)

@@ -8,9 +8,9 @@ namespace Domain.Countries
     {
         Task<IEnumerable<CountryLookup>> GetCountryLookup();
 
-        Task<IEnumerable<Country>> Get(int countryId);
+        Task<Country> Get(int countryId);
 
-        Task<bool> Delete(int countryId);
+        Task Delete(int countryId);
 
         Task<ValidationResult> Insert(Country country);
     }

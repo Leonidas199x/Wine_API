@@ -6,7 +6,7 @@ namespace Domain.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<DataContract.Country, Countries.Country>();
+            CreateMap<DataContract.CountryInbound, Countries.Country>();
         }
     }
 }
