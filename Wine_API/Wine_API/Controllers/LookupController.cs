@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace WineAPI.Controllers
 {
     [Route("[controller]")]
-    public class LookupsController : Controller
+    public class LookupController : Controller
     {
         private ICountryService _countryService;
 
-        public LookupsController(ICountryService countryService)
+        public LookupController(ICountryService countryService)
         {
             _countryService = countryService;
         }

@@ -9,6 +9,7 @@ using WineService.Countries;
 using WineService.Grapes;
 using WineAPI.Models;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace WineAPI
 {
@@ -37,14 +38,25 @@ namespace WineAPI
 
             services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString("Wine_DB")));
             services.AddTransient<IGrapesRepository>(x => new GrapesRepository(Configuration.GetConnectionString("Wine_DB")));
-            services.AddScoped<ICountryService, CountryService>();
-            services.AddScoped<IGrapeService, GrapeService>();
+            services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<IGrapeService, GrapeService>();
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Wine API",
+                    Version = "v1",
+                    Description = "An API to return data from the Wine database.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Toby Prince",
+                        Email = string.Empty,
+                        Url = new Uri("https://github.com/Leonidas199x/Wine_API"),
+                    },
+                });
             });
         }
 
@@ -56,12 +68,6 @@ namespace WineAPI
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            app.UseStaticFiles();
 
             app.UseMvc(routes =>
             {
@@ -70,11 +76,9 @@ namespace WineAPI
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            app.UseStaticFiles();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
+            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wine API");

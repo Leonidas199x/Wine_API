@@ -6,11 +6,11 @@ using WineService.Grapes;
 namespace WineAPI.Controllers
 {
     [Route("[controller]")]
-    public class GrapesController : Controller
+    public class GrapeController : Controller
     {
         private readonly IGrapeService _grapeService;
 
-        public GrapesController(IGrapeService grapeService)
+        public GrapeController(IGrapeService grapeService)
         {
             _grapeService = grapeService;
         }

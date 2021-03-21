@@ -7,11 +7,11 @@ using DataContract.Country;
 namespace WineAPI.Controllers
 {
     [Route("[controller]")]
-    public class CountriesController : Controller
+    public class CountryController : Controller
     {
         private readonly ICountryService _countryService;
 
-        public CountriesController(ICountryService countryService)
+        public CountryController(ICountryService countryService)
         {
             _countryService = countryService;
         }
