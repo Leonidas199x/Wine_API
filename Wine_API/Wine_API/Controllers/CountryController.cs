@@ -16,7 +16,7 @@ namespace WineAPI.Controllers
             _countryService = countryService;
         }
 
-        [HttpGet("{CountryId}")]
+        [HttpGet("{countryId}")]
         public async Task<IActionResult> GetCountry(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);
@@ -29,7 +29,7 @@ namespace WineAPI.Controllers
             return Ok(country);
         }
 
-        [HttpDelete("{CountryId}")]
+        [HttpDelete("{countryId}")]
         public async Task<IActionResult> DeleteCountry(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);

@@ -28,7 +28,7 @@ namespace WineAPI.Controllers
             return Ok(grapes);
         }
 
-        [HttpGet("{GrapeId}")]
+        [HttpGet("{grapeId}")]
         public async Task<IActionResult> GetGrape(int grapeId)
         { 
             var grape = await _grapeService.Get(grapeId).ConfigureAwait(false);
