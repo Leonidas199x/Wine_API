@@ -14,16 +14,12 @@ namespace Domain.Grapes
 
         public async Task<IEnumerable<Grape>> GetAll()
         {
-            var grapes = await _grapeRepository.GetAll().ConfigureAwait(false);
-
-            return grapes;
+            return await _grapeRepository.GetAll().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Grape>> Get(int grapeId)
         {
-            var country = await _grapeRepository.Get(grapeId).ConfigureAwait(false);
-
-            return country;
+            return await _grapeRepository.Get(grapeId).ConfigureAwait(false);
         }
     }
 }

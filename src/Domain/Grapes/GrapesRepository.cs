@@ -17,45 +17,27 @@ namespace Domain.Grapes
 
         public async Task<IEnumerable<Grape>> GetAll()
         {
-            IEnumerable<Grape> grapes = null;
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                grapes = await connection.QueryAsync<Grape>("[dbo].[Grape_GetAll]").ConfigureAwait(false);
-            }
-
-            return grapes;
+            using var connection = new SqlConnection(_connectionString);
+            return await connection.QueryAsync<Grape>("[dbo].[Grape_GetAll]").ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<GrapeLookup>> GetGrapeLookup()
         {
-            IEnumerable<GrapeLookup> grapes = null;
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                grapes = await connection.QueryAsync<GrapeLookup>("[dbo].[Lookup_Grape]").ConfigureAwait(false);
-            }
-
-            return grapes;
+            using var connection = new SqlConnection(_connectionString);
+            return await connection.QueryAsync<GrapeLookup>("[dbo].[Lookup_Grape]").ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Grape>> Get(int grapeId)
         {
-            IEnumerable<Grape> grape = null;
-
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeId", grapeId, DbType.Int32, ParameterDirection.Input);
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                grape = await connection.QueryAsync<Grape>(
-                    "[dbo].[Grape_GetById]",
-                    parameters,
-                    commandType: CommandType.StoredProcedure)
-                    .ConfigureAwait(false);
-            }
-
-            return grape;
+            using var connection = new SqlConnection(_connectionString);
+            return await connection.QueryAsync<Grape>(
+                "[dbo].[Grape_GetById]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
         }
     }
 }
