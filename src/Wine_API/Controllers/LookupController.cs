@@ -23,7 +23,7 @@ namespace WineAPI.Controllers
             {
                 return NoContent(); 
             }
-            
+
             return Ok(countries);
         }
     }
