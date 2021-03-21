@@ -2,6 +2,8 @@
 using Domain.Countries;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace WineAPI.Controllers
 {
@@ -9,10 +11,14 @@ namespace WineAPI.Controllers
     public class LookupController : Controller
     {
         private readonly ICountryService _countryService;
+        private readonly IMapper _lookupMapper;
 
-        public LookupController(ICountryService countryService)
+        public LookupController(
+            ICountryService countryService,
+            IMapper lookupMapper)
         {
             _countryService = countryService;
+            _lookupMapper = lookupMapper;
         }
 
         [HttpGet("countries")]
@@ -24,7 +30,9 @@ namespace WineAPI.Controllers
                 return NoContent(); 
             }
 
-            return Ok(countries);
+            var outboundCountries = _lookupMapper.Map<IEnumerable<DataContract.CountryLookup>>(countries);
+
+            return Ok(outboundCountries);
         }
     }
 }
