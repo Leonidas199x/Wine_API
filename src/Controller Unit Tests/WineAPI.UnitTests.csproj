@@ -63,12 +63,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CountriesControllerUnitTests\WhenTestingTheClass.cs" />
+    <Compile Include="CountryControllerUnitTests\WhenTestingTheClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataContractCore\DataContract.csproj">
+      <Project>{8c1edb6f-9d9d-4f8c-b70a-d794e315248a}</Project>
+      <Name>DataContract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{692ad5d1-091e-415f-9fb2-482dbe63dfa2}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wine_API\WineAPI.csproj">
+      <Project>{e90eded2-5037-4741-8ea9-726dae91937a}</Project>
+      <Name>WineAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
