@@ -19,7 +19,6 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var grapes = await _grapeService.GetAll().ConfigureAwait(false);
-
             if(!grapes.Any())
             {
                 return NoContent();
@@ -33,7 +32,6 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetGrape(int grapeId)
         { 
             var grape = await _grapeService.Get(grapeId).ConfigureAwait(false);
-
             if (grape == null)
             {
                 return NotFound();
