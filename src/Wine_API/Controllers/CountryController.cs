@@ -23,7 +23,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet("{countryId}")]
-        public async Task<IActionResult> GetCountry(int countryId)
+        public async Task<IActionResult> Get(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);
             if(country == null)
@@ -37,7 +37,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet("countries")]
-        public async Task<IActionResult> GetAllCountries()
+        public async Task<IActionResult> GetAll()
         {
             var countries = await _countryService.GetCountryLookup().ConfigureAwait(false);
             var outboundCountries = _countryMapper.Map<IEnumerable<DataContract.CountryLookup>>(countries);
@@ -46,7 +46,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpDelete("{countryId}")]
-        public async Task<IActionResult> DeleteCountry(int countryId)
+        public async Task<IActionResult> Delete(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);
             if(country == null)
@@ -60,7 +60,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertCountry([FromBody] DataContract.CountryInbound country)
+        public async Task<IActionResult> Post([FromBody] DataContract.CountryInbound country)
         {
             var domainCountry = _countryMapper.Map<Country>(country);
 
