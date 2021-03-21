@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Countries
+namespace Domain
 {
     public class Country : CountryLookup
     {

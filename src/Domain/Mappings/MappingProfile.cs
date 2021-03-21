@@ -8,9 +8,14 @@ namespace Domain.Mappings
         public MappingProfile()
         {
             #region Country
-            CreateMap<DataContract.CountryInbound, Countries.Country>();
-            CreateMap<Countries.Country, DataContract.Country>();
-            CreateMap<IEnumerable<Countries.CountryLookup>, IEnumerable<DataContract.CountryLookup>>();
+            CreateMap<DataContract.CountryInbound, Country>();
+            CreateMap<Country, DataContract.Country>();
+            CreateMap<IEnumerable<CountryLookup>, IEnumerable<DataContract.CountryLookup>>();
+            #endregion
+
+            #region Grape
+            CreateMap<IEnumerable<Grape>, IEnumerable<DataContract.Grape>>();
+            CreateMap<Grape, DataContract.Grape>();
             #endregion
         }
     }

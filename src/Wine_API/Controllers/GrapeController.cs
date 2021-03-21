@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 using Domain.Grapes;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace WineAPI.Controllers
 {
@@ -9,27 +10,27 @@ namespace WineAPI.Controllers
     public class GrapeController : Controller
     {
         private readonly IGrapeService _grapeService;
+        private readonly IMapper _grapeMapper;
 
-        public GrapeController(IGrapeService grapeService)
+        public GrapeController(
+            IGrapeService grapeService,
+            IMapper grapeMapper)
         {
             _grapeService = grapeService;
+            _grapeMapper = grapeMapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var grapes = await _grapeService.GetAll().ConfigureAwait(false);
-            if(!grapes.Any())
-            {
-                return NoContent();
-            }
 
-            //Map to data contract
-            return Ok(grapes);
+            var outboundGrapes = _grapeMapper.Map<IEnumerable<DataContract.Grape>>(grapes);
+            return Ok(outboundGrapes);
         }
 
         [HttpGet("{grapeId}")]
-        public async Task<IActionResult> GetGrape(int grapeId)
+        public async Task<IActionResult> Get(int grapeId)
         { 
             var grape = await _grapeService.Get(grapeId).ConfigureAwait(false);
             if (grape == null)
@@ -37,8 +38,8 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            //Map to data contract.
-            return Ok(grape);
+            var outboundGrape = _grapeMapper.Map<DataContract.Grape>(grape);
+            return Ok(outboundGrape);
         }
     }
 }
