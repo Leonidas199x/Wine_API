@@ -24,7 +24,6 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetCountry(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);
-
             if(country == null)
             {
                 return NotFound();
@@ -37,7 +36,6 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> DeleteCountry(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);
-
             if(country == null)
             {
                 return NotFound();
