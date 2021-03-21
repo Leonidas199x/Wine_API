@@ -6,8 +6,10 @@ namespace Domain.Mappings
     {
         public MappingProfile()
         {
+            #region Country
             CreateMap<DataContract.CountryInbound, Countries.Country>();
             CreateMap<Countries.Country, DataContract.Country>();
+            #endregion
         }
     }
 }
