@@ -20,23 +20,17 @@ namespace Domain.Countries
 
         public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
         {
-            var countries = await _countryRepository.GetCountryLookup().ConfigureAwait(false);
-
-            return (countries != null) ? countries : null; 
+            return await _countryRepository.GetCountryLookup().ConfigureAwait(false);
         }
 
         public async Task<Country> Get(int countryId)
         {
-            var country = await _countryRepository.Get(countryId).ConfigureAwait(false);
-
-            return country;
+            return await _countryRepository.Get(countryId).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Country>> GetByName(string name)
         {
-            var country = await _countryRepository.GetByName(name).ConfigureAwait(false);
-
-            return country;
+            return await _countryRepository.GetByName(name).ConfigureAwait(false);
         }
 
         public async Task Delete(int countryId)
