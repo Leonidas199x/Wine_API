@@ -2,10 +2,10 @@
 using System.Data.SqlClient;
 using System.Data;
 using Dapper;
-using DataContract.Country;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 
-namespace Repository.Countries
+namespace Domain.Countries
 {
     public class CountryRepository : ICountryRepository
     {
@@ -64,25 +64,22 @@ namespace Repository.Countries
             return true;
         }
 
-        public async Task<int> Insert(Country country)
+        public async Task<ValidationResult> Insert(Country country)
         {
-            int result;
-
             var parameters = new DynamicParameters();
-            parameters.Add("@CountryName", country.CountryName, DbType.String, ParameterDirection.Input);
-            parameters.Add("@CountryNote", country.CountryNote, DbType.String, ParameterDirection.Input);
-            parameters.Add("@Exists", DbType.Boolean, direction: ParameterDirection.Output);
+            parameters.Add("@CountryName", country.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CountryNote", country.Note, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                result = await connection.QueryFirstOrDefaultAsync<int>(
+                await connection.QueryAsync(
                     "[dbo].[Country_Insert]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
             }
 
-            return result;
+            return new ValidationResult();
         }
     }
 }

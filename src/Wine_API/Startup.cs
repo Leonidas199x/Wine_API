@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Repository.Countries;
-using Repository.Grapes;
-using WineService.Countries;
-using WineService.Grapes;
+using Domain.Countries;
+using Domain.Grapes;
 using WineAPI.Models;
 using Microsoft.Extensions.Hosting;
 using System;
+using FluentValidation.AspNetCore;
+using Domain.Mappings;
 
 namespace WineAPI
 {
@@ -32,7 +32,12 @@ namespace WineAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            var builder = services.AddMvc();
+
+            //Add fluent validtion
+            builder.AddFluentValidation(fv =>
+                fv.RegisterValidatorsFromAssemblyContaining<CountryValidator>()
+            .RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
@@ -40,7 +45,11 @@ namespace WineAPI
             services.AddTransient<IGrapesRepository>(x => new GrapesRepository(Configuration.GetConnectionString("Wine_DB")));
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IGrapeService, GrapeService>();
+
             services.AddMvc(option => option.EnableEndpointRouting = false);
+
+            //Register automapper
+            services.AddAutoMapper(typeof(MappingProfile));
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

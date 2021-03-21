@@ -4,11 +4,11 @@
 
 using System;
 
-namespace DataContract.Country
+namespace DataContract
 {
     public class Country : CountryLookup
     {
-        public string CountryNote { get; set; }
+        public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }
 

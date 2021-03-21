@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WineService.Countries;
+using Domain.Countries;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +8,7 @@ namespace WineAPI.Controllers
     [Route("[controller]")]
     public class LookupController : Controller
     {
-        private ICountryService _countryService;
+        private readonly ICountryService _countryService;
 
         public LookupController(ICountryService countryService)
         {

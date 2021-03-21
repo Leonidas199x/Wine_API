@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataContract.Grape
+namespace DataContract
 {
     public class Grape
     {

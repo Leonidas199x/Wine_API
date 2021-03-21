@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WineService.Countries;
+using Domain.Countries;
 using System.Linq;
 using System.Threading.Tasks;
-using DataContract.Country;
+using AutoMapper;
 
 namespace WineAPI.Controllers
 {
@@ -10,10 +10,14 @@ namespace WineAPI.Controllers
     public class CountryController : Controller
     {
         private readonly ICountryService _countryService;
+        private readonly IMapper _countryMapper;
 
-        public CountryController(ICountryService countryService)
+        public CountryController(
+            ICountryService countryService,
+            IMapper countryMapper)
         {
             _countryService = countryService;
+            _countryMapper = countryMapper;
         }
 
         [HttpGet("{countryId}")]
@@ -50,16 +54,18 @@ namespace WineAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertCountry([FromBody]Country country)
+        public async Task<IActionResult> InsertCountry([FromBody]DataContract.Country country)
         {
-            var (exists, updatedCountry) = await _countryService.Insert(country).ConfigureAwait(false);
+            var domainCountry = _countryMapper.Map<Country>(country);
 
-            if(exists)
+            var validationResult = await _countryService.Insert(domainCountry).ConfigureAwait(false);
+
+            if(validationResult.IsValid)
             {
-                return BadRequest();
+                return NoContent();
             }
 
-            return NoContent();
+            return BadRequest(ModelState);
         }
     }
 }

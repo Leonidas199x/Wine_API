@@ -1,4 +1,4 @@
-﻿namespace DataContract.Grape
+﻿namespace DataContract
 {
     public class GrapeLookup
     {

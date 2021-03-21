@@ -12,6 +12,6 @@ namespace WineService.Countries
 
         Task<bool> Delete(int countryId);
 
-        Task<(bool, Country)> Insert(Country country);
+        Task<int> Insert(Country country);
     }
 }

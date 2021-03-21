@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation.Results;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataContract.Country;
 
-namespace Repository.Countries
+namespace Domain.Countries
 {
-    public interface ICountryRepository
+    public interface ICountryService
     {
         Task<IEnumerable<CountryLookup>> GetCountryLookup();
 
@@ -12,6 +12,6 @@ namespace Repository.Countries
 
         Task<bool> Delete(int countryId);
 
-        Task<int> Insert(Country country);
+        Task<ValidationResult> Insert(Country country);
     }
 }
