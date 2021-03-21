@@ -27,13 +27,13 @@ namespace Domain.Grapes
             return await connection.QueryAsync<GrapeLookup>("[dbo].[Lookup_Grape]").ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Grape>> Get(int grapeId)
+        public async Task<Grape> Get(int grapeId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeId", grapeId, DbType.Int32, ParameterDirection.Input);
 
             using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<Grape>(
+            return await connection.QuerySingleAsync<Grape>(
                 "[dbo].[Grape_GetById]",
                 parameters,
                 commandType: CommandType.StoredProcedure)

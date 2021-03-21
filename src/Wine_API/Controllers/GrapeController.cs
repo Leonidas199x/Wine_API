@@ -25,6 +25,7 @@ namespace WineAPI.Controllers
                 return NoContent();
             }
 
+            //Map to data contract
             return Ok(grapes);
         }
 
@@ -33,11 +34,12 @@ namespace WineAPI.Controllers
         { 
             var grape = await _grapeService.Get(grapeId).ConfigureAwait(false);
 
-            if (!grape.Any())
+            if (grape == null)
             {
                 return NotFound();
             }
 
+            //Map to data contract.
             return Ok(grape);
         }
     }

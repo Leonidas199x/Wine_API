@@ -7,7 +7,7 @@ namespace Domain.Grapes
     {
         Task<IEnumerable<GrapeLookup>> GetGrapeLookup();
 
-        Task<IEnumerable<Grape>> Get(int grapeId);
+        Task<Grape> Get(int grapeId);
 
         Task<IEnumerable<Grape>> GetAll();
     }

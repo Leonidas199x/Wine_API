@@ -17,7 +17,7 @@ namespace Domain.Grapes
             return await _grapeRepository.GetAll().ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Grape>> Get(int grapeId)
+        public async Task<Grape> Get(int grapeId)
         {
             return await _grapeRepository.Get(grapeId).ConfigureAwait(false);
         }
