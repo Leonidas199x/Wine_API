@@ -22,7 +22,7 @@ namespace Repository.Countries
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                countries = await connection.QueryAsync<CountryLookup>("[dbo].[GetAllCountries]").ConfigureAwait(false);
+                countries = await connection.QueryAsync<CountryLookup>("[dbo].[Lookup_Country]").ConfigureAwait(false);
             }
 
             return countries;
@@ -33,12 +33,12 @@ namespace Repository.Countries
             IEnumerable<Country> country = null;
 
             var parameters = new DynamicParameters();
-            parameters.Add("@intCountryId", countryId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 country = await connection.QueryAsync<Country>(
-                    "[dbo].[GetCountry]",
+                    "[dbo].[Country_GetById]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
@@ -50,12 +50,12 @@ namespace Repository.Countries
         public async Task<bool> Delete(int countryId)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@intCountryId", countryId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.QueryAsync<Country>(
-                    "[dbo].[DeleteCountry]",
+                    "[dbo].[Country_Delete]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
@@ -69,14 +69,14 @@ namespace Repository.Countries
             bool result;
 
             var parameters = new DynamicParameters();
-            parameters.Add("@strCountryName", country.CountryName, DbType.String, ParameterDirection.Input);
-            parameters.Add("@strCountryNote", country.CountryNote, DbType.String, ParameterDirection.Input);
-            parameters.Add("@bitExists", DbType.Boolean, direction: ParameterDirection.Output);
+            parameters.Add("@CountryName", country.CountryName, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CountryNote", country.CountryNote, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Exists", DbType.Boolean, direction: ParameterDirection.Output);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 result = await connection.QueryFirstOrDefaultAsync<bool>(
-                    "[dbo].[InsertCountry]",
+                    "[dbo].[Country_Insert]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
