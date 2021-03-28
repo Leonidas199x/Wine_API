@@ -62,7 +62,7 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DataContract.CountryInbound country)
         {
-            var domainCountry = _countryMapper.Map<Country>(country);
+            var domainCountry = _countryMapper.Map<Domain.Country>(country);
 
             var validationResult = await _countryService.Insert(domainCountry).ConfigureAwait(false);
             if(validationResult.IsValid)
