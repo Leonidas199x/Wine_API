@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace WineAPI.Controllers
 {
