@@ -10,7 +10,7 @@ namespace Domain.Mappings
             #region Country
             CreateMap<DataContract.CountryInbound, Country>();
             CreateMap<Country, DataContract.Country>();
-            CreateMap<IEnumerable<CountryLookup>, IEnumerable<DataContract.CountryLookup>>();
+            CreateMap<CountryLookup, DataContract.CountryLookup>();
             #endregion
 
             #region Grape
