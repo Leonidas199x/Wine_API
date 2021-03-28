@@ -35,11 +35,11 @@ namespace WineAPI.Controllers
             return Ok(outboundCountry);
         }
 
-        [HttpGet("countries")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var countries = await _countryService.GetCountryLookup().ConfigureAwait(false);
-            var outboundCountries = _countryMapper.Map<IEnumerable<DataContract.CountryLookup>>(countries);
+            var countries = await _countryService.GetAll().ConfigureAwait(false);
+            var outboundCountries = _countryMapper.Map<IEnumerable<DataContract.Country>>(countries);
 
             return Ok(outboundCountries);
         }

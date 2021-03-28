@@ -28,6 +28,11 @@ namespace Domain.Countries
             return await _countryRepository.Get(countryId).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<Country>> GetAll()
+        {
+            return await _countryRepository.GetAll().ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<Country>> GetByName(string name)
         {
             return await _countryRepository.GetByName(name).ConfigureAwait(false);

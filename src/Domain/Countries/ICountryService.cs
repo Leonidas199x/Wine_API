@@ -10,6 +10,8 @@ namespace Domain.Countries
 
         Task<Country> Get(int countryId);
 
+        Task<IEnumerable<Country>> GetAll();
+
         Task Delete(int countryId);
 
         Task<ValidationResult> Insert(Country country);

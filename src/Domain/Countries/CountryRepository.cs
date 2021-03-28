@@ -25,6 +25,15 @@ namespace Domain.Countries
                 commandType: CommandType.StoredProcedure).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<Country>> GetAll()
+        {
+            var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<Country>(
+                "[dbo].[Country_GetAll]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }
+
         public async Task<Country> Get(int Id)
         {
             var parameters = new DynamicParameters();
