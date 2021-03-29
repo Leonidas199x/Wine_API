@@ -97,7 +97,7 @@ namespace Domain.Countries
         public async Task<ValidationResult> Update(Country country)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@CountryId", country.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CountryId", country.Id, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryName", country.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryNote", country.Note, DbType.String, ParameterDirection.Input);
 
