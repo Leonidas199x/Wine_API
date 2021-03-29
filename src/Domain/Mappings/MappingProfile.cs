@@ -9,7 +9,7 @@ namespace Domain.Mappings
         {
             #region Country
             CreateMap<DataContract.CountryInbound, Country>();
-            CreateMap<Country, DataContract.Country>();
+            CreateMap<Country, DataContract.Country>().ReverseMap();
             CreateMap<CountryLookup, DataContract.CountryLookup>();
             #endregion
 
