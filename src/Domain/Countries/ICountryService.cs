@@ -15,5 +15,7 @@ namespace Domain.Countries
         Task Delete(int countryId);
 
         Task<ValidationResult> Insert(Country country);
+
+        Task<ValidationResult> Update(Country country);
     }
 }

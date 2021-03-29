@@ -73,5 +73,21 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] DataContract.CountryInbound country)
+        {
+            var domainCountry = _countryMapper.Map<Domain.Country>(country);
+
+            var validationResult = await _countryService.Update(domainCountry).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
+        }
     }
 }

@@ -54,5 +54,17 @@ namespace Domain.Countries
 
             return await _countryRepository.Insert(country).ConfigureAwait(false);
         }
+
+        public async Task<ValidationResult> Update(Country country)
+        {
+            var validationResult = _countryValidator.Validate(country);
+
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
+            return await _countryRepository.Update(country).ConfigureAwait(false);
+        }
     }
 }

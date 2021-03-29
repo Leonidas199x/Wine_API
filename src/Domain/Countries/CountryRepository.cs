@@ -93,5 +93,24 @@ namespace Domain.Countries
 
             return new ValidationResult();
         }
+
+        public async Task<ValidationResult> Update(Country country)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@CountryId", country.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CountryName", country.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@CountryNote", country.Note, DbType.String, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.QueryAsync(
+                    "[dbo].[Country_Update]",
+                    parameters,
+                    commandType: CommandType.StoredProcedure)
+                    .ConfigureAwait(false);
+            }
+
+            return new ValidationResult();
+        }
     }
 }
