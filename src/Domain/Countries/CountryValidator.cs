@@ -8,7 +8,7 @@ namespace Domain.Countries
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Name must be provided.");
+                .WithMessage("Name is required");
 
             RuleFor(x => x.Name)
                 .MaximumLength(50)
