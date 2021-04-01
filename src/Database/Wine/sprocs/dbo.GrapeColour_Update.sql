@@ -11,7 +11,7 @@ BEGIN
     SET NOCOUNT ON;
 
     UPDATE GC
-    SET GC.GrapeColour = @GrapeColour
+    SET GC.Colour = @GrapeColour
     FROM [dbo].[GrapeColour] AS GC
     WHERE GC.[ID] = @intGrapeColourID;
 

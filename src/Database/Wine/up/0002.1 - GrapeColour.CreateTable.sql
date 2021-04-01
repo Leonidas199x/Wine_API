@@ -2,5 +2,5 @@
 (
     [ID] INT IDENTITY(1,1) NOT NULL
          PRIMARY KEY,
-    [GrapeColour] NVARCHAR(20) NULL
+    [Colour] NVARCHAR(20) NULL
 );

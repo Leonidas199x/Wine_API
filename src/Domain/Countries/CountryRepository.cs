@@ -41,7 +41,7 @@ namespace Domain.Countries
 
             using var connection = new SqlConnection(_connectionString);
 
-            return await connection.QuerySingleAsync<Country>(
+            return await connection.QuerySingleOrDefaultAsync<Country>(
                 "[dbo].[Country_GetById]",
                 parameters,
                 commandType: CommandType.StoredProcedure)
