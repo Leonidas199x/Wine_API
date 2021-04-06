@@ -69,7 +69,7 @@ namespace WineAPI.Controllers
 
         [HttpPost]
         [Route("colour")]
-        public async Task<IActionResult> InsertGrapeColour(DataContract.GrapeColourCreate grapeColour)
+        public async Task<IActionResult> InsertGrapeColour([FromBody] DataContract.GrapeColourCreate grapeColour)
         {
             var domainGrape = _grapeMapper.Map<GrapeColour>(grapeColour);
 
@@ -99,7 +99,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpPut("colour")]
-        public async Task<IActionResult> UpdateGrapeColour([FromBody] DataContract.GrapeColourCreate grapeColour)
+        public async Task<IActionResult> UpdateGrapeColour([FromBody] DataContract.GrapeColour grapeColour)
         {
             var domainGrapeColour = _grapeMapper.Map<GrapeColour>(grapeColour);
 
