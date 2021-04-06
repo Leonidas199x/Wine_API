@@ -46,7 +46,6 @@ namespace Domain.Countries
         public async Task<ValidationResult> Insert(Country country)
         {
             var validationResult = _countryValidator.Validate(country);
-
             if(!validationResult.IsValid)
             {
                 return validationResult;
