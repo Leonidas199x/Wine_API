@@ -83,5 +83,35 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpDelete("colour/{grapeColourId}")]
+        public async Task<IActionResult> DeleteGrapeColour(int grapeColourId)
+        {
+            var grapeColour = await _grapeService.GetGrapeColour(grapeColourId).ConfigureAwait(false);
+            if (grapeColour == null)
+            {
+                return NotFound();
+            }
+
+            await _grapeService.DeleteGrapeColour(grapeColourId).ConfigureAwait(false);
+
+            return NoContent();
+        }
+
+        [HttpPut("colour")]
+        public async Task<IActionResult> UpdateGrapeColour([FromBody] DataContract.GrapeColourCreate grapeColour)
+        {
+            var domainGrapeColour = _grapeMapper.Map<GrapeColour>(grapeColour);
+
+            var validationResult = await _grapeService.UpdateGrapeColour(domainGrapeColour).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
+        }
     }
 }

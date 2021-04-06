@@ -76,5 +76,37 @@ namespace Domain.Grapes
 
             return new ValidationResult();
         }
+
+        public async Task DeleteGrapeColour(int grapeColourId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@GrapeColourID", grapeColourId, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            await connection.QueryAsync<Country>(
+                "[dbo].[GrapeColour_Delete]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
+        public async Task<ValidationResult> UpdateGrapeColour(GrapeColour grapeColour)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@GrapeColourID", grapeColour.Id, DbType.String, ParameterDirection.Input);
+            parameters.Add("@GrapeColour", grapeColour.Colour, DbType.String, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.QueryAsync(
+                    "[dbo].[GrapeColour_Update]",
+                    parameters,
+                    commandType: CommandType.StoredProcedure)
+                    .ConfigureAwait(false);
+            }
+
+            return new ValidationResult();
+        }
     }
 }

@@ -17,5 +17,9 @@ namespace Domain.Grapes
         Task<GrapeColour> GetGrapeColour(int Id);
 
         Task<ValidationResult> InsertGrapeColour(GrapeColour grapeColour);
+
+        Task DeleteGrapeColour(int grapeColourId);
+
+        Task<ValidationResult> UpdateGrapeColour(GrapeColour grapeColour);
     }
 }

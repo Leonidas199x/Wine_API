@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using FluentValidation;
+using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,11 +7,13 @@ namespace Domain.Grapes
 {
     public class GrapeService : IGrapeService
     {
-        private IGrapesRepository _grapeRepository;
+        private readonly IGrapesRepository _grapeRepository;
+        private readonly IValidator<GrapeColour> _grapeColourValidator;
 
-        public GrapeService(IGrapesRepository grapeRepository)
+        public GrapeService(IGrapesRepository grapeRepository, IValidator<GrapeColour> grapeColourValidator)
         {
             _grapeRepository = grapeRepository;
+            _grapeColourValidator = grapeColourValidator;
         }
 
         public async Task<IEnumerable<Grape>> GetAll()
@@ -35,7 +38,29 @@ namespace Domain.Grapes
 
         public async Task<ValidationResult> InsertGrapeColour(GrapeColour grapeColour)
         {
+            var validationResult = _grapeColourValidator.Validate(grapeColour);
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
             return await _grapeRepository.InsertGrapeColour(grapeColour).ConfigureAwait(false);
+        }
+
+        public async Task DeleteGrapeColour(int grapeColourId)
+        {
+            await _grapeRepository.DeleteGrapeColour(grapeColourId).ConfigureAwait(false);
+        }
+
+        public async Task<ValidationResult> UpdateGrapeColour(GrapeColour grapeColour)
+        {
+            var validationResult = _grapeColourValidator.Validate(grapeColour);
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
+            return await _grapeRepository.UpdateGrapeColour(grapeColour).ConfigureAwait(false);
         }
     }
 }
