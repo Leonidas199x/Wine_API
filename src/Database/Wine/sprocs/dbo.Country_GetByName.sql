@@ -3,7 +3,7 @@
 GO
 
 ALTER PROCEDURE [dbo].[Country_GetByName]
-    @CountryName INT
+    @CountryName NVARCHAR(50)
 AS
 BEGIN
 
