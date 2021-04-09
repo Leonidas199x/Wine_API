@@ -42,7 +42,7 @@ namespace WineAPI
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
             services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString("Wine_DB")));
-            services.AddTransient<IGrapesRepository>(x => new GrapeRepository(Configuration.GetConnectionString("Wine_DB")));
+            services.AddTransient<IGrapeRepository>(x => new GrapeRepository(Configuration.GetConnectionString("Wine_DB")));
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IGrapeService, GrapeService>();
 
