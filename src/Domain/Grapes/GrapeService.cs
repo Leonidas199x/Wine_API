@@ -7,10 +7,10 @@ namespace Domain.Grapes
 {
     public class GrapeService : IGrapeService
     {
-        private readonly IGrapesRepository _grapeRepository;
+        private readonly IGrapeRepository _grapeRepository;
         private readonly IValidator<GrapeColour> _grapeColourValidator;
 
-        public GrapeService(IGrapesRepository grapeRepository, IValidator<GrapeColour> grapeColourValidator)
+        public GrapeService(IGrapeRepository grapeRepository, IValidator<GrapeColour> grapeColourValidator)
         {
             _grapeRepository = grapeRepository;
             _grapeColourValidator = grapeColourValidator;
