@@ -21,6 +21,8 @@ namespace WineAPI.Controllers
             _grapeMapper = grapeMapper;
         }
 
+        #region grape
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -42,7 +44,9 @@ namespace WineAPI.Controllers
             var outboundGrape = _grapeMapper.Map<DataContract.Grape>(grape);
             return Ok(outboundGrape);
         }
+        #endregion
 
+        #region colour
         [HttpGet]
         [Route("colour")]
         public async Task<IActionResult> GetAllColours()
@@ -113,5 +117,6 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+        #endregion
     }
 }
