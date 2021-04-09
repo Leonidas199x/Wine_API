@@ -24,6 +24,7 @@ namespace Domain.Grapes
                 {
                     return await GrapeColourExists(grapeColour.Colour).ConfigureAwait(false);
                 })
+                .When(x => x.IsNew)
                 .WithMessage($"Grape colour already exists");
         }
 

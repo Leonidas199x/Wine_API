@@ -24,6 +24,7 @@ namespace Domain.Countries
                 {
                     return await CountryExists(country.Name).ConfigureAwait(false);
                 })
+                .When(x => x.IsNew)
                 .WithMessage($"Country already exists");
         }
 

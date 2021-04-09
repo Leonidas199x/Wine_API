@@ -9,5 +9,7 @@ namespace Domain
         public DateTime DateCreated { get; set; }
 
         public DateTime DateUpdated { get; set; }
+
+        public bool IsNew => Id == default;
     }
 }
