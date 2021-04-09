@@ -7,7 +7,7 @@ using FluentValidation.Results;
 
 namespace Domain.Grapes
 {
-    public class GrapeRepository : IGrapesRepository
+    public class GrapeRepository : IGrapeRepository
     {
         private readonly string _connectionString;
 
@@ -55,6 +55,20 @@ namespace Domain.Grapes
             using var connection = new SqlConnection(_connectionString);
             return await connection.QuerySingleOrDefaultAsync<GrapeColour>(
                 "[dbo].[GrapeColour_GetById]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<GrapeColour>> GetByColour(string colour)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@GrapeColour", colour, DbType.String, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<GrapeColour>(
+                "[dbo].[GrapeColour_GetByColour]",
                 parameters,
                 commandType: CommandType.StoredProcedure)
                 .ConfigureAwait(false);
