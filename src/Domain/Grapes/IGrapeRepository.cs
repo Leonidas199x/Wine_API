@@ -12,6 +12,10 @@ namespace Domain.Grapes
 
         Task<IEnumerable<Grape>> GetAll();
 
+        Task<ValidationResult> InsertGrape(Grape grape);
+
+        Task<IEnumerable<Grape>> GetByName(string name);
+
         Task<IEnumerable<GrapeColour>> GetAllColours();
 
         Task<GrapeColour> GetGrapeColour(int Id);

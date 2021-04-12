@@ -9,11 +9,16 @@ namespace Domain.Grapes
     {
         private readonly IGrapeRepository _grapeRepository;
         private readonly IValidator<GrapeColour> _grapeColourValidator;
+        private readonly IValidator<Grape> _grapeValidator;
 
-        public GrapeService(IGrapeRepository grapeRepository, IValidator<GrapeColour> grapeColourValidator)
+        public GrapeService(
+            IGrapeRepository grapeRepository, 
+            IValidator<GrapeColour> grapeColourValidator, 
+            IValidator<Grape> grapeValidator)
         {
             _grapeRepository = grapeRepository;
             _grapeColourValidator = grapeColourValidator;
+            _grapeValidator = grapeValidator;
         }
 
         public async Task<IEnumerable<Grape>> GetAll()
@@ -24,6 +29,17 @@ namespace Domain.Grapes
         public async Task<Grape> Get(int grapeId)
         {
             return await _grapeRepository.Get(grapeId).ConfigureAwait(false);
+        }
+
+        public async Task<ValidationResult> InsertGrape(Grape grape)
+        {
+            var validationResult = _grapeValidator.Validate(grape);
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
+            return await _grapeRepository.InsertGrape(grape).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<GrapeColour>> GetAllColours()
