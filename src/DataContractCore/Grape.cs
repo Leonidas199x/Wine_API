@@ -10,8 +10,6 @@ namespace DataContract
 
         public int GrapeColourId { get; set; }
 
-        public string Colour { get; set; }
-
         public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }
