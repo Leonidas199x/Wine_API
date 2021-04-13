@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 
 namespace Domain.Mappings
 {
@@ -18,6 +17,11 @@ namespace Domain.Mappings
             CreateMap<DataContract.GrapeCreate, Grape>();
             CreateMap<Grapes.GrapeColour, DataContract.GrapeColour>().ReverseMap();
             CreateMap<DataContract.GrapeColourCreate, Grapes.GrapeColour>();
+            #endregion
+
+            #region Region
+            CreateMap<Region.Region, DataContract.Region>().ReverseMap();
+            CreateMap<Region.Region, DataContract.RegionCreate>().ReverseMap();
             #endregion
         }
     }

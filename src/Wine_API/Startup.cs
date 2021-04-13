@@ -10,11 +10,13 @@ using Microsoft.Extensions.Hosting;
 using System;
 using FluentValidation.AspNetCore;
 using Domain.Mappings;
+using Domain.Region;
 
 namespace WineAPI
 {
     public class Startup
     {
+        private const string DatabaseConfigSection = "Wine_DB";
         public IConfiguration Configuration { get; set; }
 
         public Startup(IWebHostEnvironment env)
@@ -36,15 +38,17 @@ namespace WineAPI
 
             //Add fluent validtion
             builder.AddFluentValidation(fv =>
-                fv.RegisterValidatorsFromAssemblyContaining<CountryValidator>()
+                fv.RegisterValidatorsFromAssemblyContaining<RegionValidator>()
             .RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString("Wine_DB")));
-            services.AddTransient<IGrapeRepository>(x => new GrapeRepository(Configuration.GetConnectionString("Wine_DB")));
+            services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
+            services.AddTransient<IGrapeRepository>(x => new GrapeRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
+            services.AddTransient<IRegionRepository>(x => new RegionRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IGrapeService, GrapeService>();
+            services.AddTransient<IRegionService, RegionService>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
 

@@ -5,8 +5,7 @@ GO
 ALTER PROCEDURE [dbo].[Region_Insert] 
     @RegionName	NVARCHAR(50),
     @RegionNote	NVARCHAR(500),
-    @CountryID INT,
-    @RegionId INT OUTPUT
+    @CountryID INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -30,5 +29,4 @@ BEGIN
         @RunDate
     );
 
-    SELECT @RegionId = SCOPE_IDENTITY();
 END
