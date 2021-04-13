@@ -5,8 +5,7 @@
     [CountryID] INT NULL
         FOREIGN KEY REFERENCES [Country]([ID]),
     [QualityControlName] NVARCHAR(50) NOT NULL,
-    [QualityControlShortNote] NVARCHAR(50) NULL,
-    [QualityControlNotes] NVARCHAR(max) NULL,
+    [QualityControlNotes] NVARCHAR(MAX) NULL,
     [DateCreated] DATETIME2(3) NOT NULL,
     [DateUpdated] DATETIME2(3) NOT NULL
 );
