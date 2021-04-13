@@ -38,9 +38,9 @@ namespace Domain.Countries
             return await _countryRepository.GetByName(name).ConfigureAwait(false);
         }
 
-        public async Task Delete(int countryId)
+        public async Task<ValidationResult> Delete(int countryId)
         {
-            await _countryRepository.Delete(countryId).ConfigureAwait(false);
+            return await _countryRepository.Delete(countryId).ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> Insert(Country country)

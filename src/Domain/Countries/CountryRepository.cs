@@ -62,18 +62,27 @@ namespace Domain.Countries
                 .ConfigureAwait(false);
         }
 
-        public async Task Delete(int countryId)
+        public async Task<ValidationResult> Delete(int countryId)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
+            try
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = new SqlConnection(_connectionString);
+                using var connection = new SqlConnection(_connectionString);
 
-            await connection.QueryAsync<Country>(
-                "[dbo].[Country_Delete]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+                await connection.QueryAsync<Country>(
+                    "[dbo].[Country_Delete]",
+                    parameters,
+                    commandType: CommandType.StoredProcedure)
+                    .ConfigureAwait(false);
+
+                return new ValidationResult();
+            }
+            catch(SqlException ex)
+            {
+                return SqlExceptionHandler.HandleException(ex, "Country");
+            }
         }
 
         public async Task<ValidationResult> Insert(Country country)

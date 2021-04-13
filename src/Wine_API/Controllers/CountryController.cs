@@ -53,9 +53,15 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            await _countryService.Delete(countryId).ConfigureAwait(false);
+            var validationResult = await _countryService.Delete(countryId).ConfigureAwait(false);
+            if(validationResult.IsValid)
+            {
+                return NoContent();
+            }
 
-            return NoContent();
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
         }
 
         [HttpPost]
