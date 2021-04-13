@@ -81,6 +81,7 @@ namespace Domain.Region
             parameters.Add("@RegionName", region.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@Note", region.Note, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryId", region.CountryId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@LocationRegionImage", region.LocationRegionImage, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
