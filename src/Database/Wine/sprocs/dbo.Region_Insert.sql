@@ -1,11 +1,12 @@
-﻿IF NOT EXISTS (SELECT * FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('[dbo].[Region_Insert] ') AND TYPE IN ('P','PC'))
+﻿IF NOT EXISTS (SELECT * FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('[dbo].[Region_Insert]') AND TYPE IN ('P','PC'))
     EXEC ('CREATE PROCEDURE [dbo].[Region_Insert] AS BEGIN RETURN; END')
 GO
 
 ALTER PROCEDURE [dbo].[Region_Insert] 
     @RegionName	NVARCHAR(50),
     @RegionNote	NVARCHAR(500),
-    @CountryID INT
+    @CountryID INT,
+    @LocationRegionImage NVARCHAR(100)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -17,6 +18,7 @@ BEGIN
         [Name],
         [Note],
         [CountryID],
+        [LocationRegionImage],
         [DateCreated],
         [DateUpdated]
     )
@@ -25,6 +27,7 @@ BEGIN
         @RegionName,
         @RegionNote,
         @CountryID,
+        @LocationRegionImage,
         @RunDate,
         @RunDate
     );
