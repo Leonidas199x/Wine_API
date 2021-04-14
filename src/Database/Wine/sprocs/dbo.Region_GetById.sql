@@ -12,7 +12,8 @@ BEGIN
         R.[CountryID],
         R.[Name],
         R.[Note],
-        R.[LocationRegionImage],
+        R.[Longitude],
+        R.[Latitude],
         R.[DateCreated],
         R.[DateUpdated]
     FROM [dbo].[Region] AS R

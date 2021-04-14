@@ -6,7 +6,8 @@ ALTER PROCEDURE [dbo].[Region_Insert]
     @RegionName	NVARCHAR(50),
     @RegionNote	NVARCHAR(500),
     @CountryID INT,
-    @LocationRegionImage NVARCHAR(100)
+    @Longitude DECIMAL(9,6),
+    @Latitude DECIMAL(8,6)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -18,7 +19,8 @@ BEGIN
         [Name],
         [Note],
         [CountryID],
-        [LocationRegionImage],
+        [Longitude],
+        [Latitude],
         [DateCreated],
         [DateUpdated]
     )
@@ -27,7 +29,8 @@ BEGIN
         @RegionName,
         @RegionNote,
         @CountryID,
-        @LocationRegionImage,
+        @Longitude,
+        @Latitude,
         @RunDate,
         @RunDate
     );

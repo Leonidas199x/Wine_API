@@ -6,7 +6,8 @@
     [CountryID] INT NOT NULL
         FOREIGN KEY REFERENCES [Country]([ID]),
     [Note] NVARCHAR(MAX) NULL,
-    [LocationRegionImage] NVARCHAR(100) NULL,
+    [Longitude] DECIMAL(9,6) NULL,
+    [Latitude] DECIMAL(8,6) NULL,
     [DateCreated] DATETIME2(3) NOT NULL,
     [DateUpdated] DATETIME2(3) NOT NULL
 );

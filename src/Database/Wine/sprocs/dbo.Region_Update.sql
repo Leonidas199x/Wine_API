@@ -7,7 +7,8 @@ ALTER PROCEDURE [dbo].[Region_Update]
     @RegionName	NVARCHAR(50),
     @RegionNote	NVARCHAR(500),
     @CountryID INT,
-    @LocationRegionImage NVARCHAR(100)
+    @Longitude DECIMAL(9,6),
+    @Latitude DECIMAL(8,6)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -19,7 +20,8 @@ BEGIN
         R.[Name] = @RegionName,
         R.[Note] = @RegionNote,
         R.[CountryId] = @CountryId,
-        R.[LocationRegionImage] = @LocationRegionImage
+        R.[Longitude] = @Longitude,
+        R.[Latitude] = @Latitude
     FROM [dbo].[Region] R
     WHERE R.[Id] = @RegionId;
 
