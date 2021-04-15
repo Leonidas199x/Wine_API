@@ -12,6 +12,8 @@ namespace Domain.Region
 
         Task<IEnumerable<Region>> GetByNameAndCountryId(string name, int countryId);
 
+        Task<IEnumerable<Region>> GetByIsoCode(string isoCode);
+
         Task<ValidationResult> Insert(Region region);
 
         Task<ValidationResult> Update(Region region);

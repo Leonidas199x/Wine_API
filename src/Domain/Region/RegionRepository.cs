@@ -54,6 +54,20 @@ namespace Domain.Region
                 .ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<Region>> GetByIsoCode(string isoCode)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@IsoCode", isoCode, DbType.String, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<Region>(
+                "[dbo].[Region_GetByIsoCode]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(Region region)
         {
             var parameters = new DynamicParameters();

@@ -14,6 +14,8 @@ namespace Domain.Countries
 
         Task<IEnumerable<Country>> GetByName(string name);
 
+        Task<IEnumerable<Country>> GetByIsoCode(string isoCode);
+
         Task<ValidationResult> Delete(int countryId);
 
         Task<ValidationResult> Insert(Country country);

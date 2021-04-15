@@ -62,6 +62,20 @@ namespace Domain.Countries
                 .ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<Country>> GetByIsoCode(string isoCode)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@IsoCode", isoCode, DbType.String, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<Country>(
+                "[dbo].[Country_GetByIsoCode]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Delete(int countryId)
         {
             try

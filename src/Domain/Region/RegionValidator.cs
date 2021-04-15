@@ -31,16 +31,30 @@ namespace Domain.Region
             RuleFor(x => x)
                 .MustAsync(async (region, context, cancellation) =>
                 {
-                    return await RegionExists(region.Name, region.CountryId).ConfigureAwait(false);
+                    return await RegionWithNameExists(region.Name, region.CountryId).ConfigureAwait(false);
                 })
                 .When(x => x.IsNew)
-                .WithMessage($"Country already exists");
+                .WithMessage($"Region with name already exists");
+
+            RuleFor(x => x)
+                .MustAsync(async (region, context, cancellation) =>
+                {
+                    return await RegionWithIsoExists(region.IsoCode).ConfigureAwait(false);
+                })
+                .When(x => x.IsNew)
+                .WithMessage($"Region with name already exists");
         }
 
-        private async Task<bool> RegionExists(string name, int countryId)
+        private async Task<bool> RegionWithNameExists(string name, int countryId)
         {
             var region = await _regionRepository.GetByNameAndCountryId(name, countryId).ConfigureAwait(false);
             return !region.Any(x => x.Name == name && x.CountryId == countryId);
+        }
+
+        private async Task<bool> RegionWithIsoExists(string isoCode)
+        {
+            var region = await _regionRepository.GetByIsoCode(isoCode).ConfigureAwait(false);
+            return !region.Any(x => x.IsoCode == isoCode);
         }
 
         private async Task<bool> CountryExists(int countryId)

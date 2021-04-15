@@ -22,16 +22,30 @@ namespace Domain.Countries
             RuleFor(x => x)
                 .MustAsync(async (country, context, cancellation) =>
                 {
-                    return await CountryExists(country.Name).ConfigureAwait(false);
+                    return await CountryWithNameExists(country.Name).ConfigureAwait(false);
                 })
                 .When(x => x.IsNew)
-                .WithMessage($"Country already exists");
+                .WithMessage($"Country with name already exists");
+
+            RuleFor(x => x)
+                .MustAsync(async (country, context, cancellation) =>
+                {
+                    return await CountryWithIsoExists(country.IsoCode).ConfigureAwait(false);
+                })
+                .When(x => x.IsNew)
+                .WithMessage($"Country with ISO code already exists");
         }
 
-        private async Task<bool> CountryExists(string name)
+        private async Task<bool> CountryWithNameExists(string name)
         {
             var country = await _countryRepository.GetByName(name).ConfigureAwait(false);
             return !country.Any(x => x.Name == name);
+        }
+
+        private async Task<bool> CountryWithIsoExists(string isoCode)
+        {
+            var country = await _countryRepository.GetByIsoCode(isoCode).ConfigureAwait(false);
+            return !country.Any(x => x.IsoCode == isoCode);
         }
     }
 }
