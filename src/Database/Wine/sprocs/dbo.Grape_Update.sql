@@ -18,7 +18,7 @@ BEGIN
         G.[GrapeColourID] = @GrapeColourID,
         G.[Note] = @GrapeNote,
         G.[DateUpdated] = GETDATE()
-    FROM [dbo].[Grapes] AS G
+    FROM [dbo].[Grape] AS G
     WHERE G.[ID] = @GrapeID;
 
 END
