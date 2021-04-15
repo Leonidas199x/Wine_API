@@ -7,7 +7,8 @@ ALTER PROCEDURE [dbo].[Region_Insert]
     @RegionNote	NVARCHAR(500),
     @CountryID INT,
     @Longitude DECIMAL(9,6),
-    @Latitude DECIMAL(8,6)
+    @Latitude DECIMAL(8,6),
+    @IsoCode NVARCHAR(10)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -17,6 +18,7 @@ BEGIN
     INSERT INTO [dbo].[Region]
     (
         [Name],
+        [IsoCode],
         [Note],
         [CountryID],
         [Longitude],
@@ -27,6 +29,7 @@ BEGIN
     VALUES
     (
         @RegionName,
+        @IsoCode,
         @RegionNote,
         @CountryID,
         @Longitude,

@@ -8,7 +8,8 @@ ALTER PROCEDURE [dbo].[Region_Update]
     @RegionNote	NVARCHAR(500),
     @CountryID INT,
     @Longitude DECIMAL(9,6),
-    @Latitude DECIMAL(8,6)
+    @Latitude DECIMAL(8,6),
+    @IsoCode NVARCHAR(10)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -18,6 +19,7 @@ BEGIN
     UPDATE R
     SET
         R.[Name] = @RegionName,
+        R.[IsoCode] = @IsoCode,
         R.[Note] = @RegionNote,
         R.[CountryId] = @CountryId,
         R.[Longitude] = @Longitude,

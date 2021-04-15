@@ -11,6 +11,7 @@ BEGIN
         R.[ID],
         R.[CountryID],
         R.[Name],
+        R.[IsoCode],
         R.[Note],
         R.[Longitude],
         R.[Latitude],
