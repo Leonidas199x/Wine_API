@@ -4,6 +4,8 @@ namespace Domain
 {
     public class Country : CountryLookup
     {
+        public string IsoCode { get; set; }
+
         public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }
