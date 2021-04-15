@@ -74,6 +74,26 @@ namespace Domain.Grapes
                 .ConfigureAwait(false);
         }
 
+        public async Task<ValidationResult> UpdateGrape(Grape grape)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@GrapeId", grape.Id, DbType.String, ParameterDirection.Input);
+            parameters.Add("@GrapeName", grape.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@GrapeColourId", grape.GrapeColourId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@GrapeNote", grape.Note, DbType.String, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.QueryAsync(
+                    "[dbo].[Grape_Update]",
+                    parameters,
+                    commandType: CommandType.StoredProcedure)
+                    .ConfigureAwait(false);
+            }
+
+            return new ValidationResult();
+        }
+
         public async Task<IEnumerable<GrapeColour>> GetAllColours()
         {
             using var connection = new SqlConnection(_connectionString);

@@ -42,6 +42,17 @@ namespace Domain.Grapes
             return await _grapeRepository.InsertGrape(grape).ConfigureAwait(false);
         }
 
+        public async Task<ValidationResult> UpdateGrape(Grape grape)
+        {
+            var validationResult = _grapeValidator.Validate(grape);
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
+            return await _grapeRepository.UpdateGrape(grape).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<GrapeColour>> GetAllColours()
         {
             return await _grapeRepository.GetAllColours().ConfigureAwait(false);

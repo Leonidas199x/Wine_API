@@ -22,7 +22,6 @@ namespace WineAPI.Controllers
         }
 
         #region grape
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -51,6 +50,22 @@ namespace WineAPI.Controllers
             var domainGrape = _grapeMapper.Map<Domain.Grape>(grape);
 
             var validationResult = await _grapeService.InsertGrape(domainGrape).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpPut("{grapeId}")]
+        public async Task<IActionResult> UpdateGrapeColour([FromBody] DataContract.Grape grape)
+        {
+            var domainGrape = _grapeMapper.Map<Domain.Grape>(grape);
+
+            var validationResult = await _grapeService.UpdateGrape(domainGrape).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
                 return NoContent();
