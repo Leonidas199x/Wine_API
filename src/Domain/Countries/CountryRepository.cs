@@ -104,6 +104,7 @@ namespace Domain.Countries
             var parameters = new DynamicParameters();
             parameters.Add("@CountryName", country.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryNote", country.Note, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsoCode", country.IsoCode, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -123,6 +124,7 @@ namespace Domain.Countries
             parameters.Add("@CountryId", country.Id, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryName", country.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryNote", country.Note, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsoCode", country.IsoCode, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
