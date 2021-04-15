@@ -61,7 +61,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpPut("{grapeId}")]
-        public async Task<IActionResult> UpdateGrapeColour([FromBody] DataContract.Grape grape)
+        public async Task<IActionResult> UpdateGrape([FromBody] DataContract.Grape grape)
         {
             var domainGrape = _grapeMapper.Map<Domain.Grape>(grape);
 
