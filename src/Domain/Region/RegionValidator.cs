@@ -28,6 +28,10 @@ namespace Domain.Region
                 })
                 .WithMessage("Country does not exists");
 
+            RuleFor(x => x.IsoCode)
+                .NotEmpty()
+                .WithMessage("ISO Code is required");
+
             RuleFor(x => x)
                 .MustAsync(async (region, context, cancellation) =>
                 {

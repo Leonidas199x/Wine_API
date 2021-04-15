@@ -18,6 +18,9 @@ namespace Domain.Countries
                 .MaximumLength(50)
                 .WithMessage("Name cannot be more that 50 characters");
 
+            RuleFor(x => x.IsoCode)
+               .NotEmpty()
+               .WithMessage("ISO Code is required");
 
             RuleFor(x => x)
                 .MustAsync(async (country, context, cancellation) =>
