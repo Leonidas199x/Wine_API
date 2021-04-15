@@ -80,7 +80,7 @@ namespace Domain.Region
             var parameters = new DynamicParameters();
             parameters.Add("@RegionId", region.Id, DbType.String, ParameterDirection.Input);
             parameters.Add("@RegionName", region.Name, DbType.String, ParameterDirection.Input);
-            parameters.Add("@Note", region.Note, DbType.String, ParameterDirection.Input);
+            parameters.Add("@RegionNote", region.Note, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryId", region.CountryId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Longitude", region.Longitude, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("@Latitude", region.Latitude, DbType.Decimal, ParameterDirection.Input);
