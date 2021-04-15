@@ -1,7 +1,7 @@
 ﻿INSERT INTO [dbo].[Country]
 (
     [Name],
-    [ISO_Code],
+    [IsoCode],
     [DateUpdated],
     [DateCreated]
 )

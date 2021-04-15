@@ -10,6 +10,7 @@ BEGIN
     SELECT
         C.[ID],
         C.[Name],
+        C.[IsoCode],
         C.[Note],
         C.[DateCreated],
         C.[DateUpdated]
