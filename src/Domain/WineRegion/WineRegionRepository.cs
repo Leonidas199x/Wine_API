@@ -43,7 +43,7 @@ namespace Domain.WineRegion
         {
             var parameters = new DynamicParameters();
             parameters.Add("@Name", wineRegion.Name, DbType.String, ParameterDirection.Input);
-            parameters.Add("@egionId", wineRegion.RegionId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@RegionId", wineRegion.RegionId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@CountryID", wineRegion.Note, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
