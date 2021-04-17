@@ -10,13 +10,12 @@ ALTER PROCEDURE [dbo].[WineRegion_Update]
 AS
 BEGIN
 
-    DECLARE @RunDate DATETIME = GETDATE();
-
     UPDATE WR
     SET
         WR.[Name] = @Name,
         WR.[RegionId] = @RegionId,
-        WR.[Note] = @Note
+        WR.[Note] = @Note,
+        WR.[DateUpdaed] =  GETDATE()
     FROM [dbo].[WineRegion] WR
     WHERE WR.[ID] = @ID;
 
