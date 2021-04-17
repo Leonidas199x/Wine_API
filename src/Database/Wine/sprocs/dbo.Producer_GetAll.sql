@@ -14,6 +14,6 @@ BEGIN
         P.[DateCreated],
         P.[DateUpdated]
     FROM [dbo].[Producer] AS P
-    ORDER BY R.[Name] ASC;
+    ORDER BY P.[Name] ASC;
 
 END
