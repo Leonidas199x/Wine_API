@@ -15,7 +15,7 @@ BEGIN
         WR.[Name] = @Name,
         WR.[RegionId] = @RegionId,
         WR.[Note] = @Note,
-        WR.[DateUpdaed] =  GETDATE()
+        WR.[DateUpdated] =  GETDATE()
     FROM [dbo].[WineRegion] WR
     WHERE WR.[ID] = @ID;
 
