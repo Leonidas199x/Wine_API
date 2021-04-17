@@ -12,6 +12,7 @@ using FluentValidation.AspNetCore;
 using Domain.Mappings;
 using Domain.Region;
 using Domain.WineRegion;
+using Domain.Producer;
 
 namespace WineAPI
 {
@@ -52,6 +53,8 @@ namespace WineAPI
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IWineRegionService, WineRegionService>();
             services.AddTransient<IWineRegionRepository, WineRegionRepository>();
+            services.AddTransient<IProducerService, ProducerService>();
+            services.AddTransient<IProducerRepository, ProducerRepository>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
