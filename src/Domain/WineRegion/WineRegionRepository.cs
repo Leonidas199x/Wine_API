@@ -42,7 +42,7 @@ namespace Domain.WineRegion
         public async Task<ValidationResult> Insert(WineRegion wineRegion)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@RName", wineRegion.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Name", wineRegion.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@egionId", wineRegion.RegionId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@CountryID", wineRegion.Note, DbType.String, ParameterDirection.Input);
 
