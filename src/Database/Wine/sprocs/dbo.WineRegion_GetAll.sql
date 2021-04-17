@@ -15,6 +15,6 @@ BEGIN
         WR.[DateCreated],
         WR.[DateUpdated]
     FROM [dbo].[WineRegion] AS WR
-    ORDER BY R.[Name] ASC;
+    ORDER BY WR.[Name] ASC;
 
 END
