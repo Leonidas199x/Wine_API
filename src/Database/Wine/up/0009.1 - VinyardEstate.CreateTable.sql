@@ -4,6 +4,8 @@
         PRIMARY KEY,
     [Name] NVARCHAR(50) NOT NULL,
     [VinyardEstateNote] NVARCHAR(MAX) NULL,
+    [Longitude] DECIMAL(9,6) NULL,
+    [Latitude] DECIMAL(8,6) NULL,
     [DateCreated] DATETIME2(3) NOT NULL,
     [DateUpdated] DATETIME2(3) NOT NULL
 );
