@@ -28,26 +28,41 @@ namespace Domain.Countries
             return await _countryRepository.Get(countryId).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<Country>> GetAll()
+        {
+            return await _countryRepository.GetAll().ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<Country>> GetByName(string name)
         {
             return await _countryRepository.GetByName(name).ConfigureAwait(false);
         }
 
-        public async Task Delete(int countryId)
+        public async Task<ValidationResult> Delete(int countryId)
         {
-            await _countryRepository.Delete(countryId).ConfigureAwait(false);
+            return await _countryRepository.Delete(countryId).ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> Insert(Country country)
         {
             var validationResult = _countryValidator.Validate(country);
-
             if(!validationResult.IsValid)
             {
                 return validationResult;
             }
 
             return await _countryRepository.Insert(country).ConfigureAwait(false);
+        }
+
+        public async Task<ValidationResult> Update(Country country)
+        {
+            var validationResult = _countryValidator.Validate(country);
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
+            return await _countryRepository.Update(country).ConfigureAwait(false);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Wine]
 (
-    [ID] INT IDENTITY(1,1) NOT NULL,
+    [ID] INT IDENTITY(1,1) NOT NULL
+        PRIMARY KEY,
     [ProducerID] INT NULL
         FOREIGN KEY REFERENCES [Producer]([ID]),
     [RegionID] INT NULL
@@ -15,10 +16,6 @@
     [Description] NVARCHAR(100) NULL,
     [ABV] DECIMAL(4, 2) NULL,
     [Importer] NVARCHAR(25) NULL,
-    [Pats_Rating] TINYINT NULL,
-    [Pats_Comments] NVARCHAR(200) NULL,
-    [Mikes_Rating] TINYINT NULL,
-    [Mikes_Comments] NVARCHAR(200) NULL,
     [InventoryLevel] TINYINT NULL,
     [ExclusiveToRetailerID] INT NULL,
     [DateCreated] DATETIME2(3) NOT NULL,

@@ -3,16 +3,16 @@
     [ID] INT IDENTITY(1,1) NOT NULL
         PRIMARY KEY,
     [Name] NVARCHAR(50) NOT NULL,
-    [MinimumPurchaseQty] TINYINT NULL,
-    [IncrementQuantity] TINYINT NULL,
-    [GenericDiscountPercentage] DECIMAL(4, 2) NULL,
+    [MinimumPurchaseQuantity] TINYINT NOT NULL,
+    [IncrementQuantity] TINYINT NOT NULL,
+    [GenericDiscountPercentage] DECIMAL(4,2) NULL,
     [GenericDiscountName] NVARCHAR(25) NULL,
-    [WedSiteRating] TINYINT NULL,
+    [WebsiteUrl] NVARCHAR(MAX) NULL,
+    [WebsiteRating] TINYINT NULL,
     [OrderRating] TINYINT NULL,
     [DeliveryRating] TINYINT NULL,
-    [MaxCustRating] TINYINT NULL,
-    [LocationRetailerImage] NVARCHAR(100) NULL,
-    [RetailerShortNotes] NVARCHAR(50) NULL,
-    [DateCreated] DATETIME2(3) NULL,
-    [DateUpdated] DATETIME2(3) NULL
+    [MaxCustomerRating] TINYINT NOT NULL,
+    [Note] NVARCHAR(MAX) NULL,
+    [DateCreated] DATETIME2(3) NOT NULL,
+    [DateUpdated] DATETIME2(3) NOT NULL
 );

@@ -1,4 +1,4 @@
-﻿namespace Domain.Countries
+﻿namespace Domain
 {
     public class CountryLookup
     {

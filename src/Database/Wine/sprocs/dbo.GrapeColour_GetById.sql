@@ -9,7 +9,7 @@ BEGIN
 
     SELECT
         GC.[ID],
-        GC.[GrapeColour]
+        GC.[Colour]
     FROM [dbo].[GrapeColour] AS	GC
     WHERE GC.[ID] = @GrapeColourID;
 

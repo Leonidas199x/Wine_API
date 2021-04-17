@@ -1,4 +1,4 @@
-﻿IF NOT EXISTS (SELECT * FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('[dbo].[Region_Insert] ') AND TYPE IN ('P','PC'))
+﻿IF NOT EXISTS (SELECT * FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('[dbo].[Region_Insert]') AND TYPE IN ('P','PC'))
     EXEC ('CREATE PROCEDURE [dbo].[Region_Insert] AS BEGIN RETURN; END')
 GO
 
@@ -6,7 +6,9 @@ ALTER PROCEDURE [dbo].[Region_Insert]
     @RegionName	NVARCHAR(50),
     @RegionNote	NVARCHAR(500),
     @CountryID INT,
-    @RegionId INT OUTPUT
+    @Longitude DECIMAL(9,6),
+    @Latitude DECIMAL(8,6),
+    @IsoCode NVARCHAR(10)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -16,19 +18,24 @@ BEGIN
     INSERT INTO [dbo].[Region]
     (
         [Name],
+        [IsoCode],
         [Note],
         [CountryID],
+        [Longitude],
+        [Latitude],
         [DateCreated],
         [DateUpdated]
     )
     VALUES
     (
         @RegionName,
+        @IsoCode,
         @RegionNote,
         @CountryID,
+        @Longitude,
+        @Latitude,
         @RunDate,
         @RunDate
     );
 
-    SELECT @RegionId = SCOPE_IDENTITY();
 END

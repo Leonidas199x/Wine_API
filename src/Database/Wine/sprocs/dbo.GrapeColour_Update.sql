@@ -4,15 +4,15 @@ GO
 
 ALTER PROCEDURE [dbo].[GrapeColour_Update]
     @GrapeColour NVARCHAR(50),
-    @intGrapeColourID INT
+    @GrapeColourID INT
 AS
 BEGIN
 
     SET NOCOUNT ON;
 
     UPDATE GC
-    SET GC.GrapeColour = @GrapeColour
+    SET GC.Colour = @GrapeColour
     FROM [dbo].[GrapeColour] AS GC
-    WHERE GC.[ID] = @intGrapeColourID;
+    WHERE GC.[ID] = @GrapeColourID;
 
 END

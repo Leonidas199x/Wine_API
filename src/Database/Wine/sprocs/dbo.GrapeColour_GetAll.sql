@@ -10,8 +10,7 @@ BEGIN
 
     SELECT
         GC.[ID],
-        GC.[GrapeColour]
-    FROM [dbo].[GrapeColour] AS GC
-    ORDER BY GC.[GrapeColour] ASC;
+        GC.[Colour]
+    FROM [dbo].[GrapeColour] AS GC;
 
 END

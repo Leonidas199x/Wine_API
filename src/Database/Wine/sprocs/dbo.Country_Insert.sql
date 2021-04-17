@@ -4,7 +4,8 @@ GO
 
 ALTER PROCEDURE [dbo].[Country_Insert] 
     @CountryName NVARCHAR(50),
-    @CountryNote NVARCHAR(500)
+    @CountryNote NVARCHAR(500),
+    @IsoCode NVARCHAR(2)
 AS
 BEGIN
 
@@ -15,6 +16,7 @@ BEGIN
     INSERT INTO [dbo].[Country]
     (
         [Name],
+        [IsoCode],
         [Note],
         [DateCreated],
         [DateUpdated]
@@ -22,6 +24,7 @@ BEGIN
     VALUES
     (
         @CountryName,
+        @IsoCode,
         @CountryNote,
         @DateTimeNow,
         @DateTimeNow

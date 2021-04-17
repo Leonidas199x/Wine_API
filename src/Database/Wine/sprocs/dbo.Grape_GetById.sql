@@ -11,7 +11,7 @@ BEGIN
         G.[ID],
         G.[Name],
         G.[GrapeColourID],
-        GC.[GrapeColour],
+        GC.[Colour],
         G.[Note],
         G.[DateCreated],
         G.[DateUpdated]

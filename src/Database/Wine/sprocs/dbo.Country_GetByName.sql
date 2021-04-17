@@ -3,13 +3,14 @@
 GO
 
 ALTER PROCEDURE [dbo].[Country_GetByName]
-    @CountryName INT
+    @CountryName NVARCHAR(50)
 AS
 BEGIN
 
     SELECT
         C.[ID],
         C.[Name],
+        C.[IsoCode],
         C.[Note],
         C.[DateCreated],
         C.[DateUpdated]

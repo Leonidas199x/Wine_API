@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Grapes
+namespace Domain
 {
     public class Grape
     {
@@ -10,12 +10,12 @@ namespace Domain.Grapes
 
         public int GrapeColourId { get; set; }
 
-        public string GrapeColour { get; set; }
-
         public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         public DateTime DateUpdated { get; set; }
+
+        public bool IsNew => Id == default;
     }
 }

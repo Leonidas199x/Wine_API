@@ -1,0 +1,66 @@
+﻿DECLARE @CountryId INT;
+
+SELECT @CountryId = C.[Id]
+FROM [dbo].[Country] C
+WHERE C.[Name] = 'Spain';
+
+INSERT INTO [dbo].[Region]
+(
+    [Name],
+    [IsoCode],
+    [DateUpdated],
+    [DateCreated],
+    [CountryId]
+)
+SELECT 'Navarra','ES-NA',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Barcelona','ES-B',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Castellón','ES-CS',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Zamora','ES-ZA',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Asturias','ES-O',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Orense','ES-OR',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Madrid','ES-M',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Lérida','ES-L',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Jaén','ES-J',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Huelva','ES-H',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Cuenca','ES-CU',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Tarragona','ES-T',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'La Coruña','ES-C',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Ávila','ES-AV',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Alicante','ES-A',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Ciudad Real','ES-CR',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Córdoba','ES-CO',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Valladolid','ES-VA',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Santa Cruz de Tenerife','ES-TF',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Zaragoza','ES-Z',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Málaga','ES-MA',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Almería','ES-AL',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Ceuta','ES-CE',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Baleares','ES-PM',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Álava','ES-VI',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Cantabria','ES-S',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Teruel','ES-TE',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Cáceres','ES-CC',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Palencia','ES-P',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Pontevedra','ES-PO',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Las Palmas','ES-GC',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Gerona','ES-GI',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Toledo','ES-TO',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Murcia','ES-MU',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Granada','ES-GR',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Guadalajara','ES-GU',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Albacete','ES-AB',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Soria','ES-SO',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Melilla','ES-ML',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Lugo','ES-LU',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Sevilla','ES-SE',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Cádiz','ES-CA',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Segovia','ES-SG',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Burgos','ES-BU',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Salamanca','ES-SA',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Valencia','ES-V',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'León','ES-LE',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Bizkaia','ES-BI',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Huesca','ES-HU',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'La Rioja','ES-LO',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Gipuzkoa','ES-SS',GETDATE(),GETDATE(),@CountryId UNION ALL
+SELECT 'Badajoz','ES-BA',GETDATE(),GETDATE(),@CountryId;

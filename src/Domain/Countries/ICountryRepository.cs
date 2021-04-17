@@ -10,10 +10,16 @@ namespace Domain.Countries
 
         Task<Country> Get(int countryId);
 
+        Task<IEnumerable<Country>> GetAll();
+
         Task<IEnumerable<Country>> GetByName(string name);
 
-        Task Delete(int countryId);
+        Task<IEnumerable<Country>> GetByIsoCode(string isoCode);
+
+        Task<ValidationResult> Delete(int countryId);
 
         Task<ValidationResult> Insert(Country country);
+
+        Task<ValidationResult> Update(Country country);
     }
 }

@@ -5,8 +5,7 @@ GO
 ALTER PROCEDURE [dbo].[Grape_Insert]
     @GrapeName NVARCHAR(25),
     @GrapeNote NVARCHAR(MAX),
-    @GrapeColourId INT,
-    @GrapeId INT OUTPUT
+    @GrapeColourId INT
 AS
 BEGIN
 
@@ -30,6 +29,4 @@ BEGIN
         @RunDate,
         @RunDate
     );
-
-    SELECT @GrapeId = SCOPE_IDENTITY();
 END

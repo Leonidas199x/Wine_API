@@ -11,8 +11,10 @@ BEGIN
         R.[ID],
         R.[CountryID],
         R.[Name],
+        R.[IsoCode],
         R.[Note],
-        R.[LocationRegionImage],
+        R.[Longitude],
+        R.[Latitude],
         R.[DateCreated],
         R.[DateUpdated]
     FROM [dbo].[Region] AS R

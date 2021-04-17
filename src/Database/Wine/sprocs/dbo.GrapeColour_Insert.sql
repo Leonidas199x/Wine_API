@@ -3,8 +3,7 @@
 GO
 
 ALTER PROCEDURE [dbo].[GrapeColour_Insert]
-    @GrapeColour NVARCHAR(20),
-    @GrapeColourId INT OUTPUT
+    @GrapeColour NVARCHAR(20)
 AS
 BEGIN
 
@@ -12,13 +11,11 @@ BEGIN
 
     INSERT INTO dbo.GrapeColour
     (
-        GrapeColour
+        Colour
     )
     VALUES
     (
         @GrapeColour
     );
-
-    SELECT @GrapeColourId = SCOPE_IDENTITY();
 
 END

@@ -5,7 +5,7 @@
     [Name] NVARCHAR(50) NOT NULL,
     [RegionID] INT NULL
         FOREIGN KEY REFERENCES [Region]([ID]),
-    [Note] NVARCHAR(50) NULL,
+    [Note] NVARCHAR(MAX) NULL,
     [DateCreated] DATETIME2(3) NULL,
     [DateUpdated] DATETIME2(3) NULL
 );
