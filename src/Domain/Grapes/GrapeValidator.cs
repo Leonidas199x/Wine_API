@@ -17,7 +17,7 @@ namespace Domain.Grapes
                 .NotEmpty()
                 .WithMessage("Name is required")
                 .MaximumLength(_maxLength)
-                .WithMessage($"Name cannot be more that {_maxLength} characters");
+                .WithMessage($"Name cannot be more than {_maxLength} characters");
 
             RuleFor(x => x.GrapeColourId)
                 .NotEmpty()
