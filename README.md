@@ -1,6 +1,8 @@
-# Wine_API
+# Wine API
 
-Configuring to run
+The Wine API 
+
+## Configuring to run
 To use [RoundhousE](https://github.com/chucknorris/roundhouse) to deploy the database, edit the LOCAL.DBDeployment.bat file in the root of the Database project, to point at your local instance of SQL Server:
 
 SET server.database="[SqlServer\Instance]"
