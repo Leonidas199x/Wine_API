@@ -8,13 +8,18 @@ The database it will create is named `Wine`, ensure that there is no database wi
 
 You can change the name of the database in the .bat file:
 
+```
 SET database.name="Wine"
+```
+
 If the database name is changed, then the appsettings.json file must be updated to reflect the database name change (see below).
 
 When ready to deploy run LOCAL.DBDeployment.bat.
 
 Amend appsettings.json to point at your SQL instance:
 
+```
 "ConnectionStrings": {
     "CustomerDevTaskDb": "Data Source = {SqlInstance};Initial Catalog={Database if changed};Integrated Security=True"
   }
+```
