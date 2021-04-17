@@ -4,8 +4,7 @@ GO
 
 ALTER PROCEDURE [dbo].[Producer_Insert]
     @ProducerNote NVARCHAR(MAX),
-    @ProducerName NVARCHAR(50),
-    @ProducerId INT OUTPUT
+    @ProducerName NVARCHAR(50)
 AS
 BEGIN
 
@@ -28,5 +27,4 @@ BEGIN
         @RunDate
     );
 
-    SELECT @ProducerId = SCOPE_IDENTITY();
 END
