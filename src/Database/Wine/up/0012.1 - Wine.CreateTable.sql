@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Wine]
 (
-    [ID] INT IDENTITY(1,1) NOT NULL,
+    [ID] INT IDENTITY(1,1) NOT NULL
+        PRIMARY KEY,
     [ProducerID] INT NULL
         FOREIGN KEY REFERENCES [Producer]([ID]),
     [RegionID] INT NULL
