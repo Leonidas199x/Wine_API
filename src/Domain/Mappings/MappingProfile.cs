@@ -26,6 +26,7 @@ namespace Domain.Mappings
 
             #region WineRegion
             CreateMap<WineRegion.WineRegion, DataContract.WineRegion>().ReverseMap();
+            CreateMap<WineRegion.WineRegion, DataContract.WineRegionCreate>().ReverseMap();
             #endregion
         }
     }
