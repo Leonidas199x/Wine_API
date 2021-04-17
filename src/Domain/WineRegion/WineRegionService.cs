@@ -13,7 +13,7 @@ namespace Domain.WineRegion
         public WineRegionService(IWineRegionRepository wineRegionRepository, IValidator<WineRegion> wineRegionValidator)
         {
             _wineRegionRepository = wineRegionRepository;
-            _wineRegionValidator = wineRegionValidator
+            _wineRegionValidator = wineRegionValidator;
         }
 
         public async Task<IEnumerable<WineRegion>> GetAll()
@@ -46,6 +46,11 @@ namespace Domain.WineRegion
             }
 
             return await _wineRegionRepository.Update(wineRegion).ConfigureAwait(false);
+        }
+
+        public async Task Delete(int wineRegionId)
+        {
+            await _wineRegionRepository.Delete(wineRegionId).ConfigureAwait(false);
         }
     }
 }

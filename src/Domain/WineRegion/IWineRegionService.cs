@@ -13,5 +13,7 @@ namespace Domain.WineRegion
         Task<ValidationResult> Insert(WineRegion wineRegion);
 
         Task<ValidationResult> Update(WineRegion wineRegion);
+
+        Task Delete(int wineRegionId);
     }
 }
