@@ -104,11 +104,9 @@ namespace Domain.Grapes
 
             return new ValidationResult();
         }
-
         #endregion
 
         #region Grape Colour
-
         public async Task<IEnumerable<GrapeColour>> GetAllColours()
         {
             using var connection = new SqlConnection(_connectionString);
@@ -190,6 +188,9 @@ namespace Domain.Grapes
 
             return new ValidationResult();
         }
+        #endregion
+
+        #region Alternate Name
 
         #endregion
     }
