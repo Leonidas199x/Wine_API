@@ -48,6 +48,11 @@ namespace Domain.Mappings
             CreateMap<StopperType.StopperType, DataContract.StopperType>().ReverseMap();
             CreateMap<StopperType.StopperType, DataContract.StopperTypeCreate>().ReverseMap();
             #endregion
+
+            #region Wine Type
+            CreateMap<WineType.WineType, DataContract.WineType>().ReverseMap();
+            CreateMap<WineType.WineType, DataContract.WineTypeCreate>().ReverseMap();
+            #endregion
         }
     }
 }
