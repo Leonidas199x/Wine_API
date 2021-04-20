@@ -32,7 +32,17 @@ namespace Domain.Mappings
             #region Producer
             CreateMap<Producer.Producer, DataContract.Producer>().ReverseMap();
             CreateMap<Producer.Producer, DataContract.ProducerCreate>().ReverseMap();
-            #endregion  
+            #endregion
+
+            #region Drinker
+            CreateMap<Drinker.Drinker, DataContract.Drinker>().ReverseMap();
+            CreateMap<Drinker.Drinker, DataContract.DrinkerCreate>().ReverseMap();
+            #endregion
+
+            #region QualityControl
+            CreateMap<QualityControl.QualityControl, DataContract.QualityControl>().ReverseMap();
+            CreateMap<QualityControl.QualityControl, DataContract.QualityControlCreate>().ReverseMap();
+            #endregion
         }
     }
 }
