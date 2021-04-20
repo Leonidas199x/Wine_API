@@ -43,6 +43,11 @@ namespace Domain.Mappings
             CreateMap<QualityControl.QualityControl, DataContract.QualityControl>().ReverseMap();
             CreateMap<QualityControl.QualityControl, DataContract.QualityControlCreate>().ReverseMap();
             #endregion
+
+            #region StopperType
+            CreateMap<StopperType.StopperType, DataContract.StopperType>().ReverseMap();
+            CreateMap<StopperType.StopperType, DataContract.StopperTypeCreate>().ReverseMap();
+            #endregion
         }
     }
 }
