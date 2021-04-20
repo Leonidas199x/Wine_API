@@ -45,6 +45,11 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.StopperTypeCreate stopperType)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainStopper = _mapper.Map<StopperType>(stopperType);
             var validationResult = await _stopperTypeService.Insert(domainStopper).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -60,6 +65,11 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.StopperType stopperType)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainStopper = _mapper.Map<StopperType>(stopperType);
 
             var validationResult = await _stopperTypeService.Update(domainStopper).ConfigureAwait(false);

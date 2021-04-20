@@ -67,6 +67,11 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DataContract.CountryInbound country)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainCountry = _mapper.Map<Domain.Country>(country);
 
             var validationResult = await _countryService.Insert(domainCountry).ConfigureAwait(false);
@@ -83,6 +88,11 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Country country)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainCountry = _mapper.Map<Domain.Country>(country);
 
             var validationResult = await _countryService.Update(domainCountry).ConfigureAwait(false);

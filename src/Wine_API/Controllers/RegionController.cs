@@ -45,6 +45,11 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.RegionCreate region)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainRegion = _mapper.Map<Region>(region);
             var validationResult = await _regionService.Insert(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -60,6 +65,11 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Region region)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainRegion = _mapper.Map<Region>(region);
 
             var validationResult = await _regionService.Update(domainRegion).ConfigureAwait(false);

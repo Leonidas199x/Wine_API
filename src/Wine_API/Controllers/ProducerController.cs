@@ -47,6 +47,11 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.ProducerCreate producer)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainProducer = _mapper.Map<Producer>(producer);
             var validationResult = await _producerService.Insert(domainProducer).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -62,6 +67,11 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Producer producer)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainProducer = _mapper.Map<Producer>(producer);
 
             var validationResult = await _producerService.Update(domainProducer).ConfigureAwait(false);

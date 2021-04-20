@@ -47,6 +47,11 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.GrapeCreate grape)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainGrape = _mapper.Map<Domain.Grape>(grape);
 
             var validationResult = await _grapeService.InsertGrape(domainGrape).ConfigureAwait(false);
@@ -63,6 +68,11 @@ namespace WineAPI.Controllers
         [HttpPut("{grapeId}")]
         public async Task<IActionResult> UpdateGrape([FromBody] DataContract.Grape grape)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainGrape = _mapper.Map<Domain.Grape>(grape);
 
             var validationResult = await _grapeService.UpdateGrape(domainGrape).ConfigureAwait(false);
@@ -124,6 +134,11 @@ namespace WineAPI.Controllers
         [Route("colour")]
         public async Task<IActionResult> InsertGrapeColour([FromBody] DataContract.GrapeColourCreate grapeColour)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainGrapeColour = _mapper.Map<GrapeColour>(grapeColour);
 
             var validationResult = await _grapeService.InsertGrapeColour(domainGrapeColour).ConfigureAwait(false);
@@ -154,6 +169,11 @@ namespace WineAPI.Controllers
         [HttpPut("colour")]
         public async Task<IActionResult> UpdateGrapeColour([FromBody] DataContract.GrapeColour grapeColour)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainGrapeColour = _mapper.Map<GrapeColour>(grapeColour);
 
             var validationResult = await _grapeService.UpdateGrapeColour(domainGrapeColour).ConfigureAwait(false);

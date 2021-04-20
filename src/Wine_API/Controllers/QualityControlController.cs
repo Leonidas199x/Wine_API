@@ -47,6 +47,11 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.QualityControlCreate qualityControl)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainRegion = _mapper.Map<QualityControl>(qualityControl);
             var validationResult = await _qualityControlService.Insert(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -62,6 +67,11 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.QualityControl qualityControl)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var domainQualityControl = _mapper
                 .Map<QualityControl>(qualityControl);
 
