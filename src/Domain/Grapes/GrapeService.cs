@@ -21,6 +21,7 @@ namespace Domain.Grapes
             _grapeValidator = grapeValidator;
         }
 
+        #region Grape
         public async Task<IEnumerable<Grape>> GetAll()
         {
             return await _grapeRepository.GetAll().ConfigureAwait(false);
@@ -53,6 +54,12 @@ namespace Domain.Grapes
             return await _grapeRepository.UpdateGrape(grape).ConfigureAwait(false);
         }
 
+        public async Task<ValidationResult> DeleteGrape(int grapeId)
+        {
+            return await _grapeRepository.DeleteGrape(grapeId).ConfigureAwait(false);
+        }
+
+        #endregion
         public async Task<IEnumerable<GrapeColour>> GetAllColours()
         {
             return await _grapeRepository.GetAllColours().ConfigureAwait(false);

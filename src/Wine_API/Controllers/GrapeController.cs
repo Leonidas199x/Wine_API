@@ -75,6 +75,24 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpDelete("{grapeId}")]
+        public async Task<IActionResult> DeleteGrape(int grapeId)
+        {
+            var grape = await _grapeService.Get(grapeId).ConfigureAwait(false);
+            if (grape == null)
+            {
+                return NotFound();
+            }
+
+            var validationResult = await _grapeService.DeleteGrape(grapeId).ConfigureAwait(false);
+            if(!validationResult.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
         #endregion
 
         #region colour

@@ -6,8 +6,6 @@ namespace Domain.Grapes
 {
     public interface IGrapeRepository
     {
-        Task<IEnumerable<GrapeLookup>> GetGrapeLookup();
-
         Task<Grape> Get(int grapeId);
 
         Task<IEnumerable<Grape>> GetAll();
@@ -17,6 +15,8 @@ namespace Domain.Grapes
         Task<IEnumerable<Grape>> GetByName(string name);
 
         Task<ValidationResult> UpdateGrape(Grape grape);
+
+        Task<ValidationResult> DeleteGrape(int grapeId);
 
         Task<IEnumerable<GrapeColour>> GetAllColours();
 

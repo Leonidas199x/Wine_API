@@ -16,16 +16,11 @@ namespace Domain.Grapes
             _connectionString = connectionString;
         }
 
+        #region Grape
         public async Task<IEnumerable<Grape>> GetAll()
         {
             using var connection = new SqlConnection(_connectionString);
             return await connection.QueryAsync<Grape>("[dbo].[Grape_GetAll]").ConfigureAwait(false);
-        }
-
-        public async Task<IEnumerable<GrapeLookup>> GetGrapeLookup()
-        {
-            using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<GrapeLookup>("[dbo].[Lookup_Grape]").ConfigureAwait(false);
         }
 
         public async Task<Grape> Get(int grapeId)
@@ -93,6 +88,26 @@ namespace Domain.Grapes
 
             return new ValidationResult();
         }
+
+        public async Task<ValidationResult> DeleteGrape(int grapeId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@GrapeID", grapeId, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            await connection.QueryAsync<Country>(
+                "[dbo].[Grape_Delete]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+
+            return new ValidationResult();
+        }
+
+        #endregion
+
+        #region Grape Colour
 
         public async Task<IEnumerable<GrapeColour>> GetAllColours()
         {
@@ -175,5 +190,7 @@ namespace Domain.Grapes
 
             return new ValidationResult();
         }
+
+        #endregion
     }
 }
