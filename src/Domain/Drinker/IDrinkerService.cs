@@ -12,8 +12,8 @@ namespace Domain.Drinker
 
         Task<ValidationResult> Insert(Drinker drinker);
 
-        Task<ValidationResult> UpdateGrape(Drinker drinker);
+        Task<ValidationResult> Update(Drinker drinker);
 
-        Task Delete(int drinkerId);
+        Task<ValidationResult> Delete(int drinkerId);
     }
 }

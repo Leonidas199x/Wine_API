@@ -37,7 +37,7 @@ namespace Domain.Drinker
             return await _drinkerRepository.Insert(drinker).ConfigureAwait(false);
         }
 
-        public async Task<ValidationResult> UpdateGrape(Drinker drinker)
+        public async Task<ValidationResult> Update(Drinker drinker)
         {
             var validationResult = _drinkerValidator.Validate(drinker);
             if (!validationResult.IsValid)
@@ -48,9 +48,9 @@ namespace Domain.Drinker
             return await _drinkerRepository.Update(drinker).ConfigureAwait(false);
         }
 
-        public async Task Delete(int drinkerId)
+        public async Task<ValidationResult> Delete(int drinkerId)
         {
-            await _drinkerRepository.Delete(drinkerId).ConfigureAwait(false);
+            return await _drinkerRepository.Delete(drinkerId).ConfigureAwait(false);
         }
     }
 }

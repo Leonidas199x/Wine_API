@@ -67,18 +67,21 @@ namespace Domain.Drinker
             return new ValidationResult();
         }
 
-        public async Task Delete(int drinkerId)
+        public async Task<ValidationResult> Delete(int drinkerId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@DrinkerId", drinkerId, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = new SqlConnection(_connectionString);
-
-            await connection.QueryAsync<Country>(
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.QueryAsync<Country>(
                 "[dbo].[Drinker_Delete]",
                 parameters,
                 commandType: CommandType.StoredProcedure)
                 .ConfigureAwait(false);
+            }
+
+            return new ValidationResult();
         }
 
         public async Task<ValidationResult> Insert(Drinker drinker)
