@@ -49,24 +49,29 @@ namespace WineAPI
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
-            services.AddTransient<IGrapeRepository>(x => new GrapeRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
-            services.AddTransient<IRegionRepository>(x => new RegionRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
+            var dbConnectionString = Configuration.GetConnectionString(DatabaseConfigSection);
+
+            //repositories
+            services.AddTransient<ICountryRepository>(x => new CountryRepository(dbConnectionString));
+            services.AddTransient<IGrapeRepository>(x => new GrapeRepository(dbConnectionString));
+            services.AddTransient<IRegionRepository>(x => new RegionRepository(dbConnectionString));
+            services.AddTransient<IWineRegionRepository>(x => new WineRegionRepository(dbConnectionString));
+            services.AddTransient<IProducerRepository>(x => new ProducerRepository(dbConnectionString));
+            services.AddTransient<IVineyardEstateRepository>(x => new VineyardEstateRepository(dbConnectionString));
+            services.AddTransient<IDrinkerRepository>(x => new DrinkerRepository(dbConnectionString));
+            services.AddTransient<IQualityControlRepository>(x => new QualityControlRepository(dbConnectionString));
+            services.AddTransient<IStopperTypeRepository>(x => new StopperTypeRepository(dbConnectionString));
+
+            //services
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IGrapeService, GrapeService>();
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IWineRegionService, WineRegionService>();
-            services.AddTransient<IWineRegionRepository, WineRegionRepository>();
             services.AddTransient<IProducerService, ProducerService>();
-            services.AddTransient<IProducerRepository, ProducerRepository>();
             services.AddTransient<IVineyardEstateService, VineyardEstateService>();
-            services.AddTransient<IVineyardEstateRepository, VineyardEstateRepository>();
             services.AddTransient<IDrinkerService, DrinkerService>();
-            services.AddTransient<IDrinkerRepository, DrinkerRepository>();
             services.AddTransient<IQualityControlService, QualityControlService>();
-            services.AddTransient<IQualityControlRepository, QualityControlRepository>();
             services.AddTransient<IStopperTypeService, StopperTypeService>();
-            services.AddTransient<IStopperTypeRepository, StopperTypeRepository>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
