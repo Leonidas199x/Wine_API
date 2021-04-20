@@ -36,7 +36,7 @@ namespace Domain.Retailer
                     return await Exists(stopperType.Name).ConfigureAwait(false);
                 })
                 .When(x => x.IsNew)
-                .WithMessage($"Retailer with name already exists");
+                .WithMessage("Retailer with name already exists");
         }
 
         private async Task<bool> Exists(string name)
