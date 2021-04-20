@@ -11,6 +11,7 @@ BEGIN
         QC.[ID],
         QC.[Name],
         QC.[Note],
+        QC.[CountryId],
         QC.[DateCreated],
         QC.[DateUpdated]
     FROM [dbo].[QualityControl] AS QC
