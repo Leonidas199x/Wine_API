@@ -19,15 +19,15 @@ namespace Domain.Retailer
                 .WithMessage($"Name cannot be more that {_maxLength} characters");
 
             RuleFor(x => x.MinimumPurchaseQuantity)
-                .NotEmpty()
+                .NotNull()
                 .WithMessage("Minimum Purchase Quantity is required");
 
             RuleFor(x => x.IncrementQuantity)
-                .NotEmpty()
+                .NotNull()
                 .WithMessage("Increment Quantity is required");
 
             RuleFor(x => x.MaxCustomerRating)
-                .NotEmpty()
+                .NotNull()
                 .WithMessage("Maximum Customer Rating is required");
 
             RuleFor(x => x)
@@ -36,7 +36,7 @@ namespace Domain.Retailer
                     return await Exists(stopperType.Name).ConfigureAwait(false);
                 })
                 .When(x => x.IsNew)
-                .WithMessage($"Stopper type with name already exists");
+                .WithMessage($"Retailer with name already exists");
         }
 
         private async Task<bool> Exists(string name)
