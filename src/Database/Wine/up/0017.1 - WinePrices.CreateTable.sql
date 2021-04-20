@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[WinePrices]
+﻿CREATE TABLE [dbo].[WinePrice]
 (
     [ID] INT IDENTITY(1,1) NOT NULL
         PRIMARY KEY,
