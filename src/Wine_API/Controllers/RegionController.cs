@@ -11,12 +11,12 @@ namespace WineAPI.Controllers
     public class RegionController : Controller
     {
         private readonly IRegionService _regionService;
-        private readonly IMapper _regionMapper;
+        private readonly IMapper _mapper;
 
-        public RegionController(IRegionService regionService, IMapper regionMapper)
+        public RegionController(IRegionService regionService, IMapper mapper)
         {
             _regionService = regionService;
-            _regionMapper = regionMapper;
+            _mapper = mapper;
         }
 
         [HttpGet("{regionId}")]
@@ -28,7 +28,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRegion = _regionMapper.Map<DataContract.Region>(region);
+            var outboundRegion = _mapper.Map<DataContract.Region>(region);
 
             return Ok(outboundRegion);
         }
@@ -37,7 +37,7 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var regions = await _regionService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _regionMapper.Map<IEnumerable<DataContract.Region>>(regions);
+            var outboundRegions = _mapper.Map<IEnumerable<DataContract.Region>>(regions);
 
             return Ok(outboundRegions);
         }
@@ -45,7 +45,7 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.RegionCreate region)
         {
-            var domainRegion = _regionMapper.Map<Region>(region);
+            var domainRegion = _mapper.Map<Region>(region);
             var validationResult = await _regionService.Insert(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
@@ -60,7 +60,7 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Region region)
         {
-            var domainRegion = _regionMapper.Map<Region>(region);
+            var domainRegion = _mapper.Map<Region>(region);
 
             var validationResult = await _regionService.Update(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)

@@ -11,14 +11,14 @@ namespace WineAPI.Controllers
     public class CountryController : Controller
     {
         private readonly ICountryService _countryService;
-        private readonly IMapper _countryMapper;
+        private readonly IMapper _mapper;
 
         public CountryController(
             ICountryService countryService,
-            IMapper countryMapper)
+            IMapper mapper)
         {
             _countryService = countryService;
-            _countryMapper = countryMapper;
+            _mapper = mapper;
         }
 
         [HttpGet("{countryId}")]
@@ -30,7 +30,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundCountry = _countryMapper.Map<DataContract.Country>(country);
+            var outboundCountry = _mapper.Map<DataContract.Country>(country);
 
             return Ok(outboundCountry);
         }
@@ -39,7 +39,7 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var countries = await _countryService.GetAll().ConfigureAwait(false);
-            var outboundCountries = _countryMapper.Map<IEnumerable<DataContract.Country>>(countries);
+            var outboundCountries = _mapper.Map<IEnumerable<DataContract.Country>>(countries);
 
             return Ok(outboundCountries);
         }
@@ -67,7 +67,7 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DataContract.CountryInbound country)
         {
-            var domainCountry = _countryMapper.Map<Domain.Country>(country);
+            var domainCountry = _mapper.Map<Domain.Country>(country);
 
             var validationResult = await _countryService.Insert(domainCountry).ConfigureAwait(false);
             if(validationResult.IsValid)
@@ -83,7 +83,7 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Country country)
         {
-            var domainCountry = _countryMapper.Map<Domain.Country>(country);
+            var domainCountry = _mapper.Map<Domain.Country>(country);
 
             var validationResult = await _countryService.Update(domainCountry).ConfigureAwait(false);
             if (validationResult.IsValid)

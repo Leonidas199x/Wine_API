@@ -11,19 +11,19 @@ namespace WineAPI.Controllers
     public class DrinkerController : Controller
     {
         private readonly IDrinkerService _drinkerService;
-        private readonly IMapper _drinkerMapper;
+        private readonly IMapper _mapper;
 
-        public DrinkerController(IDrinkerService drinkerService, IMapper drinkerMapper)
+        public DrinkerController(IDrinkerService drinkerService, IMapper mapper)
         {
             _drinkerService = drinkerService;
-            _drinkerMapper = drinkerMapper;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var drinkers = await _drinkerService.GetAll().ConfigureAwait(false);
-            var outboundDrinkers = _drinkerMapper.Map<IEnumerable<DataContract.Drinker>>(drinkers);
+            var outboundDrinkers = _mapper.Map<IEnumerable<DataContract.Drinker>>(drinkers);
 
             return Ok(outboundDrinkers);
         }
@@ -37,7 +37,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundDrinker = _drinkerMapper.Map<DataContract.Drinker>(drinker);
+            var outboundDrinker = _mapper.Map<DataContract.Drinker>(drinker);
 
             return Ok(outboundDrinker);
         }
@@ -45,7 +45,7 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DataContract.DrinkerCreate drinker)
         {
-            var domainDrinker = _drinkerMapper.Map<Drinker>(drinker);
+            var domainDrinker = _mapper.Map<Drinker>(drinker);
 
             var validationResult = await _drinkerService.Insert(domainDrinker).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -61,7 +61,7 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Drinker drinker)
         {
-            var domainDrinker = _drinkerMapper.Map<Drinker>(drinker);
+            var domainDrinker = _mapper.Map<Drinker>(drinker);
 
             var validationResult = await _drinkerService.Update(domainDrinker).ConfigureAwait(false);
             if (validationResult.IsValid)

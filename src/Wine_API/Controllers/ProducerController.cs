@@ -11,19 +11,21 @@ namespace WineAPI.Controllers
     public class ProducerController : Controller
     {
         private readonly IProducerService _producerService;
-        private readonly IMapper _producerMapper;
+        private readonly IMapper _mapper;
 
-        public ProducerController(IProducerService producerService, IMapper producerMapper)
+        public ProducerController(
+            IProducerService producerService, 
+            IMapper mapper)
         {
             _producerService = producerService;
-            _producerMapper = producerMapper;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var producers = await _producerService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _producerMapper.Map<IEnumerable<DataContract.Producer>>(producers);
+            var outboundRegions = _mapper.Map<IEnumerable<DataContract.Producer>>(producers);
 
             return Ok(outboundRegions);
         }
@@ -37,7 +39,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundProducer = _producerMapper.Map<DataContract.Producer>(producer);
+            var outboundProducer = _mapper.Map<DataContract.Producer>(producer);
 
             return Ok(outboundProducer);
         }
@@ -45,7 +47,7 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.ProducerCreate producer)
         {
-            var domainProducer = _producerMapper.Map<Producer>(producer);
+            var domainProducer = _mapper.Map<Producer>(producer);
             var validationResult = await _producerService.Insert(domainProducer).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
@@ -60,7 +62,7 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Producer producer)
         {
-            var domainProducer = _producerMapper.Map<Producer>(producer);
+            var domainProducer = _mapper.Map<Producer>(producer);
 
             var validationResult = await _producerService.Update(domainProducer).ConfigureAwait(false);
             if (validationResult.IsValid)

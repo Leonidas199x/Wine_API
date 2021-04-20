@@ -11,19 +11,19 @@ namespace WineAPI.Controllers
     public class WineRegionController : Controller
     {
         private readonly IWineRegionService _wineRegionService;
-        private readonly IMapper _wineRegionMapper;
+        private readonly IMapper _mapper;
 
-        public WineRegionController(IWineRegionService wineRegionService, IMapper wineRegionMapper)
+        public WineRegionController(IWineRegionService wineRegionService, IMapper mapper)
         {
             _wineRegionService = wineRegionService;
-            _wineRegionMapper = wineRegionMapper;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var wineRegions = await _wineRegionService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _wineRegionMapper.Map<IEnumerable<DataContract.WineRegion>>(wineRegions);
+            var outboundRegions = _mapper.Map<IEnumerable<DataContract.WineRegion>>(wineRegions);
 
             return Ok(outboundRegions);
         }
@@ -37,7 +37,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRegion = _wineRegionMapper.Map<DataContract.WineRegion>(wineRegion);
+            var outboundRegion = _mapper.Map<DataContract.WineRegion>(wineRegion);
 
             return Ok(outboundRegion);
         }
@@ -45,7 +45,7 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.WineRegionCreate wineRegion)
         {
-            var domainWineRegion = _wineRegionMapper.Map<WineRegion>(wineRegion);
+            var domainWineRegion = _mapper.Map<WineRegion>(wineRegion);
             var validationResult = await _wineRegionService.Insert(domainWineRegion).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
@@ -60,7 +60,7 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.WineRegion wineRegion)
         {
-            var domainRegion = _wineRegionMapper.Map<WineRegion>(wineRegion);
+            var domainRegion = _mapper.Map<WineRegion>(wineRegion);
 
             var validationResult = await _wineRegionService.Update(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)

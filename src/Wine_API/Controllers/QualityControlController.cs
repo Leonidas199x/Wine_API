@@ -11,12 +11,14 @@ namespace WineAPI.Controllers
     public class QualityControlController : Controller
     {
         private readonly IQualityControlService _qualityControlService;
-        private readonly IMapper _qualityControlMapper;
+        private readonly IMapper _mapper;
 
-        public QualityControlController(IQualityControlService qualityControlService, IMapper qualityControlMapper)
+        public QualityControlController(
+            IQualityControlService qualityControlService, 
+            IMapper mapper)
         {
             _qualityControlService = qualityControlService;
-            _qualityControlMapper = qualityControlMapper;
+            _mapper = mapper;
         }
 
         [HttpGet("{qualityControlId}")]
@@ -28,7 +30,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundQualityControl = _qualityControlMapper.Map<DataContract.QualityControl>(qualityControl);
+            var outboundQualityControl = _mapper.Map<DataContract.QualityControl>(qualityControl);
 
             return Ok(outboundQualityControl);
         }
@@ -37,7 +39,7 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var qualityControllers = await _qualityControlService.GetAll().ConfigureAwait(false);
-            var outboundQualityControllers = _qualityControlMapper.Map<IEnumerable<DataContract.QualityControl>>(qualityControllers);
+            var outboundQualityControllers = _mapper.Map<IEnumerable<DataContract.QualityControl>>(qualityControllers);
 
             return Ok(outboundQualityControllers);
         }
@@ -45,7 +47,7 @@ namespace WineAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.QualityControlCreate qualityControl)
         {
-            var domainRegion = _qualityControlMapper.Map<QualityControl>(qualityControl);
+            var domainRegion = _mapper.Map<QualityControl>(qualityControl);
             var validationResult = await _qualityControlService.Insert(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
@@ -60,7 +62,7 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.QualityControl qualityControl)
         {
-            var domainQualityControl = _qualityControlMapper
+            var domainQualityControl = _mapper
                 .Map<QualityControl>(qualityControl);
 
             var validationResult = await _qualityControlService
