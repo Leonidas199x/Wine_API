@@ -15,6 +15,7 @@ using Domain.WineRegion;
 using Domain.Producer;
 using Domain.VineyardEstate;
 using Domain.Drinker;
+using Domain.QualityControl;
 
 namespace WineAPI
 {
@@ -61,6 +62,8 @@ namespace WineAPI
             services.AddTransient<IVineyardEstateRepository, VineyardEstateRepository>();
             services.AddTransient<IDrinkerService, DrinkerService>();
             services.AddTransient<IDrinkerRepository, DrinkerRepository>();
+            services.AddTransient<IQualityControlService, QualityControlService>();
+            services.AddTransient<IQualityControlRepository, QualityControlRepository>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
