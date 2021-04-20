@@ -9,7 +9,7 @@ ALTER PROCEDURE [dbo].[QualityControl_Insert]
 AS
 BEGIN
     
-    DECLARE @RunDate DATETIME2(3) = GETDATE():
+    DECLARE @RunDate DATETIME2(3) = GETDATE();
 
     INSERT INTO [dbo].[QualityControl]
     (
