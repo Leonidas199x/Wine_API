@@ -10,8 +10,7 @@ BEGIN
 
     UPDATE ST
     SET
-        ST.[Name] = @Name,
-        ST.[UpdatedDate] = GETDATE()
+        ST.[Name] = @Name
     FROM [dbo].[StopperType] AS ST
     WHERE ST.[ID] = @StopperTypeId;
 
