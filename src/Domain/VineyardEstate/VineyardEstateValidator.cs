@@ -24,7 +24,7 @@ namespace Domain.VineyardEstate
                     return await Exists(vineyardEstate.Name).ConfigureAwait(false);
                 })
                 .When(x => x.IsNew)
-                .WithMessage($"Region with name already exists");
+                .WithMessage($"Vineyard Estate with name already exists");
         }
 
         private async Task<bool> Exists(string name)
