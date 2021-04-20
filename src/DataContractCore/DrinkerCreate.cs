@@ -1,6 +1,6 @@
 ﻿namespace DataContract
 {
-    public class DrinkerInbound
+    public class DrinkerCreate
     {
         public string Name { get; set; }
     }

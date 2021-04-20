@@ -45,7 +45,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] DataContract.DrinkerInbound drinker)
+        public async Task<IActionResult> Post([FromBody] DataContract.DrinkerCreate drinker)
         {
             var domainDrinker = _drinkerMapper.Map<Drinker>(drinker);
 
