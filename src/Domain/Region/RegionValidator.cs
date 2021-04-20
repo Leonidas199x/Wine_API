@@ -46,7 +46,7 @@ namespace Domain.Region
                     return await RegionWithIsoExists(region.IsoCode).ConfigureAwait(false);
                 })
                 .When(x => x.IsNew)
-                .WithMessage($"Region with name already exists");
+                .WithMessage($"Region with ISO Code already exists");
         }
 
         private async Task<bool> RegionWithNameExists(string name, int countryId)
