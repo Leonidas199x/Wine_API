@@ -4,8 +4,8 @@
         PRIMARY KEY,
     [CountryID] INT NULL
         FOREIGN KEY REFERENCES [Country]([ID]),
-    [QualityControlName] NVARCHAR(50) NOT NULL,
-    [QualityControlNotes] NVARCHAR(MAX) NULL,
+    [Name] NVARCHAR(50) NOT NULL,
+    [Notes] NVARCHAR(MAX) NULL,
     [DateCreated] DATETIME2(3) NOT NULL,
     [DateUpdated] DATETIME2(3) NOT NULL
 );
