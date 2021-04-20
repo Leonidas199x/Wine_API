@@ -39,6 +39,20 @@ namespace Domain.VineyardEstate
                 .ConfigureAwait(false);
         }
 
+        public async Task<VineyardEstate> GetByName(string name)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Name", name, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QuerySingleOrDefaultAsync<VineyardEstate>(
+                "[dbo].[VineyardEstate_GetByName]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(VineyardEstate vineyardEstate)
         {
             var parameters = new DynamicParameters();
