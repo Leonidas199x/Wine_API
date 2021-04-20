@@ -30,7 +30,7 @@ namespace Domain.StopperType
         private async Task<bool> Exists(string name)
         {
             var stopper = await _stopperTypeRepository.GetByName(name).ConfigureAwait(false);
-            return stopper != null;
+            return stopper == null;
         }
     }
 }

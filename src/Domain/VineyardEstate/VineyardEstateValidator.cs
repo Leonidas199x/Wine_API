@@ -30,7 +30,7 @@ namespace Domain.VineyardEstate
         private async Task<bool> Exists(string name)
         {
             var vineyardEstate = await _vineyardEstateRepository.GetByName(name).ConfigureAwait(false);
-            return vineyardEstate != null;
+            return vineyardEstate == null;
         }
     }
 }
