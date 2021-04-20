@@ -7,19 +7,13 @@ ALTER PROCEDURE [dbo].[StopperType_Insert]
 AS
 BEGIN
 
-    DECLARE @RunDate DATETIME2(3) = GETDATE();
-
     INSERT INTO [dbo].[StopperType]
     (
-        [Name],
-        [DateUpdated],
-        [DateCreated]
+        [Name]
     )
     VALUES
     (
-        @Name,
-        @RunDate,
-        @RunDate
+        @Name
     )
 
 END
