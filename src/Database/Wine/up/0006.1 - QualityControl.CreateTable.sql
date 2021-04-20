@@ -5,7 +5,7 @@
     [CountryID] INT NULL
         FOREIGN KEY REFERENCES [Country]([ID]),
     [Name] NVARCHAR(50) NOT NULL,
-    [Notes] NVARCHAR(MAX) NULL,
+    [Note] NVARCHAR(MAX) NULL,
     [DateCreated] DATETIME2(3) NOT NULL,
     [DateUpdated] DATETIME2(3) NOT NULL
 );
