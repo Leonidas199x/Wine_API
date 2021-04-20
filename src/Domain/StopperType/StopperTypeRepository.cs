@@ -73,7 +73,7 @@ namespace Domain.StopperType
         public async Task<ValidationResult> Update(StopperType stopperType)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@StopperTypeId", stopperType.Id, DbType.String, ParameterDirection.Input);
+            parameters.Add("@StopperTypeId", stopperType.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Name", stopperType.Name, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
