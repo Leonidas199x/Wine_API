@@ -8,12 +8,12 @@ namespace Domain.VineyardEstate
     public class VineyardEstateService : IVineyardEstateService
     {
         private readonly IVineyardEstateRepository _vineyardEstateRepository;
-        private readonly IValidator<VineyardEstate> _vineyardEstateMapper;
+        private readonly IValidator<VineyardEstate> _vineyardEstateValdator;
 
-        public VineyardEstateService(IVineyardEstateRepository vineyardEstateRepository, IValidator<VineyardEstate> vineyardEstateMapper)
+        public VineyardEstateService(IVineyardEstateRepository vineyardEstateRepository, IValidator<VineyardEstate> vineyardEstateValdator)
         {
             _vineyardEstateRepository = vineyardEstateRepository;
-            _vineyardEstateMapper = vineyardEstateMapper;
+            _vineyardEstateValdator = vineyardEstateValdator;
         }
 
         public async Task<IEnumerable<VineyardEstate>> GetAll()
@@ -28,7 +28,7 @@ namespace Domain.VineyardEstate
 
         public async Task<ValidationResult> Insert(VineyardEstate vineyardEstate)
         {
-            var validationResult = _vineyardEstateMapper.Validate(vineyardEstate);
+            var validationResult = _vineyardEstateValdator.Validate(vineyardEstate);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -39,7 +39,7 @@ namespace Domain.VineyardEstate
 
         public async Task<ValidationResult> Update(VineyardEstate vineyardEstate)
         {
-            var validationResult = _vineyardEstateMapper.Validate(vineyardEstate);
+            var validationResult = _vineyardEstateValdator.Validate(vineyardEstate);
             if (!validationResult.IsValid)
             {
                 return validationResult;
