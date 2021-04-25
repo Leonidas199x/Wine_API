@@ -25,9 +25,8 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var vineyardEstates = await _vineyardEstateService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _mapper.Map<IEnumerable<DataContract.Producer>>(vineyardEstates);
 
-            return Ok(outboundRegions);
+            return Ok(_mapper.Map<IEnumerable<DataContract.Producer>>(vineyardEstates));
         }
 
         [HttpGet("{vineyardEstateId}")]
@@ -39,9 +38,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundVineyardEstate = _mapper.Map<DataContract.VineyardEstate>(vineyardEstate);
-
-            return Ok(outboundVineyardEstate);
+            return Ok(_mapper.Map<DataContract.VineyardEstate>(vineyardEstate));
         }
 
         [HttpPost]

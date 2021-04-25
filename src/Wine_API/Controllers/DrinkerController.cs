@@ -23,9 +23,8 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var drinkers = await _drinkerService.GetAll().ConfigureAwait(false);
-            var outboundDrinkers = _mapper.Map<IEnumerable<DataContract.Drinker>>(drinkers);
 
-            return Ok(outboundDrinkers);
+            return Ok(_mapper.Map<IEnumerable<DataContract.Drinker>>(drinkers));
         }
 
         [HttpGet("{drinkerId}")]
@@ -37,9 +36,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundDrinker = _mapper.Map<DataContract.Drinker>(drinker);
-
-            return Ok(outboundDrinker);
+            return Ok(_mapper.Map<DataContract.Drinker>(drinker));
         }
 
         [HttpPost]

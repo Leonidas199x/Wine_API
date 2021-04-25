@@ -23,9 +23,8 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var wineRegions = await _wineRegionService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _mapper.Map<IEnumerable<DataContract.WineRegion>>(wineRegions);
 
-            return Ok(outboundRegions);
+            return Ok(_mapper.Map<IEnumerable<DataContract.WineRegion>>(wineRegions));
         }
 
         [HttpGet("{wineRegionId}")]
@@ -37,9 +36,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRegion = _mapper.Map<DataContract.WineRegion>(wineRegion);
-
-            return Ok(outboundRegion);
+            return Ok(_mapper.Map<DataContract.WineRegion>(wineRegion));
         }
 
         [HttpPost]

@@ -28,18 +28,15 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRetailer = _mapper.Map<DataContract.Retailer>(retailer);
-
-            return Ok(outboundRetailer);
+            return Ok(_mapper.Map<DataContract.Retailer>(retailer));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var retailers = await _retailerService.GetAll().ConfigureAwait(false);
-            var outboundRetailers = _mapper.Map<IEnumerable<DataContract.Retailer>>(retailers);
 
-            return Ok(outboundRetailers);
+            return Ok(_mapper.Map<IEnumerable<DataContract.Retailer>>(retailers));
         }
 
         [HttpPost]

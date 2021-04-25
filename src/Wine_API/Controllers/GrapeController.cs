@@ -27,8 +27,7 @@ namespace WineAPI.Controllers
         {
             var grapes = await _grapeService.GetAll().ConfigureAwait(false);
 
-            var outboundGrapes = _mapper.Map<IEnumerable<DataContract.Grape>>(grapes);
-            return Ok(outboundGrapes);
+            return Ok(_mapper.Map<IEnumerable<DataContract.Grape>>(grapes));
         }
 
         [HttpGet("{grapeId}")]
@@ -40,8 +39,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundGrape = _mapper.Map<DataContract.Grape>(grape);
-            return Ok(outboundGrape);
+            return Ok(_mapper.Map<DataContract.Grape>(grape));
         }
 
         [HttpPost]
@@ -112,8 +110,7 @@ namespace WineAPI.Controllers
         {
             var grapeColours = await _grapeService.GetAllColours().ConfigureAwait(false);
 
-            var outboundGrapeColours = _mapper.Map<IEnumerable<DataContract.GrapeColour>>(grapeColours);
-            return Ok(outboundGrapeColours);
+            return Ok(_mapper.Map<IEnumerable<DataContract.GrapeColour>>(grapeColours));
         }
 
         [HttpGet]
@@ -126,8 +123,7 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundGrapeColours = _mapper.Map<DataContract.GrapeColour>(grapeColour);
-            return Ok(outboundGrapeColours);
+            return Ok(_mapper.Map<DataContract.GrapeColour>(grapeColour));
         }
 
         [HttpPost]

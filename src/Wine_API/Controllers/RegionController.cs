@@ -28,18 +28,15 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRegion = _mapper.Map<DataContract.Region>(region);
-
-            return Ok(outboundRegion);
+            return Ok(_mapper.Map<DataContract.Region>(region));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var regions = await _regionService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _mapper.Map<IEnumerable<DataContract.Region>>(regions);
 
-            return Ok(outboundRegions);
+            return Ok(_mapper.Map<IEnumerable<DataContract.Region>>(regions));
         }
 
         [HttpPost]

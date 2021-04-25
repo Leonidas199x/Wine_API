@@ -30,18 +30,15 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundQualityControl = _mapper.Map<DataContract.QualityControl>(qualityControl);
-
-            return Ok(outboundQualityControl);
+            return Ok(_mapper.Map<DataContract.QualityControl>(qualityControl));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var qualityControllers = await _qualityControlService.GetAll().ConfigureAwait(false);
-            var outboundQualityControllers = _mapper.Map<IEnumerable<DataContract.QualityControl>>(qualityControllers);
 
-            return Ok(outboundQualityControllers);
+            return Ok(_mapper.Map<IEnumerable<DataContract.QualityControl>>(qualityControllers));
         }
 
         [HttpPost]

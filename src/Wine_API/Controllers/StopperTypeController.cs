@@ -28,18 +28,15 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRegion = _mapper.Map<DataContract.StopperType>(stopperType);
-
-            return Ok(outboundRegion);
+            return Ok(_mapper.Map<DataContract.StopperType>(stopperType));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var stopperTypes = await _stopperTypeService.GetAll().ConfigureAwait(false);
-            var outboundStoppers = _mapper.Map<IEnumerable<DataContract.StopperType>>(stopperTypes);
 
-            return Ok(outboundStoppers);
+            return Ok(_mapper.Map<IEnumerable<DataContract.StopperType>>(stopperTypes));
         }
 
         [HttpPost]

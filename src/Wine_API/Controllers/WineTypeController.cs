@@ -28,18 +28,15 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundType = _mapper.Map<DataContract.WineType>(wineType);
-
-            return Ok(outboundType);
+            return Ok(_mapper.Map<DataContract.WineType>(wineType));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var wineTypes = await _wineTypeService.GetAll().ConfigureAwait(false);
-            var outboundTypes = _mapper.Map<IEnumerable<DataContract.WineType>>(wineTypes);
 
-            return Ok(outboundTypes);
+            return Ok(_mapper.Map<IEnumerable<DataContract.WineType>>(wineTypes));
         }
 
         [HttpPost]
