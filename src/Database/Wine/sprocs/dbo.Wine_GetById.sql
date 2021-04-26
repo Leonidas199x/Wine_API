@@ -50,4 +50,17 @@ BEGIN
     LEFT JOIN [dbo].[GrapeColour] GC ON G.[GrapeColourID] = GC.[ID]
     WHERE GW.[WineId] = @WineID;
 
+    /*Prices*/
+    SELECT
+        P.[ID],
+        P.[WineId],
+        P.[RetailerWineId],
+        P.[EffectiveDate],
+        P.[FullPrice],
+        P.[DiscountPrice],
+        P.[DateCreated],
+        P.[DateUpdated]
+    FROM [dbo].[WinePrice] P
+    WHERE P.[WineId] = @WineID;
+
 END
