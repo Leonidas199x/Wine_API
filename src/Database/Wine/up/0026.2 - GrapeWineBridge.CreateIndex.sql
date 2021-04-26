@@ -1,0 +1,1 @@
+﻿CREATE NONCLUSTERED INDEX IDX_GrapeWineBridge_WineId ON [dbo].[GrapeWineBridge]([WineId]);
