@@ -4,6 +4,8 @@
         PRIMARY KEY,
     [WineId] INT NOT NULL
         FOREIGN KEY REFERENCES [Wine]([ID]),
+    [RetailerWineId] INT NOT NULL
+        FOREIGN KEY REFERENCES [RetailerWine]([ID]),
     [EffectiveDate] DATE NOT NULL,
     [FullPrice] MONEY NOT NULL,
     [DiscountPrice] MONEY NULL,
