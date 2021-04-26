@@ -2,5 +2,5 @@
 (
     [ID] INT IDENTITY(1,1) NOT NULL
         PRIMARY KEY,
-    [Name] NVARCHAR(255)
+    [Name] NVARCHAR(255) NOT NULL
 );
