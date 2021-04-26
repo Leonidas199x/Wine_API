@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Domain.Wine
@@ -35,6 +34,7 @@ namespace Domain.Wine
                 {
                     wine.Ratings = await multi.ReadAsync<WineRating>();
                     wine.Grapes = await multi.ReadAsync<Grape>();
+                    wine.Prices = await multi.ReadAsync<WinePrice>();
                 }
             }
 

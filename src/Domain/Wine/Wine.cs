@@ -36,5 +36,7 @@ namespace Domain.Wine
         public IEnumerable<WineRating> Ratings { get; set; }
 
         public IEnumerable<Grape> Grapes { get; set; }
+
+        public IEnumerable<WinePrice> Prices { get; set; }
     }
 }
