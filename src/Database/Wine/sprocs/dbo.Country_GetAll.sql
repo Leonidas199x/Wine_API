@@ -19,6 +19,15 @@ BEGIN
         SELECT @Offset = (@PageSize * (@Page - 1));
     END
 
+    DECLARE @TotalPages INT;
+    
+    SELECT @TotalPages = CEILING(CAST(COUNT(C.[ID]) AS FLOAT)/@PageSize) 
+    FROM [dbo].[Country] C;
+
+    /*Paging info*/
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
+
+    /*Data*/
     SELECT
         C.[ID],
         C.[Name],
@@ -28,6 +37,6 @@ BEGIN
         C.[DateUpdated]
     FROM [dbo].[Country] AS C
     ORDER BY C.[Name] ASC
-    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY
+    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 END
