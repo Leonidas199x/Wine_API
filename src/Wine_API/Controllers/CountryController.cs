@@ -34,11 +34,11 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var countries = await _countryService.GetAll().ConfigureAwait(false);
+            var countries = await _countryService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.Country>>(countries));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Country>>>(countries));
         }
 
         [HttpDelete("{countryId}")]
