@@ -33,12 +33,19 @@ namespace Domain.Countries
 
             var connection = new SqlConnection(_connectionString);
 
-            var countries = await connection.QueryAsync<Country>(
+            PagedList<IEnumerable<Country>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[Country_GetAll]",
                 parameters,
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Country>>>();
+                pagingInfo.Data = await multi.ReadAsync<Country>();
+            }
 
-            return new PagedList<IEnumerable<Country>>(page, pageSize, countries);
+            return pagingInfo;
         }
 
         public async Task<Country> Get(int Id)
