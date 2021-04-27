@@ -38,12 +38,7 @@ namespace Domain.Countries
                 parameters,
                 commandType: CommandType.StoredProcedure).ConfigureAwait(false);
 
-            return new PagedList<IEnumerable<Country>>()
-            {
-                Page = page,
-                PageSize = pageSize,
-                Data = countries,
-            };
+            return new PagedList<IEnumerable<Country>>(page, pageSize, countries);
         }
 
         public async Task<Country> Get(int Id)
