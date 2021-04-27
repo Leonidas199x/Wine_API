@@ -25,13 +25,25 @@ namespace Domain.Countries
                 commandType: CommandType.StoredProcedure).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<PagedList<IEnumerable<Country>>> GetAll(int page, int pageSize)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<Country>(
+            var countries = await connection.QueryAsync<Country>(
                 "[dbo].[Country_GetAll]",
+                parameters,
                 commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+
+            return new PagedList<IEnumerable<Country>>()
+            {
+                Page = page,
+                PageSize = pageSize,
+                Data = countries,
+            };
         }
 
         public async Task<Country> Get(int Id)

@@ -28,9 +28,9 @@ namespace Domain.Countries
             return await _countryRepository.Get(countryId).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<PagedList<IEnumerable<Country>>> GetAll(int page, int pageSize)
         {
-            return await _countryRepository.GetAll().ConfigureAwait(false);
+            return await _countryRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Country>> GetByName(string name)

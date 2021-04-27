@@ -10,7 +10,7 @@ namespace Domain.Countries
 
         Task<Country> Get(int countryId);
 
-        Task<IEnumerable<Country>> GetAll();
+        Task<PagedList<IEnumerable<Country>>> GetAll(int page, int pageSize);
 
         Task<IEnumerable<Country>> GetByName(string name);
 
