@@ -6,6 +6,10 @@ namespace Domain.Mappings
     {
         public MappingProfile()
         {
+            #region Domain
+            CreateMap(typeof(DataContract.PagedList<>), typeof(Domain.PagedList<>)).ReverseMap();
+            #endregion
+
             #region Country
             CreateMap<DataContract.CountryInbound, Country>();
             CreateMap<Country, DataContract.Country>().ReverseMap();
@@ -61,7 +65,7 @@ namespace Domain.Mappings
 
             #region Wine
             CreateMap<Wine.Wine, DataContract.Wine>().ReverseMap();
-            CreateMap<Wine.WineRating, DataContract.WineRating>().ReverseMap();
+            CreateMap<Rating.WineRating, DataContract.WineRating>().ReverseMap();
             CreateMap<Wine.WinePrice, DataContract.WinePrice>().ReverseMap();
             #endregion
         }
