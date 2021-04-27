@@ -1,4 +1,4 @@
-﻿namespace Domain.Wine
+﻿namespace Domain.Rating
 {
     public class WineRating
     {
