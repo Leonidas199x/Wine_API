@@ -6,12 +6,17 @@
 
         public int PageSize { get; set; }
 
+        public int TotalPages { get; set; }
+
         public T Data { get; set; }
 
-        public PagedList(int page, int pageSize, T data)
+        public PagedList() { }
+
+        public PagedList(int page, int pageSize, int totalPages,  T data)
         {
             Page = page;
             PageSize = pageSize;
+            TotalPages = totalPages;
             Data = data;
         }
     }
