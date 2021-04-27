@@ -1,7 +1,6 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -11,19 +10,32 @@ namespace WineAPI.UnitTests.Controllers.CountryControllerUnitTests.GetAll
     {
         protected override void SetupScenario()
         {
-            var domainCountries = new List<Country>
+            var page = 1;
+            var pageSize = 10;
+
+            var domainCountries = new PagedList<IEnumerable<Country>>
             {
-                new Country(),
+                Page = page,
+                PageSize = pageSize,
+                Data = new List<Country>
+                {
+                    new Country(),
+                },
             };
 
-            var outboundCountries = new List<DataContract.Country>
+            var outboundCountries = new DataContract.PagedList<IEnumerable<DataContract.Country>>
             {
-                new DataContract.Country(),
+                Page = page,
+                PageSize = pageSize,
+                Data = new List<DataContract.Country>
+                {
+                    new DataContract.Country(),
+                }
             };
 
-            CountryService.GetAll().Returns(domainCountries);
+            CountryService.GetAll(page, pageSize).Returns(domainCountries);
 
-            CountryMapper.Map<IEnumerable<DataContract.Country>>(domainCountries).Returns(outboundCountries);
+            CountryMapper.Map<DataContract.PagedList<IEnumerable<DataContract.Country>>>(domainCountries).Returns(outboundCountries);
         }
 
         [Test]
