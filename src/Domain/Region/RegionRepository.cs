@@ -16,13 +16,36 @@ namespace Domain.Region
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Region>> GetAll()
+        public async Task<IEnumerable<RegionLookup>> GetLookup()
         {
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<RegionLookup>(
+                "[dbo].[Region_Lookup]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }
+
+        public async Task<PagedList<IEnumerable<Region>>> GetAll(int page, int pageSize)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<Region>(
+            PagedList<IEnumerable<Region>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[Region_GetAll]",
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Region>>>();
+                pagingInfo.Data = await multi.ReadAsync<Region>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<Region> Get(int Id)

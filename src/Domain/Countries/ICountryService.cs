@@ -6,7 +6,7 @@ namespace Domain.Countries
 {
     public interface ICountryService
     {
-        Task<IEnumerable<CountryLookup>> GetCountryLookup();
+        Task<IEnumerable<CountryLookup>> GetLookup();
 
         Task<Country> Get(int countryId);
 

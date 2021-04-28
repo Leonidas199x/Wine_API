@@ -16,7 +16,7 @@ namespace Domain.Countries
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
+        public async Task<IEnumerable<CountryLookup>> GetLookup()
         {
             using var connection = new SqlConnection(_connectionString);
 

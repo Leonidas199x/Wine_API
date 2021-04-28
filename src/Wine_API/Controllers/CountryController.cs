@@ -44,7 +44,7 @@ namespace WineAPI.Controllers
         [HttpGet("lookup")]
         public async Task<IActionResult> GetLookup()
         {
-            var lookup = await _countryService.GetCountryLookup().ConfigureAwait(false);
+            var lookup = await _countryService.GetLookup().ConfigureAwait(false);
 
             return Ok(_mapper.Map<IEnumerable<DataContract.CountryLookup>>(lookup));
         }

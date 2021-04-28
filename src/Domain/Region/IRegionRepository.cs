@@ -6,7 +6,9 @@ namespace Domain.Region
 {
     public interface IRegionRepository
     {
-        Task<IEnumerable<Region>> GetAll();
+        Task<IEnumerable<RegionLookup>> GetLookup();
+
+        Task<PagedList<IEnumerable<Region>>> GetAll(int page, int pageSize);
 
         Task<Region> Get(int Id);
 

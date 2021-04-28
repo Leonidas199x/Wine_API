@@ -18,9 +18,9 @@ namespace Domain.Countries
             _countryValidator = countryValidator;
         }
 
-        public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
+        public async Task<IEnumerable<CountryLookup>> GetLookup()
         {
-            return await _countryRepository.GetCountryLookup().ConfigureAwait(false);
+            return await _countryRepository.GetLookup().ConfigureAwait(false);
         }
 
         public async Task<Country> Get(int countryId)

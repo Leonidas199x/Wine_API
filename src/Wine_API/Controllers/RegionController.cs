@@ -32,11 +32,19 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var regions = await _regionService.GetAll().ConfigureAwait(false);
+            var regions = await _regionService.GetAll(page, pageSize).ConfigureAwait(false);
 
             return Ok(_mapper.Map<IEnumerable<DataContract.Region>>(regions));
+        }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _regionService.GetLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.RegionLookup>>(lookup));
         }
 
         [HttpPost]

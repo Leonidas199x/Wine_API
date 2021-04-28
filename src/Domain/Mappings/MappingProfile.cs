@@ -14,6 +14,7 @@ namespace Domain.Mappings
             CreateMap<DataContract.CountryInbound, Country>();
             CreateMap<Country, DataContract.Country>().ReverseMap();
             CreateMap<CountryLookup, DataContract.CountryLookup>();
+            CreateMap<Region.RegionLookup, DataContract.RegionLookup>();
             #endregion
 
             #region Grape
