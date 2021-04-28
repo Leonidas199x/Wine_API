@@ -26,7 +26,7 @@ namespace WineAPI.Controllers
         {
             var vineyardEstates = await _vineyardEstateService.GetAll().ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.Producer>>(vineyardEstates));
+            return Ok(_mapper.Map<IEnumerable<DataContract.VineyardEstate>>(vineyardEstates));
         }
 
         [HttpGet("{vineyardEstateId}")]
