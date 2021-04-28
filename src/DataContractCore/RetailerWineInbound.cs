@@ -4,8 +4,6 @@ namespace DataContract
 {
     public class RetailerWineInbound
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public int RetailerId { get; set; }
