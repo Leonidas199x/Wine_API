@@ -20,6 +20,7 @@ using Domain.StopperType;
 using Domain.WineType;
 using Domain.Retailer;
 using Domain.Wine;
+using Domain.RetailerWine;
 
 namespace WineAPI
 {
@@ -67,6 +68,7 @@ namespace WineAPI
             services.AddTransient<IWineTypeRepository>(x => new WineTypeRepository(dbConnectionString));
             services.AddTransient<IRetailerRepository>(x => new RetailerRepository(dbConnectionString));
             services.AddTransient<IWineRepository>(x => new WineRepository(dbConnectionString));
+            services.AddTransient<IRetailerWineRepository>(x => new RetailerWineRepository(dbConnectionString));
 
             //services
             services.AddTransient<ICountryService, CountryService>();
@@ -81,6 +83,7 @@ namespace WineAPI
             services.AddTransient<IWineTypeService, WineTypeService>();
             services.AddTransient<IRetailerService, RetailerService>();
             services.AddTransient<IWineService, WineService>();
+            services.AddTransient<IRetailerWineService, RetailerWineService>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
