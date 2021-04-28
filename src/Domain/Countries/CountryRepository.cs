@@ -21,7 +21,7 @@ namespace Domain.Countries
             using var connection = new SqlConnection(_connectionString);
 
             return await connection.QueryAsync<CountryLookup>(
-                "[dbo].[Lookup_Country]",
+                "[dbo].[Country_Lookup]",
                 commandType: CommandType.StoredProcedure).ConfigureAwait(false);
         }
 

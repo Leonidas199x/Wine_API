@@ -41,6 +41,14 @@ namespace WineAPI.Controllers
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Country>>>(countries));
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _countryService.GetCountryLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.CountryLookup>>(lookup));
+        }
+
         [HttpDelete("{countryId}")]
         public async Task<IActionResult> Delete(int countryId)
         {
