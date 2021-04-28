@@ -24,43 +24,36 @@ namespace Domain.RetailerWine
                 .NotEmpty()
                 .WithMessage("Name is required")
                 .MaximumLength(_maxLength)
-                .WithMessage($"Name cannot be more that {_maxLength} characters");
-
-            RuleFor(x => x.RetailerId)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Retailer ID is required");
-
-            RuleFor(x => x.WineId)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Wine ID is required");
-
-            RuleFor(x => x.Description)
-                .NotNull()
-                .WithMessage("Description is required");
-
-            RuleFor(x => x)
+                .WithMessage($"Name cannot be more that {_maxLength} characters")
                 .MustAsync(async (retailerWine, context, cancellation) =>
                 {
                     return await Exists(retailerWine.Name).ConfigureAwait(false);
                 })
-                .When(x => x.IsNew)
                 .WithMessage("Retailer with name already exists");
 
-            RuleFor(x => x)
+            RuleFor(x => x.RetailerId)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Retailer ID is required")
                 .MustAsync(async (retailerWine, context, cancellation) =>
                 {
                     return await RetailerExists(retailerWine.RetailerId).ConfigureAwait(false);
                 })
                 .WithMessage("Retailer ID does not exist");
 
-            RuleFor(x => x)
+            RuleFor(x => x.WineId)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Wine ID is required")
                 .MustAsync(async (retailerWine, context, cancellation) =>
                 {
                     return await WineExists(retailerWine.WineId).ConfigureAwait(false);
                 })
                 .WithMessage("Wine ID does not exist");
+
+            RuleFor(x => x.Description)
+                .NotNull()
+                .WithMessage("Description is required");
         }
 
         private async Task<bool> Exists(string name)
