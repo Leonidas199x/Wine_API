@@ -18,11 +18,11 @@ namespace DataContract
 
         public string RetailerTasteGuide { get; set; }
 
-        public int StopperTypeId { get; set; }
+        public int? StopperTypeId { get; set; }
 
         public string WineCode { get; set; }
 
-        public decimal CustomerRating { get; set; }
+        public decimal? CustomerRating { get; set; }
 
         public string TastingNotes { get; set; }
 
