@@ -12,10 +12,11 @@ namespace WineAPI.UnitTests.Controllers.CountryControllerUnitTests.GetAll
         {
             var page = 1;
             var pageSize = 10;
+            var totalPages = 2;
 
             var countries = new List<Country>();
 
-            var domainCountries = new PagedList<IEnumerable<Country>>(page, pageSize, countries);
+            var domainCountries = new PagedList<IEnumerable<Country>>(page, pageSize, totalPages, countries);
 
             var outboundCountries = new DataContract.PagedList<IEnumerable<DataContract.Country>>
             {
