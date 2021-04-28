@@ -16,10 +16,36 @@ namespace Domain.Drinker
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Drinker>> GetAll()
+        public async Task<IEnumerable<Drinker>> GetLookup()
         {
             using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<Drinker>("[dbo].[Drinker_GetAll]").ConfigureAwait(false);
+
+            return await connection.QueryAsync<Drinker>(
+                "[dbo].[Drinker_Lookup]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }
+
+        public async Task<PagedList<IEnumerable<Drinker>>> GetAll(int page, int pageSize)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
+            var connection = new SqlConnection(_connectionString);
+
+            PagedList<IEnumerable<Drinker>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[Drinker_GetAll]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Drinker>>>();
+                pagingInfo.Data = await multi.ReadAsync<Drinker>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<Drinker> Get(int drinkerId)

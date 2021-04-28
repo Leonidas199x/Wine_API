@@ -16,14 +16,19 @@ namespace Domain.Drinker
             _drinkerValidator = drinkerValidator;
         }
 
-        public async Task<IEnumerable<Drinker>> GetAll()
+        public async Task<PagedList<IEnumerable<Drinker>>> GetAll(int page, int pageSize)
         {
-            return await _drinkerRepository.GetAll().ConfigureAwait(false);
+            return await _drinkerRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Drinker> Get(int drinkerId)
         {
             return await _drinkerRepository.Get(drinkerId).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<Drinker>> GetLookup()
+        {
+            return await _drinkerRepository.GetLookup().ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> Insert(Drinker drinker)

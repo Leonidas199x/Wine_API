@@ -20,11 +20,19 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var drinkers = await _drinkerService.GetAll().ConfigureAwait(false);
+            var drinkers = await _drinkerService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.Drinker>>(drinkers));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Drinker>>>(drinkers));
+        }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _drinkerService.GetLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.Drinker>>(lookup));
         }
 
         [HttpGet("{drinkerId}")]

@@ -6,11 +6,13 @@ namespace Domain.Drinker
 {
     public interface IDrinkerRepository
     {
-        Task<IEnumerable<Drinker>> GetAll();
+        Task<PagedList<IEnumerable<Drinker>>> GetAll(int page, int pageSize);
 
         Task<Drinker> Get(int drinkerId);
 
         Task<IEnumerable<Drinker>> GetByName(string name);
+
+        Task<IEnumerable<Drinker>> GetLookup();
 
         Task<ValidationResult> Update(Drinker drinker);
 
