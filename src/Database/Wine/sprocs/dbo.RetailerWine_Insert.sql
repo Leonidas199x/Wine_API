@@ -17,6 +17,8 @@ ALTER PROCEDURE [dbo].[RetailerWine_Insert]
     @Range NVARCHAR(20)
 AS
 BEGIN
+    
+    DECLARE @RunDate DATETIME2(3) = (SELECT GETDATE());
 
     INSERT INTO [dbo].[RetailerWine]
     (
@@ -31,7 +33,9 @@ BEGIN
         [CustomerRating],
         [TastingNotes],
         [StorageNotes],
-        [Range]
+        [Range],
+        [DateCreated],
+        [DateUpdated]
     )
     VALUES
     (
@@ -46,7 +50,9 @@ BEGIN
         @CustomerRating,
         @TastingNotes,
         @StorageNotes,
-        @Range
+        @Range,
+        @RunDate,
+        @RunDate
     );
 
 END

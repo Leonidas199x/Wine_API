@@ -32,7 +32,8 @@ BEGIN
         RW.[CustomerRating] = @CustomerRating,
         RW.[TastingNotes] = @TastingNotes,
         RW.[StorageNotes] = @StorageNotes,
-        RW.[Range] = @Range
+        RW.[Range] = @Range,
+        RW.[DateUpdated] = GETDATE()
     FROM [dbo].[RetailerWine] AS RW
     WHERE RW.[ID] = @RetailerWineId;
 
