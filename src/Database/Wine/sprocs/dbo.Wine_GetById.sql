@@ -75,4 +75,17 @@ BEGIN
     FROM [dbo].[Issue] I
     WHERE I.[WineId] = @WineID;
 
+    /*Receipts*/
+    SELECT
+        R.[ID],
+        R.[WineId],
+        R.[RetailerId],
+        R.[Date],
+        R.[Quantity],
+        R.[Note],
+        R.[DateCreated],
+        R.[DateUpdated]
+    FROM [dbo].[Receipt] R
+    WHERE R.[WineId] = @WineID;
+
 END

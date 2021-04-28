@@ -41,5 +41,7 @@ namespace Domain.Wine
         public IEnumerable<WinePrice> Prices { get; set; }
 
         public IEnumerable<Issue.Issue> Issues { get; set; }
+
+        public IEnumerable<Receipt.Receipt> Receipts { get; set; }
     }
 }

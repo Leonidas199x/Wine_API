@@ -40,5 +40,7 @@ namespace DataContract
         public IEnumerable<WinePrice> Prices { get; set; }
 
         public IEnumerable<Issue> Issues { get; set; }
+
+        public IEnumerable<Receipt> Receipts { get; set; }
     }
 }
