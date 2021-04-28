@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataContract
+﻿namespace DataContract
 {
     public class RetailerWineInbound
     {
