@@ -36,6 +36,7 @@ namespace Domain.Wine
                     wine.Ratings = await multi.ReadAsync<WineRating>();
                     wine.Grapes = await multi.ReadAsync<Grape>();
                     wine.Prices = await multi.ReadAsync<WinePrice>();
+                    wine.Issues = await multi.ReadAsync<Issue.Issue>();
                 }
             }
 

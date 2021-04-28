@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DataContract
 {
@@ -39,5 +38,7 @@ namespace DataContract
         public IEnumerable<Grape> Grapes { get; set; }
 
         public IEnumerable<WinePrice> Prices { get; set; }
+
+        public IEnumerable<Issue> Issues { get; set; }
     }
 }

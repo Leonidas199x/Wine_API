@@ -63,4 +63,16 @@ BEGIN
     FROM [dbo].[WinePrice] P
     WHERE P.[WineId] = @WineID;
 
+    /*Issues*/
+    SELECT
+        I.[ID],
+        I.[WineId],
+        I.[Date],
+        I.[Quantity],
+        I.[Note],
+        I.[DateCreated],
+        I.[DateUpdated]
+    FROM [dbo].[Issue] I
+    WHERE I.[WineId] = @WineID;
+
 END
