@@ -36,7 +36,7 @@ namespace WineAPI.Controllers
         {
             var regions = await _regionService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.Region>>(regions));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Region>>>(regions));
         }
 
         [HttpGet("lookup")]
