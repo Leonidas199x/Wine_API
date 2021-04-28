@@ -38,9 +38,9 @@ namespace Domain.RetailerWine
             return await _retailerWineRepository.GetByName(name).ConfigureAwait(false);
         }
 
-        public async Task<ValidationResult> Delete(int countryId)
+        public async Task<ValidationResult> Delete(int id)
         {
-            return await _retailerWineRepository.Delete(countryId).ConfigureAwait(false);
+            return await _retailerWineRepository.Delete(id).ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> Insert(RetailerWine retailerWine)
