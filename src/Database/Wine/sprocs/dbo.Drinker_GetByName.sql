@@ -3,7 +3,7 @@
 GO
 
 ALTER PROCEDURE [dbo].[Drinker_GetByName]
-    @Name INT
+    @Name NVARCHAR(255)
 AS
 BEGIN
 
