@@ -16,13 +16,27 @@ namespace Domain.StopperType
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<StopperType>> GetAll()
+        public async Task<PagedList<IEnumerable<StopperType>>> GetAll(int page, int pageSize)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<StopperType>(
+            PagedList<IEnumerable<StopperType>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[StopperType_GetAll]",
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<StopperType>>>();
+                pagingInfo.Data = await multi.ReadAsync<StopperType>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<StopperType> Get(int Id)

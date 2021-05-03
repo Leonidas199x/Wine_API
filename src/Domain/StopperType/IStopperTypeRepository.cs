@@ -6,7 +6,7 @@ namespace Domain.StopperType
 {
     public interface IStopperTypeRepository
     {
-        Task<IEnumerable<StopperType>> GetAll();
+        Task<PagedList<IEnumerable<StopperType>>> GetAll(int page, int pageSize);
 
         Task<StopperType> Get(int Id);
 

@@ -32,11 +32,11 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var stopperTypes = await _stopperTypeService.GetAll().ConfigureAwait(false);
+            var stopperTypes = await _stopperTypeService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.StopperType>>(stopperTypes));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.StopperType>>>(stopperTypes));
         }
 
         [HttpPost]

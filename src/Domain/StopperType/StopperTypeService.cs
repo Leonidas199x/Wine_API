@@ -16,9 +16,9 @@ namespace Domain.StopperType
             _stopperTypeValidator = stopperTypeValidator;
         }
 
-        public async Task<IEnumerable<StopperType>> GetAll()
+        public async Task<PagedList<IEnumerable<StopperType>>> GetAll(int page, int pageSize)
         {
-            return await _stopperTypeRepository.GetAll().ConfigureAwait(false);
+            return await _stopperTypeRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<StopperType> Get(int id)
