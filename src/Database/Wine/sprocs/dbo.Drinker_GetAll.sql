@@ -32,6 +32,7 @@ BEGIN
         D.[ID],
         D.[Name]
     FROM [dbo].[Drinker] AS D
-    ORDER BY D.[Name] ASC;
+    ORDER BY D.[Name] ASC
+    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 END
