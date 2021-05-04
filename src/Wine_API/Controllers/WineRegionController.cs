@@ -20,11 +20,11 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var wineRegions = await _wineRegionService.GetAll().ConfigureAwait(false);
+            var wineRegions = await _wineRegionService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.WineRegion>>(wineRegions));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.WineRegion>>>(wineRegions));
         }
 
         [HttpGet("{wineRegionId}")]

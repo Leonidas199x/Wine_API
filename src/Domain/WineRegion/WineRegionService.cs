@@ -16,9 +16,9 @@ namespace Domain.WineRegion
             _wineRegionValidator = wineRegionValidator;
         }
 
-        public async Task<IEnumerable<WineRegion>> GetAll()
+        public async Task<PagedList<IEnumerable<WineRegion>>> GetAll(int page, int pageSize)
         {
-            return await _wineRegionRepository.GetAll().ConfigureAwait(false);
+            return await _wineRegionRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<WineRegion> Get(int Id)
