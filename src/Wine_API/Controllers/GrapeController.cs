@@ -23,11 +23,11 @@ namespace WineAPI.Controllers
 
         #region grape
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var grapes = await _grapeService.GetAll().ConfigureAwait(false);
+            var grapes = await _grapeService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.Grape>>(grapes));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Grape>>>(grapes));
         }
 
         [HttpGet("{grapeId}")]
@@ -106,11 +106,11 @@ namespace WineAPI.Controllers
         #region colour
         [HttpGet]
         [Route("colour")]
-        public async Task<IActionResult> GetAllColours()
+        public async Task<IActionResult> GetAllColours([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var grapeColours = await _grapeService.GetAllColours().ConfigureAwait(false);
+            var grapeColours = await _grapeService.GetAllColours(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.GrapeColour>>(grapeColours));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.GrapeColour>>>(grapeColours));
         }
 
         [HttpGet]

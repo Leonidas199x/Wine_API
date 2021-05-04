@@ -9,7 +9,7 @@ namespace Domain.Grapes
         #region grape
         Task<Grape> Get(int grapeId);
 
-        Task<IEnumerable<Grape>> GetAll();
+        Task<PagedList<IEnumerable<Grape>>> GetAll(int page, int pageSize);
 
         Task<ValidationResult> InsertGrape(Grape grape);
 
@@ -19,7 +19,7 @@ namespace Domain.Grapes
         #endregion
 
         #region GrapeColour
-        Task<IEnumerable<GrapeColour>> GetAllColours();
+        Task<PagedList<IEnumerable<GrapeColour>>> GetAllColours(int page, int pageSize);
 
         Task<GrapeColour> GetGrapeColour(int id);
 

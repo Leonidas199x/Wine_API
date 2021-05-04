@@ -17,10 +17,27 @@ namespace Domain.Grapes
         }
 
         #region Grape
-        public async Task<IEnumerable<Grape>> GetAll()
+        public async Task<PagedList<IEnumerable<Grape>>> GetAll(int page, int pageSize)
         {
-            using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<Grape>("[dbo].[Grape_GetAll]").ConfigureAwait(false);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
+            var connection = new SqlConnection(_connectionString);
+
+            PagedList<IEnumerable<Grape>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[Grape_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Grape>>>();
+                pagingInfo.Data = await multi.ReadAsync<Grape>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<Grape> Get(int grapeId)
@@ -107,10 +124,27 @@ namespace Domain.Grapes
         #endregion
 
         #region Grape Colour
-        public async Task<IEnumerable<GrapeColour>> GetAllColours()
+        public async Task<PagedList<IEnumerable<GrapeColour>>> GetAllColours(int page, int pageSize)
         {
-            using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<GrapeColour>("[dbo].[GrapeColour_GetAll]").ConfigureAwait(false);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
+            var connection = new SqlConnection(_connectionString);
+
+            PagedList<IEnumerable<GrapeColour>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[GrapeColour_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<GrapeColour>>>();
+                pagingInfo.Data = await multi.ReadAsync<GrapeColour>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<GrapeColour> GetGrapeColour(int Id)

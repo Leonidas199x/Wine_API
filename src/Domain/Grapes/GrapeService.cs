@@ -22,9 +22,9 @@ namespace Domain.Grapes
         }
 
         #region Grape
-        public async Task<IEnumerable<Grape>> GetAll()
+        public async Task<PagedList<IEnumerable<Grape>>> GetAll(int page, int pageSize)
         {
-            return await _grapeRepository.GetAll().ConfigureAwait(false);
+            return await _grapeRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Grape> Get(int grapeId)
@@ -60,9 +60,9 @@ namespace Domain.Grapes
         }
 
         #endregion
-        public async Task<IEnumerable<GrapeColour>> GetAllColours()
+        public async Task<PagedList<IEnumerable<GrapeColour>>> GetAllColours(int page, int pageSize)
         {
-            return await _grapeRepository.GetAllColours().ConfigureAwait(false);
+            return await _grapeRepository.GetAllColours(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<GrapeColour> GetGrapeColour(int id)
