@@ -28,7 +28,7 @@ namespace Domain.Retailer
         public async Task<Retailer> Get(int Id)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@WineTypeId", Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@RetailerId", Id, DbType.Int32, ParameterDirection.Input);
 
             using var connection = new SqlConnection(_connectionString);
 
