@@ -7,7 +7,7 @@ ALTER PROCEDURE [dbo].[Region_GetAll]
     @PageSize INT = 10
 AS
 BEGIN
-    
+
     DECLARE @Offset INT;
 
     IF(@Page = 1)
