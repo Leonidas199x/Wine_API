@@ -32,11 +32,11 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var wineTypes = await _wineTypeService.GetAll().ConfigureAwait(false);
+            var wineTypes = await _wineTypeService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.WineType>>(wineTypes));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.WineType>>>(wineTypes));
         }
 
         [HttpPost]

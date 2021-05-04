@@ -16,13 +16,27 @@ namespace Domain.WineType
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<WineType>> GetAll()
+        public async Task<PagedList<IEnumerable<WineType>>> GetAll(int page, int pageSize)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<WineType>(
+            PagedList<IEnumerable<WineType>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[WineType_GetAll]",
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<WineType>>>();
+                pagingInfo.Data = await multi.ReadAsync<WineType>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<WineType> Get(int Id)

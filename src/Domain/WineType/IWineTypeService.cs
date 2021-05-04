@@ -6,7 +6,7 @@ namespace Domain.WineType
 {
     public interface IWineTypeService
     {
-        Task<IEnumerable<WineType>> GetAll();
+        Task<PagedList<IEnumerable<WineType>>> GetAll(int page, int pageSize);
 
         Task<WineType> Get(int id);
 

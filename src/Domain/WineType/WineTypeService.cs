@@ -16,9 +16,9 @@ namespace Domain.WineType
             _wineTypeValidator = wineTypeValidator;
         }
 
-        public async Task<IEnumerable<WineType>> GetAll()
+        public async Task<PagedList<IEnumerable<WineType>>> GetAll(int page, int pageSize)
         {
-            return await _wineTypeRepository.GetAll().ConfigureAwait(false);
+            return await _wineTypeRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<WineType> Get(int id)
