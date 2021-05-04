@@ -3,9 +3,29 @@
 GO
 
 ALTER PROCEDURE [dbo].[Retailer_GetAll]
-
+    @Page INT = 1,
+    @PageSize INT = 10
 AS
 BEGIN
+
+    DECLARE @Offset INT;
+
+    IF(@Page = 1)
+    BEGIN 
+        SELECT @Offset = 0;
+    END
+    ELSE
+    BEGIN
+        SELECT @Offset = (@PageSize * (@Page - 1));
+    END
+
+    DECLARE @TotalPages INT;
+    
+    SELECT @TotalPages = CEILING(CAST(COUNT(R.[ID]) AS FLOAT)/@PageSize) 
+    FROM [dbo].[Retailer] R;
+
+    /*Paging info*/
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
 
     SELECT
         R.[ID],
@@ -23,6 +43,7 @@ BEGIN
         R.[DateCreated],
         R.[DateUpdated]
     FROM [dbo].[Retailer] AS R
-    ORDER BY R.[Name] ASC;
+    ORDER BY R.[Name] ASC
+    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 END
