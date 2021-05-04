@@ -22,11 +22,11 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var producers = await _producerService.GetAll().ConfigureAwait(false);
+            var producers = await _producerService.GetAll(page, pageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.Producer>>(producers));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Producer>>>(producers));
         }
 
         [HttpGet("{producerId}")]

@@ -6,7 +6,7 @@ namespace Domain.Producer
 {
     public interface IProducerRepository
     {
-        Task<IEnumerable<Producer>> GetAll();
+        Task<PagedList<IEnumerable<Producer>>> GetAll(int page, int pageSize);
 
         Task<Producer> Get(int Id);
 

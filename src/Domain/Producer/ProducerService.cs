@@ -16,9 +16,9 @@ namespace Domain.Producer
             _producerValidator = producerValidator;
         }
 
-        public async Task<IEnumerable<Producer>> GetAll()
+        public async Task<PagedList<IEnumerable<Producer>>> GetAll(int page, int pageSize)
         {
-            return await _producerRepository.GetAll().ConfigureAwait(false);
+            return await _producerRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Producer> Get(int Id)
