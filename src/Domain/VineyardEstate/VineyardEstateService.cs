@@ -16,9 +16,9 @@ namespace Domain.VineyardEstate
             _vineyardEstateValdator = vineyardEstateValdator;
         }
 
-        public async Task<IEnumerable<VineyardEstate>> GetAll()
+        public async Task<PagedList<IEnumerable<VineyardEstate>>> GetAll(int page, int pageSize)
         {
-            return await _vineyardEstateRepository.GetAll().ConfigureAwait(false);
+            return await _vineyardEstateRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<VineyardEstate> Get(int vineyardEstateid)

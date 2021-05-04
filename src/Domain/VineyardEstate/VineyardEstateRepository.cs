@@ -16,13 +16,27 @@ namespace Domain.VineyardEstate
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<VineyardEstate>> GetAll()
+        public async Task<PagedList<IEnumerable<VineyardEstate>>> GetAll(int page, int pageSize)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<VineyardEstate>(
-                "[dbo].[VineyardEstate_GetAll]",
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+            PagedList<IEnumerable<VineyardEstate>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                 "[dbo].[VineyardEstate_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<VineyardEstate>>>();
+                pagingInfo.Data = await multi.ReadAsync<VineyardEstate>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<VineyardEstate> Get(int Id)

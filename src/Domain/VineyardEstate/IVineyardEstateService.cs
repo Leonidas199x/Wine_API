@@ -6,7 +6,7 @@ namespace Domain.VineyardEstate
 {
     public interface IVineyardEstateService
     {
-        Task<IEnumerable<VineyardEstate>> GetAll();
+        Task<PagedList<IEnumerable<VineyardEstate>>> GetAll(int page, int pageSize);
 
         Task<VineyardEstate> Get(int vineyardEstateid);
 
