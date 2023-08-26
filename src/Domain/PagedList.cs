@@ -10,6 +10,8 @@
 
         public T Data { get; set; }
 
+        public int TotalRecords { get; set; }
+
         public PagedList() { }
 
         public PagedList(int page, int pageSize, int totalPages,  T data)
