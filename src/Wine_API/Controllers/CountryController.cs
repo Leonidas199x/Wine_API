@@ -36,6 +36,11 @@ namespace WineAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
+            if (page == 0 || pageSize == 0)
+            {
+                return BadRequest("Page and/or PageSize cannot be 0");
+            }
+
             var countries = await _countryService.GetAll(page, pageSize).ConfigureAwait(false);
 
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Country>>>(countries));
