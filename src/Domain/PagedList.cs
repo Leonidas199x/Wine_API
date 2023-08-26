@@ -8,9 +8,9 @@
 
         public int TotalPages { get; set; }
 
-        public T Data { get; set; }
-
         public int TotalRecords { get; set; }
+
+        public T Data { get; set; }
 
         public PagedList() { }
 
