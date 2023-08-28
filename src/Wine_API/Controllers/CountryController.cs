@@ -55,8 +55,18 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> Search([FromBody] DataContract.CountrySearch searchParams, [FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<IActionResult> Search(
+            [FromQuery] string name, 
+            [FromQuery] string isoCode, 
+            [FromQuery] int page, 
+            [FromQuery] int pageSize)
         {
+            var searchParams = new DataContract.CountrySearch
+            {
+                Name = name,
+                IsoCode = isoCode,
+            };
+
             var domainSearch = _mapper.Map<CountrySearch>(searchParams);
             var countries = await _countryService.Search(domainSearch, page, pageSize).ConfigureAwait(false);
            
