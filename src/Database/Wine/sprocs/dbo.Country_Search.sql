@@ -24,10 +24,14 @@ BEGIN
     DECLARE @TotalPages INT, @TotalRecords INT;
 
     SELECT @TotalPages = CEILING(CAST(COUNT(C.[ID]) AS FLOAT)/@PageSize) 
-    FROM [dbo].[Country] C;
+    FROM [dbo].[Country] C
+	 WHERE C.[Name] LIKE '%' + ISNULL(@Name, C.[Name]) + '%'
+		AND C.[IsoCode] LIKE '%' +  ISNULL(@IsoCode, C.[IsoCode]) + '%';
 
     SELECT @TotalRecords = COUNT(C.[ID])
-    FROM [dbo].[Country] C;
+    FROM [dbo].[Country] C
+	 WHERE C.[Name] LIKE '%' + ISNULL(@Name, C.[Name]) + '%'
+		AND C.[IsoCode] LIKE '%' +  ISNULL(@IsoCode, C.[IsoCode]) + '%';
 
     /*Paging info*/
     SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages], @TotalRecords [TotalRecords];
