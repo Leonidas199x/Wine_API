@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataContract;
 
 namespace Domain.Mappings
 {
@@ -15,6 +16,7 @@ namespace Domain.Mappings
             CreateMap<Country, DataContract.Country>().ReverseMap();
             CreateMap<CountryLookup, DataContract.CountryLookup>();
             CreateMap<Region.RegionLookup, DataContract.RegionLookup>();
+            CreateMap<DataContract.CountrySearch, Countries.CountrySearch>();
             #endregion
 
             #region Grape

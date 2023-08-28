@@ -48,6 +48,31 @@ namespace Domain.Countries
             return pagingInfo;
         }
 
+        public async Task<PagedList<IEnumerable<Country>>> Search(CountrySearch search, int page, int pageSize)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Name", search.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsoCode", search.IsoCode, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
+            var connection = new SqlConnection(_connectionString);
+
+            PagedList<IEnumerable<Country>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[Country_Search]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Country>>>();
+                pagingInfo.Data = await multi.ReadAsync<Country>();
+            }
+
+            return pagingInfo;
+        }
+
         public async Task<Country> Get(int Id)
         {
             var parameters = new DynamicParameters();

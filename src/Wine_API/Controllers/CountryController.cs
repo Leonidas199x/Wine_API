@@ -25,7 +25,7 @@ namespace WineAPI.Controllers
         public async Task<IActionResult> Get(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);
-            if(country == null)
+            if (country == null)
             {
                 return NotFound();
             }
@@ -54,17 +54,26 @@ namespace WineAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<DataContract.CountryLookup>>(lookup));
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromBody] DataContract.CountrySearch searchParams, [FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var domainSearch = _mapper.Map<CountrySearch>(searchParams);
+            var countries = await _countryService.Search(domainSearch, page, pageSize).ConfigureAwait(false);
+           
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Country>>>(countries));
+        }
+
         [HttpDelete("{countryId}")]
         public async Task<IActionResult> Delete(int countryId)
         {
             var country = await _countryService.Get(countryId).ConfigureAwait(false);
-            if(country == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
             var validationResult = await _countryService.Delete(countryId).ConfigureAwait(false);
-            if(validationResult.IsValid)
+            if (validationResult.IsValid)
             {
                 return NoContent();
             }
@@ -85,7 +94,7 @@ namespace WineAPI.Controllers
             var domainCountry = _mapper.Map<Domain.Country>(country);
 
             var validationResult = await _countryService.Insert(domainCountry).ConfigureAwait(false);
-            if(validationResult.IsValid)
+            if (validationResult.IsValid)
             {
                 return NoContent();
             }

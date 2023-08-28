@@ -21,5 +21,7 @@ namespace Domain.Countries
         Task<ValidationResult> Insert(Country country);
 
         Task<ValidationResult> Update(Country country);
+
+        Task<PagedList<IEnumerable<Country>>> Search(CountrySearch search, int page, int pageSize);
     }
 }
