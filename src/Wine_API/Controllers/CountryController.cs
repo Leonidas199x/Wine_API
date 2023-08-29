@@ -61,6 +61,11 @@ namespace WineAPI.Controllers
             [FromQuery] int page, 
             [FromQuery] int pageSize)
         {
+            if (page == 0 || pageSize == 0)
+            {
+                return BadRequest("Page and/or PageSize cannot be 0");
+            }
+
             var searchParams = new DataContract.CountrySearch
             {
                 Name = name,
