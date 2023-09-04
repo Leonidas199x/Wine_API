@@ -87,8 +87,14 @@ namespace WineAPI
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
+            //Get debug settings
+            services.Configure<DebugSettings>(Configuration.GetSection("DebugSettings"));
+
             //Register automapper
             services.AddAutoMapper(typeof(MappingProfile));
+
+            //Add Logging
+            services.AddLogging();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
