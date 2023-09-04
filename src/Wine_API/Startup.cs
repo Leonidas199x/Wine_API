@@ -126,6 +126,8 @@ namespace WineAPI
 
             app.UseStaticFiles();
 
+            app.UseMiddleware<ErrorLoggingMiddleware>();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
