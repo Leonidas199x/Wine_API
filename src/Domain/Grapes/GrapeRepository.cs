@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 using Dapper;
 using FluentValidation.Results;
+using Microsoft.Extensions.Hosting;
 
 namespace Domain.Grapes
 {
@@ -34,7 +36,10 @@ namespace Domain.Grapes
                 .ConfigureAwait(false))
             {
                 pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Grape>>>();
-                pagingInfo.Data = await multi.ReadAsync<Grape>();
+
+                var grapes = multi.Read<Grape, GrapeColour, Grape>(AddGrapeColour, splitOn: "ID");
+
+                pagingInfo.Data = grapes;
             }
 
             return pagingInfo;
@@ -45,12 +50,19 @@ namespace Domain.Grapes
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeId", grapeId, DbType.Int32, ParameterDirection.Input);
 
+            Grape grape;
             using var connection = new SqlConnection(_connectionString);
-            return await connection.QuerySingleOrDefaultAsync<Grape>(
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[Grape_GetById]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                grape = await multi.ReadSingleOrDefaultAsync<Grape>();
+                grape.Colour = await multi.ReadSingleOrDefaultAsync<GrapeColour>();
+            }
+
+            return grape;
         }
 
         public async Task<ValidationResult> InsertGrape(Grape grape)
@@ -58,7 +70,7 @@ namespace Domain.Grapes
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeName", grape.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@GrapeNote", grape.Note, DbType.String, ParameterDirection.Input);
-            parameters.Add("@GrapeColourId", grape.GrapeColourId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@GrapeColourId", grape.Colour.Id, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -79,11 +91,15 @@ namespace Domain.Grapes
 
             using var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<Grape>(
-                "[dbo].[Grape_GetByName]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+            return await connection.QueryAsync<Grape, GrapeColour, Grape>("[dbo].[Grape_GetByName]", (grape, grapeColour) => 
+            {
+                grape.Colour = grapeColour;
+                return grape;
+            },
+            parameters,
+            commandType: CommandType.StoredProcedure,
+            splitOn: "ID")
+            .ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> UpdateGrape(Grape grape)
@@ -91,7 +107,7 @@ namespace Domain.Grapes
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeId", grape.Id, DbType.String, ParameterDirection.Input);
             parameters.Add("@GrapeName", grape.Name, DbType.String, ParameterDirection.Input);
-            parameters.Add("@GrapeColourId", grape.GrapeColourId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@GrapeColourId", grape.Colour.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@GrapeNote", grape.Note, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
@@ -227,5 +243,15 @@ namespace Domain.Grapes
         #region Alternate Name
 
         #endregion
+
+        private Grape AddGrapeColour(Grape grape, GrapeColour grapeColour)
+        {
+            if (grape != null && grapeColour != null)
+            {
+                grape.Colour = grapeColour;
+            }
+
+            return grape;
+        }
     }
 }

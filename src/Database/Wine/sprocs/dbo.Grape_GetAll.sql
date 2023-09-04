@@ -20,7 +20,7 @@ BEGIN
     END
 
     DECLARE @TotalPages INT;
-    
+
     SELECT @TotalPages = CEILING(CAST(COUNT(G.[ID]) AS FLOAT)/@PageSize) 
     FROM [dbo].[Grape] G;
 
@@ -30,12 +30,12 @@ BEGIN
     SELECT
         G.[ID],
         G.[Name],
-        G.[GrapeColourID],
-        GC.[Colour],
         G.[Note],
         G.[DateCreated],
-        G.[DateUpdated]
-    FROM [dbo].[Grape] AS	G
-    LEFT JOIN [dbo].[GrapeColour] AS GC ON G.[GrapeColourID] = GC.[ID];
+        G.[DateUpdated],
+        GC.[ID],
+        GC.[Colour]
+    FROM [dbo].[Grape] AS G
+    INNER JOIN [dbo].[GrapeColour] AS GC ON G.[GrapeColourId] = GC.[ID];
 
 END
