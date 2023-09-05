@@ -34,17 +34,13 @@ namespace WineAPI
             }
             catch (Exception e)
             {
-                var error = new StringBuilder("An error occured, please review the folling message and stack trace:");
-                error.AppendLine($"Message: {e.Message}");
-                error.AppendLine($"Stack trace: {e.StackTrace}");
-
-                _logger.LogError($"Error occured: {error}");
+                LogError(e);
 
                 context.Response.Redirect("/Error");
             }
         }
 
-        public async Task<string> BuildInfo(HttpContext context) 
+        private async Task<string> BuildInfo(HttpContext context) 
         {
             var queryString = context.Request.QueryString.ToString();
             var body = await GetBody(context).ConfigureAwait(false);
@@ -68,7 +64,7 @@ namespace WineAPI
             return info.ToString();
         }
 
-        public async Task<string> GetBody(HttpContext context) 
+        private async Task<string> GetBody(HttpContext context) 
         {
             context.Request.EnableBuffering();
             var buffer = new byte[Convert.ToInt32(context.Request.ContentLength)];
@@ -80,6 +76,15 @@ namespace WineAPI
             context.Request.Body.Position = 0;
 
             return requestContent;
+        }
+
+        private void LogError(Exception e)
+        {
+            var error = new StringBuilder("An error occured, please review the folling message and stack trace:");
+            error.AppendLine($"Message: {e.Message}");
+            error.AppendLine($"Stack trace: {e.StackTrace}");
+
+            _logger.LogError($"Error occured: {error}");
         }
     }
 }
