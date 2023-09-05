@@ -80,7 +80,7 @@ namespace WineAPI
 
         private void LogError(Exception e)
         {
-            var error = new StringBuilder("An error occured, please review the folling message and stack trace:");
+            var error = new StringBuilder("An error occured, please review the following message and stack trace:");
             error.AppendLine($"Message: {e.Message}");
             error.AppendLine($"Stack trace: {e.StackTrace}");
 
