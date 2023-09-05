@@ -39,6 +39,8 @@ namespace WineAPI
                 error.AppendLine($"Stack trace: {e.StackTrace}");
 
                 _logger.LogError($"Error occured: {error}");
+
+                context.Response.Redirect("/Error");
             }
         }
 
