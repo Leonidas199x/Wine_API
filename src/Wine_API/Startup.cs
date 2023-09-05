@@ -21,6 +21,7 @@ using Domain.WineType;
 using Domain.Retailer;
 using Domain.Wine;
 using Domain.RetailerWine;
+using System.Diagnostics;
 
 namespace WineAPI
 {
@@ -117,11 +118,14 @@ namespace WineAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            CreateEventLogSource();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
+
+            app.UseMiddleware<ErrorLoggingMiddleware>();
 
             app.UseMvc(routes =>
             {
@@ -131,14 +135,20 @@ namespace WineAPI
             });
 
             app.UseStaticFiles();
-
-            app.UseMiddleware<ErrorLoggingMiddleware>();
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wine API");
             });
+        }
+
+        private static void CreateEventLogSource()
+        {
+            if (!EventLog.SourceExists(EventViewerInformation.Source))
+            {
+                EventLog.CreateEventSource(EventViewerInformation.Source, EventViewerInformation.Log);
+                return;
+            }
         }
     }
 }

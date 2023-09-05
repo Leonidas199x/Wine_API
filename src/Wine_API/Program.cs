@@ -17,7 +17,8 @@ namespace WineAPI
                  {
                      logging.AddEventLog(settings =>
                      {
-                         settings.SourceName = "Wine API Logs";
+                         settings.SourceName = EventViewerInformation.Source;
+                         settings.LogName = EventViewerInformation.Log;
                      });
                  })
                 .UseStartup<Startup>()
