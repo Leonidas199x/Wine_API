@@ -16,9 +16,9 @@ namespace Domain.Retailer
             _reatilerValidator = reatilerValidator;
         }
 
-        public async Task<IEnumerable<Retailer>> GetAll()
+        public async Task<PagedList<IEnumerable<Retailer>>> GetAll(int page, int pageSize)
         {
-            return await _retailerRepository.GetAll().ConfigureAwait(false);
+            return await _retailerRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Retailer> Get(int id)

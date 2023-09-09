@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -16,13 +17,27 @@ namespace Domain.Retailer
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Retailer>> GetAll()
+        public async Task<PagedList<IEnumerable<Retailer>>> GetAll(int page, int pageSize)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<Retailer>(
+            PagedList<IEnumerable<Retailer>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[Retailer_GetAll]",
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Retailer>>>();
+                pagingInfo.Data = await multi.ReadAsync<Retailer>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<Retailer> Get(int Id)

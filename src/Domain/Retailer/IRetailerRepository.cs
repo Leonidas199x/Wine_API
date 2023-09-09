@@ -6,9 +6,9 @@ namespace Domain.Retailer
 {
     public interface IRetailerRepository
     {
-        Task<IEnumerable<Retailer>> GetAll();
+        Task<PagedList<IEnumerable<Retailer>>> GetAll(int page, int pageSize);
 
-        Task<Retailer> Get(int Id);
+        Task<Retailer> Get(int id);
 
         Task<Retailer> GetByName(string name);
 

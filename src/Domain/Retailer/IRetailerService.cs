@@ -6,7 +6,7 @@ namespace Domain.Retailer
 {
     public interface IRetailerService
     {
-        Task<IEnumerable<Retailer>> GetAll();
+        Task<PagedList<IEnumerable<Retailer>>> GetAll(int page, int pageSize);
 
         Task<Retailer> Get(int id);
 
