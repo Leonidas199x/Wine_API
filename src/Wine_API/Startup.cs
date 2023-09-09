@@ -56,45 +56,12 @@ namespace WineAPI
 
             var dbConnectionString = Configuration.GetConnectionString(DatabaseConfigSection);
 
-            //repositories
-            services.AddTransient<ICountryRepository>(x => new CountryRepository(dbConnectionString));
-            services.AddTransient<IGrapeRepository>(x => new GrapeRepository(dbConnectionString));
-            services.AddTransient<IRegionRepository>(x => new RegionRepository(dbConnectionString));
-            services.AddTransient<IWineRegionRepository>(x => new WineRegionRepository(dbConnectionString));
-            services.AddTransient<IProducerRepository>(x => new ProducerRepository(dbConnectionString));
-            services.AddTransient<IVineyardEstateRepository>(x => new VineyardEstateRepository(dbConnectionString));
-            services.AddTransient<IDrinkerRepository>(x => new DrinkerRepository(dbConnectionString));
-            services.AddTransient<IQualityControlRepository>(x => new QualityControlRepository(dbConnectionString));
-            services.AddTransient<IStopperTypeRepository>(x => new StopperTypeRepository(dbConnectionString));
-            services.AddTransient<IWineTypeRepository>(x => new WineTypeRepository(dbConnectionString));
-            services.AddTransient<IRetailerRepository>(x => new RetailerRepository(dbConnectionString));
-            services.AddTransient<IWineRepository>(x => new WineRepository(dbConnectionString));
-            services.AddTransient<IRetailerWineRepository>(x => new RetailerWineRepository(dbConnectionString));
-
-            //services
-            services.AddTransient<ICountryService, CountryService>();
-            services.AddTransient<IGrapeService, GrapeService>();
-            services.AddTransient<IRegionService, RegionService>();
-            services.AddTransient<IWineRegionService, WineRegionService>();
-            services.AddTransient<IProducerService, ProducerService>();
-            services.AddTransient<IVineyardEstateService, VineyardEstateService>();
-            services.AddTransient<IDrinkerService, DrinkerService>();
-            services.AddTransient<IQualityControlService, QualityControlService>();
-            services.AddTransient<IStopperTypeService, StopperTypeService>();
-            services.AddTransient<IWineTypeService, WineTypeService>();
-            services.AddTransient<IRetailerService, RetailerService>();
-            services.AddTransient<IWineService, WineService>();
-            services.AddTransient<IRetailerWineService, RetailerWineService>();
+            services.RegisterUserRepositories(dbConnectionString);
+            services.RegisterUserServices();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
-
-            //Get debug settings
             services.Configure<DebugSettings>(Configuration.GetSection("DebugSettings"));
-
-            //Register automapper
             services.AddAutoMapper(typeof(MappingProfile));
-
-            //Add Logging
             services.AddLogging();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
