@@ -19,13 +19,16 @@ BEGIN
         SELECT @Offset = (@PageSize * (@Page - 1));
     END
 
-    DECLARE @TotalPages INT;
+    DECLARE @TotalPages INT, @TotalRecords INT;
     
     SELECT @TotalPages = CEILING(CAST(COUNT(D.[ID]) AS FLOAT)/@PageSize) 
     FROM [dbo].[Drinker] D;
 
+    SELECT @TotalRecords = COUNT(D.[ID])
+    FROM [dbo].[Drinker] D;
+
     /*Paging info*/
-    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages], @TotalRecords [TotalRecords];
 
     /*Data*/
     SELECT
