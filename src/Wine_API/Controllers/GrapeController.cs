@@ -4,6 +4,7 @@ using Domain.Grapes;
 using AutoMapper;
 using System.Collections.Generic;
 using FluentValidation.AspNetCore;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -23,9 +24,14 @@ namespace WineAPI.Controllers
 
         #region grape
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            var grapes = await _grapeService.GetAll(page, pageSize).ConfigureAwait(false);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var grapes = await _grapeService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
 
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Grape>>>(grapes));
         }

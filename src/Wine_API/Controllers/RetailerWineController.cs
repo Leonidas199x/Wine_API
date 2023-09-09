@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -34,9 +35,14 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            var retailerWineRecords = await _retailerWineService.GetAll(page, pageSize).ConfigureAwait(false);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var retailerWineRecords = await _retailerWineService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
 
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.RetailerWine>>>(retailerWineRecords));
         }

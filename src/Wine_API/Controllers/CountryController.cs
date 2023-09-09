@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using System.Collections.Generic;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -34,14 +35,14 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            if (page == 0 || pageSize == 0)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Page and/or PageSize cannot be 0");
+                return BadRequest(ModelState);
             }
 
-            var countries = await _countryService.GetAll(page, pageSize).ConfigureAwait(false);
+            var countries = await _countryService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
 
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Country>>>(countries));
         }
