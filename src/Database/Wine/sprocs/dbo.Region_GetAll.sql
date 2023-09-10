@@ -29,7 +29,7 @@ BEGIN
     LEFT JOIN [dbo].[Country] AS C ON R.[CountryId] = C.[ID];
 
     /*Paging info*/
-    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages], @TotalRecords [TotalRecords];
 
     /*Data*/
     SELECT
