@@ -42,7 +42,9 @@ namespace Domain.Region
                 .ConfigureAwait(false))
             {
                 pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Region>>>();
-                pagingInfo.Data = await multi.ReadAsync<Region>();
+
+                var regions = multi.Read<Region, Country, Region>(AddCountry, splitOn: "ID");
+                pagingInfo.Data = regions;
             }
 
             return pagingInfo;
@@ -96,7 +98,7 @@ namespace Domain.Region
             var parameters = new DynamicParameters();
             parameters.Add("@RegionName", region.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@RegionNote", region.Note, DbType.String, ParameterDirection.Input);
-            parameters.Add("@CountryID", region.CountryId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CountryID", region.Country.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Longitude", region.Longitude, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("@Latitude", region.Latitude, DbType.Decimal, ParameterDirection.Input);
 
@@ -118,7 +120,7 @@ namespace Domain.Region
             parameters.Add("@RegionId", region.Id, DbType.String, ParameterDirection.Input);
             parameters.Add("@RegionName", region.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@RegionNote", region.Note, DbType.String, ParameterDirection.Input);
-            parameters.Add("@CountryId", region.CountryId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CountryId", region.Country.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Longitude", region.Longitude, DbType.Decimal, ParameterDirection.Input);
             parameters.Add("@Latitude", region.Latitude, DbType.Decimal, ParameterDirection.Input);
 
@@ -146,6 +148,16 @@ namespace Domain.Region
                 parameters,
                 commandType: CommandType.StoredProcedure)
                 .ConfigureAwait(false);
+        }
+
+        private Region AddCountry(Region region, Country country)
+        {
+            if (region != null && country != null)
+            {
+                region.Country = country;
+            }
+
+            return region;
         }
     }
 }

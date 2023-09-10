@@ -10,7 +10,7 @@ namespace DataContract
 
         public string IsoCode { get; set; }
 
-        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
         public string Note { get; set; }
 

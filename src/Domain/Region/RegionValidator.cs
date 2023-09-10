@@ -21,10 +21,10 @@ namespace Domain.Region
                 .MaximumLength(50)
                 .WithMessage("Name cannot be more that 50 characters");
 
-            RuleFor(x => x.CountryId)
+            RuleFor(x => x.Country.Id)
                 .MustAsync(async (region, context, cancellation) =>
                 {
-                    return await CountryExists(region.CountryId).ConfigureAwait(false);
+                    return await CountryExists(region.Country.Id).ConfigureAwait(false);
                 })
                 .WithMessage("Country does not exists");
 
@@ -35,7 +35,7 @@ namespace Domain.Region
             RuleFor(x => x)
                 .MustAsync(async (region, context, cancellation) =>
                 {
-                    return await RegionWithNameExists(region.Name, region.CountryId).ConfigureAwait(false);
+                    return await RegionWithNameExists(region.Name, region.Country.Id).ConfigureAwait(false);
                 })
                 .When(x => x.IsNew)
                 .WithMessage($"Region with name already exists");
@@ -52,7 +52,7 @@ namespace Domain.Region
         private async Task<bool> RegionWithNameExists(string name, int countryId)
         {
             var region = await _regionRepository.GetByNameAndCountryId(name, countryId).ConfigureAwait(false);
-            return !region.Any(x => x.Name == name && x.CountryId == countryId);
+            return !region.Any(x => x.Name == name && x.Country.Id == countryId);
         }
 
         private async Task<bool> RegionWithIsoExists(string isoCode)
