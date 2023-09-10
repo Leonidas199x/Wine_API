@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 using Dapper;
 using FluentValidation.Results;
-using Microsoft.Extensions.Hosting;
 
 namespace Domain.Grapes
 {
