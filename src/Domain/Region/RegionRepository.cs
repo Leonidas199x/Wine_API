@@ -55,13 +55,19 @@ namespace Domain.Region
             var parameters = new DynamicParameters();
             parameters.Add("@RegionId", Id, DbType.Int32, ParameterDirection.Input);
 
+            Region region;
             using var connection = new SqlConnection(_connectionString);
-
-            return await connection.QuerySingleOrDefaultAsync<Region>(
-                "[dbo].[Region_GetById]",
+            using (var multi = await connection.QueryMultipleAsync(
+               "[dbo].[Region_GetById]",
                 parameters,
                 commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+               .ConfigureAwait(false))
+            {
+                region = await multi.ReadSingleOrDefaultAsync<Region>();
+                region.Country = await multi.ReadSingleOrDefaultAsync<Country>();
+            }
+
+            return region;
         }
 
         public async Task<IEnumerable<Region>> GetByNameAndCountryId(string name, int countryId)
@@ -70,13 +76,18 @@ namespace Domain.Region
             parameters.Add("@RegionName", name, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = new SqlConnection(_connectionString);
+            var connection = new SqlConnection(_connectionString);
+            IEnumerable<Region> regions;
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[Region_GetbyNameAndCountryId]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                regions = multi.Read<Region, Country, Region>(AddCountry, splitOn: "ID");
+            }
 
-            return await connection.QueryAsync<Region>(
-                "[dbo].[Region_GetByNameAndCountryId]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+            return regions;
         }
 
         public async Task<IEnumerable<Region>> GetByIsoCode(string isoCode)
@@ -84,13 +95,18 @@ namespace Domain.Region
             var parameters = new DynamicParameters();
             parameters.Add("@IsoCode", isoCode, DbType.String, ParameterDirection.Input);
 
-            using var connection = new SqlConnection(_connectionString);
+            var connection = new SqlConnection(_connectionString);
+            IEnumerable<Region> regions;
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[Region_GetbyIsoCode]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                regions = multi.Read<Region, Country, Region>(AddCountry, splitOn: "ID");
+            }
 
-            return await connection.QueryAsync<Region>(
-                "[dbo].[Region_GetByIsoCode]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+            return regions;
         }
 
         public async Task<ValidationResult> Insert(Region region)
