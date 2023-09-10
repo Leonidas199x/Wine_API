@@ -9,15 +9,21 @@ BEGIN
 
     SELECT
         R.[ID],
-        R.[CountryID],
         R.[Name],
         R.[IsoCode],
         R.[Note],
         R.[Longitude],
         R.[Latitude],
         R.[DateCreated],
-        R.[DateUpdated]
+        R.[DateUpdated],
+        C.[ID],
+        C.[Name],
+        C.[IsoCode],
+        C.[Note],
+        C.[DateCreated],
+        C.[DateUpdated]
     FROM [dbo].[Region] AS R
+    LEFT JOIN [dbo].[Country] AS C ON C.[ID] = R.[CountryID]
     WHERE R.[ID] = @RegionId;
 
 END
