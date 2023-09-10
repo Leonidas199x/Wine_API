@@ -109,7 +109,7 @@ namespace Domain.Retailer
             parameters.Add("@OrderRating", retailer.OrderRating, DbType.Int16, ParameterDirection.Input);
             parameters.Add("@DeliveryRating", retailer.DeliveryRating, DbType.Int16, ParameterDirection.Input);
             parameters.Add("@MaxCustomerRating", retailer.MaxCustomerRating, DbType.Int16, ParameterDirection.Input);
-            parameters.Add("@Note", retailer.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Note", retailer.Note, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
