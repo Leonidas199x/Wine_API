@@ -19,15 +19,6 @@ namespace Domain.Grapes
                 .MaximumLength(_maxLength)
                 .WithMessage($"Name cannot be more than {_maxLength} characters");
 
-            RuleFor(x => x.GrapeColourId)
-                .NotEmpty()
-                .WithMessage("Grape colour ID is required")
-                .MustAsync(async (grape, context, cancellation) =>
-                {
-                    return await GrapeColourExists(grape.GrapeColourId).ConfigureAwait(false);
-                })
-                .WithMessage($"Grape colour does not exists");
-
             RuleFor(x => x)
                 .MustAsync(async (grape, context, cancellation) =>
                 {
@@ -41,12 +32,6 @@ namespace Domain.Grapes
         {
             var nameResult = await _grapeRepository.GetByName(name).ConfigureAwait(false);
             return !nameResult.Any(x => x.Name == name);
-        }
-
-        private async Task<bool> GrapeColourExists(int id)
-        {
-            var grapeColourResult = await _grapeRepository.GetGrapeColour(id).ConfigureAwait(false);
-            return grapeColourResult != null;
         }
     }
 }

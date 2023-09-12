@@ -16,16 +16,31 @@ namespace Domain.Grapes
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Grape>> GetAll()
+        #region Grape
+        public async Task<PagedList<IEnumerable<Grape>>> GetAll(int page, int pageSize)
         {
-            using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<Grape>("[dbo].[Grape_GetAll]").ConfigureAwait(false);
-        }
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
 
-        public async Task<IEnumerable<GrapeLookup>> GetGrapeLookup()
-        {
-            using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<GrapeLookup>("[dbo].[Lookup_Grape]").ConfigureAwait(false);
+            var connection = new SqlConnection(_connectionString);
+
+            PagedList<IEnumerable<Grape>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[Grape_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Grape>>>();
+
+                var grapes = multi.Read<Grape, GrapeColour, Grape>(AddGrapeColour, splitOn: "ID");
+
+                pagingInfo.Data = grapes;
+            }
+
+            return pagingInfo;
         }
 
         public async Task<Grape> Get(int grapeId)
@@ -33,12 +48,19 @@ namespace Domain.Grapes
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeId", grapeId, DbType.Int32, ParameterDirection.Input);
 
+            Grape grape;
             using var connection = new SqlConnection(_connectionString);
-            return await connection.QuerySingleOrDefaultAsync<Grape>(
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[Grape_GetById]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                grape = await multi.ReadSingleOrDefaultAsync<Grape>();
+                grape.Colour = await multi.ReadSingleOrDefaultAsync<GrapeColour>();
+            }
+
+            return grape;
         }
 
         public async Task<ValidationResult> InsertGrape(Grape grape)
@@ -46,7 +68,7 @@ namespace Domain.Grapes
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeName", grape.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@GrapeNote", grape.Note, DbType.String, ParameterDirection.Input);
-            parameters.Add("@GrapeColourId", grape.GrapeColourId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@GrapeColourId", grape.Colour.Id, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -67,11 +89,15 @@ namespace Domain.Grapes
 
             using var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<Grape>(
-                "[dbo].[Grape_GetByName]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+            return await connection.QueryAsync<Grape, GrapeColour, Grape>("[dbo].[Grape_GetByName]", (grape, grapeColour) => 
+            {
+                grape.Colour = grapeColour;
+                return grape;
+            },
+            parameters,
+            commandType: CommandType.StoredProcedure,
+            splitOn: "ID")
+            .ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> UpdateGrape(Grape grape)
@@ -79,7 +105,7 @@ namespace Domain.Grapes
             var parameters = new DynamicParameters();
             parameters.Add("@GrapeId", grape.Id, DbType.String, ParameterDirection.Input);
             parameters.Add("@GrapeName", grape.Name, DbType.String, ParameterDirection.Input);
-            parameters.Add("@GrapeColourId", grape.GrapeColourId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@GrapeColourId", grape.Colour.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@GrapeNote", grape.Note, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
@@ -94,10 +120,45 @@ namespace Domain.Grapes
             return new ValidationResult();
         }
 
-        public async Task<IEnumerable<GrapeColour>> GetAllColours()
+        public async Task<ValidationResult> DeleteGrape(int grapeId)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@GrapeID", grapeId, DbType.Int32, ParameterDirection.Input);
+
             using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<GrapeColour>("[dbo].[GrapeColour_GetAll]").ConfigureAwait(false);
+
+            await connection.QueryAsync<Country>(
+                "[dbo].[Grape_Delete]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+
+            return new ValidationResult();
+        }
+        #endregion
+
+        #region Grape Colour
+        public async Task<PagedList<IEnumerable<GrapeColour>>> GetAllColours(int page, int pageSize)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
+            var connection = new SqlConnection(_connectionString);
+
+            PagedList<IEnumerable<GrapeColour>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[GrapeColour_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<GrapeColour>>>();
+                pagingInfo.Data = await multi.ReadAsync<GrapeColour>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<GrapeColour> GetGrapeColour(int Id)
@@ -174,6 +235,21 @@ namespace Domain.Grapes
             }
 
             return new ValidationResult();
+        }
+        #endregion
+
+        #region Alternate Name
+
+        #endregion
+
+        private Grape AddGrapeColour(Grape grape, GrapeColour grapeColour)
+        {
+            if (grape != null && grapeColour != null)
+            {
+                grape.Colour = grapeColour;
+            }
+
+            return grape;
         }
     }
 }

@@ -10,13 +10,18 @@ BEGIN
     SELECT
         G.[ID],
         G.[Name],
-        G.[GrapeColourID],
-        GC.[Colour],
         G.[Note],
         G.[DateCreated],
         G.[DateUpdated]
     FROM [dbo].[Grape] AS G
     LEFT JOIN [dbo].[GrapeColour] AS GC ON G.[GrapeColourID] = GC.[ID]
+    WHERE G.[ID] = @GrapeID;
+
+    SELECT
+        C.[ID],
+        C.[Colour]
+    FROM [dbo].[GrapeColour] AS C
+    LEFT JOIN [dbo].[Grape] AS G ON G.[GrapeColourID] = C.[ID]
     WHERE G.[ID] = @GrapeID;
 
 END

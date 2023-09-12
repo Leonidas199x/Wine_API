@@ -14,6 +14,14 @@ using Domain.Region;
 using Domain.WineRegion;
 using Domain.Producer;
 using Domain.VineyardEstate;
+using Domain.Drinker;
+using Domain.QualityControl;
+using Domain.StopperType;
+using Domain.WineType;
+using Domain.Retailer;
+using Domain.Wine;
+using Domain.RetailerWine;
+using System.Diagnostics;
 
 namespace WineAPI
 {
@@ -46,23 +54,15 @@ namespace WineAPI
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddTransient<ICountryRepository>(x => new CountryRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
-            services.AddTransient<IGrapeRepository>(x => new GrapeRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
-            services.AddTransient<IRegionRepository>(x => new RegionRepository(Configuration.GetConnectionString(DatabaseConfigSection)));
-            services.AddTransient<ICountryService, CountryService>();
-            services.AddTransient<IGrapeService, GrapeService>();
-            services.AddTransient<IRegionService, RegionService>();
-            services.AddTransient<IWineRegionService, WineRegionService>();
-            services.AddTransient<IWineRegionRepository, WineRegionRepository>();
-            services.AddTransient<IProducerService, ProducerService>();
-            services.AddTransient<IProducerRepository, ProducerRepository>();
-            services.AddTransient<IVineyardEstateService, VineyardEstateService>();
-            services.AddTransient<IVineyardEstateRepository, VineyardEstateRepository>();
+            var dbConnectionString = Configuration.GetConnectionString(DatabaseConfigSection);
+
+            services.RegisterUserRepositories(dbConnectionString);
+            services.RegisterUserServices();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
-
-            //Register automapper
+            services.Configure<DebugSettings>(Configuration.GetSection("DebugSettings"));
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddLogging();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -85,11 +85,14 @@ namespace WineAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            CreateEventLogSource();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
+
+            app.UseMiddleware<ErrorLoggingMiddleware>();
 
             app.UseMvc(routes =>
             {
@@ -99,12 +102,20 @@ namespace WineAPI
             });
 
             app.UseStaticFiles();
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wine API");
             });
+        }
+
+        private static void CreateEventLogSource()
+        {
+            if (!EventLog.SourceExists(EventViewerInformation.Source))
+            {
+                EventLog.CreateEventSource(EventViewerInformation.Source, EventViewerInformation.Log);
+                return;
+            }
         }
     }
 }

@@ -10,6 +10,8 @@
 
         public string Note { get; set; }
 
-        public string LocationRegionImage { get; set; }
+        public decimal? Longitude { get; set; }
+
+        public decimal? Latitude { get; set; }
     }
 }

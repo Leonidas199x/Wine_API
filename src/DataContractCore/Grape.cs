@@ -8,7 +8,7 @@ namespace DataContract
 
         public string Name { get; set; }
 
-        public int GrapeColourId { get; set; }
+        public GrapeColour Colour { get; set; }
 
         public string Note { get; set; }
 

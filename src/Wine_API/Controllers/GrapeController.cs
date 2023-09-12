@@ -4,6 +4,7 @@ using Domain.Grapes;
 using AutoMapper;
 using System.Collections.Generic;
 using FluentValidation.AspNetCore;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -11,24 +12,28 @@ namespace WineAPI.Controllers
     public class GrapeController : Controller
     {
         private readonly IGrapeService _grapeService;
-        private readonly IMapper _grapeMapper;
+        private readonly IMapper _mapper;
 
         public GrapeController(
             IGrapeService grapeService,
-            IMapper grapeMapper)
+            IMapper mapper)
         {
             _grapeService = grapeService;
-            _grapeMapper = grapeMapper;
+            _mapper = mapper;
         }
 
         #region grape
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            var grapes = await _grapeService.GetAll().ConfigureAwait(false);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            var outboundGrapes = _grapeMapper.Map<IEnumerable<DataContract.Grape>>(grapes);
-            return Ok(outboundGrapes);
+            var grapes = await _grapeService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
+
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Grape>>>(grapes));
         }
 
         [HttpGet("{grapeId}")]
@@ -40,14 +45,18 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundGrape = _grapeMapper.Map<DataContract.Grape>(grape);
-            return Ok(outboundGrape);
+            return Ok(_mapper.Map<DataContract.Grape>(grape));
         }
 
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.GrapeCreate grape)
         {
-            var domainGrape = _grapeMapper.Map<Domain.Grape>(grape);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainGrape = _mapper.Map<Domain.Grape>(grape);
 
             var validationResult = await _grapeService.InsertGrape(domainGrape).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -63,7 +72,12 @@ namespace WineAPI.Controllers
         [HttpPut("{grapeId}")]
         public async Task<IActionResult> UpdateGrape([FromBody] DataContract.Grape grape)
         {
-            var domainGrape = _grapeMapper.Map<Domain.Grape>(grape);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainGrape = _mapper.Map<Domain.Grape>(grape);
 
             var validationResult = await _grapeService.UpdateGrape(domainGrape).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -75,17 +89,34 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpDelete("{grapeId}")]
+        public async Task<IActionResult> DeleteGrape(int grapeId)
+        {
+            var grape = await _grapeService.Get(grapeId).ConfigureAwait(false);
+            if (grape == null)
+            {
+                return NotFound();
+            }
+
+            var validationResult = await _grapeService.DeleteGrape(grapeId).ConfigureAwait(false);
+            if(!validationResult.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
         #endregion
 
         #region colour
         [HttpGet]
         [Route("colour")]
-        public async Task<IActionResult> GetAllColours()
+        public async Task<IActionResult> GetAllColours([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var grapeColours = await _grapeService.GetAllColours().ConfigureAwait(false);
+            var grapeColours = await _grapeService.GetAllColours(page, pageSize).ConfigureAwait(false);
 
-            var outboundGrapeColours = _grapeMapper.Map<IEnumerable<DataContract.GrapeColour>>(grapeColours);
-            return Ok(outboundGrapeColours);
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.GrapeColour>>>(grapeColours));
         }
 
         [HttpGet]
@@ -98,15 +129,19 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundGrapeColours = _grapeMapper.Map<DataContract.GrapeColour>(grapeColour);
-            return Ok(outboundGrapeColours);
+            return Ok(_mapper.Map<DataContract.GrapeColour>(grapeColour));
         }
 
         [HttpPost]
         [Route("colour")]
         public async Task<IActionResult> InsertGrapeColour([FromBody] DataContract.GrapeColourCreate grapeColour)
         {
-            var domainGrapeColour = _grapeMapper.Map<GrapeColour>(grapeColour);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainGrapeColour = _mapper.Map<GrapeColour>(grapeColour);
 
             var validationResult = await _grapeService.InsertGrapeColour(domainGrapeColour).ConfigureAwait(false);
             if (validationResult.IsValid)
@@ -136,7 +171,12 @@ namespace WineAPI.Controllers
         [HttpPut("colour")]
         public async Task<IActionResult> UpdateGrapeColour([FromBody] DataContract.GrapeColour grapeColour)
         {
-            var domainGrapeColour = _grapeMapper.Map<GrapeColour>(grapeColour);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainGrapeColour = _mapper.Map<GrapeColour>(grapeColour);
 
             var validationResult = await _grapeService.UpdateGrapeColour(domainGrapeColour).ConfigureAwait(false);
             if (validationResult.IsValid)

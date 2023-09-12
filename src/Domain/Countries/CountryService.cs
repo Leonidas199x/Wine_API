@@ -18,9 +18,9 @@ namespace Domain.Countries
             _countryValidator = countryValidator;
         }
 
-        public async Task<IEnumerable<CountryLookup>> GetCountryLookup()
+        public async Task<IEnumerable<CountryLookup>> GetLookup()
         {
-            return await _countryRepository.GetCountryLookup().ConfigureAwait(false);
+            return await _countryRepository.GetLookup().ConfigureAwait(false);
         }
 
         public async Task<Country> Get(int countryId)
@@ -28,9 +28,14 @@ namespace Domain.Countries
             return await _countryRepository.Get(countryId).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<PagedList<IEnumerable<Country>>> GetAll(int page, int pageSize)
         {
-            return await _countryRepository.GetAll().ConfigureAwait(false);
+            return await _countryRepository.GetAll(page, pageSize).ConfigureAwait(false);
+        }
+
+        public async Task<PagedList<IEnumerable<Country>>> Search(CountrySearch search, int page, int pageSize)
+        {
+            return await _countryRepository.Search(search, page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Country>> GetByName(string name)

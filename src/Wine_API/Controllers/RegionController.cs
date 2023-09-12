@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -11,12 +12,12 @@ namespace WineAPI.Controllers
     public class RegionController : Controller
     {
         private readonly IRegionService _regionService;
-        private readonly IMapper _regionMapper;
+        private readonly IMapper _mapper;
 
-        public RegionController(IRegionService regionService, IMapper regionMapper)
+        public RegionController(IRegionService regionService, IMapper mapper)
         {
             _regionService = regionService;
-            _regionMapper = regionMapper;
+            _mapper = mapper;
         }
 
         [HttpGet("{regionId}")]
@@ -28,24 +29,39 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRegion = _regionMapper.Map<DataContract.Region>(region);
-
-            return Ok(outboundRegion);
+            return Ok(_mapper.Map<DataContract.Region>(region));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            var regions = await _regionService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _regionMapper.Map<IEnumerable<DataContract.Region>>(regions);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok(outboundRegions);
+            var regions = await _regionService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
+
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Region>>>(regions));
+        }
+
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _regionService.GetLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.RegionLookup>>(lookup));
         }
 
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.RegionCreate region)
         {
-            var domainRegion = _regionMapper.Map<Region>(region);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainRegion = _mapper.Map<Region>(region);
             var validationResult = await _regionService.Insert(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
@@ -60,7 +76,12 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.Region region)
         {
-            var domainRegion = _regionMapper.Map<Region>(region);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainRegion = _mapper.Map<Region>(region);
 
             var validationResult = await _regionService.Update(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)

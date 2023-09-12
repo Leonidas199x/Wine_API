@@ -16,9 +16,14 @@ namespace Domain.Region
             _regionValidator = regionValidator;
         }
 
-        public async Task<IEnumerable<Region>> GetAll()
+        public async Task<IEnumerable<RegionLookup>> GetLookup()
         {
-            return await _regionRepository.GetAll().ConfigureAwait(false);
+            return await _regionRepository.GetLookup().ConfigureAwait(false);
+        }
+
+        public async Task<PagedList<IEnumerable<Region>>> GetAll(int page, int pageSize)
+        {
+            return await _regionRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Region> Get(int regionId)

@@ -9,7 +9,6 @@ BEGIN
 
     SELECT
         R.[ID],
-        R.[CountryID],
         R.[Name],
         R.[IsoCode],
         R.[Note],
@@ -18,6 +17,17 @@ BEGIN
         R.[DateCreated],
         R.[DateUpdated]
     FROM [dbo].[Region] AS R
+    WHERE R.[ID] = @RegionId;
+
+    SELECT
+        C.[ID],
+        C.[Name],
+        C.[IsoCode],
+        C.[Note],
+        C.[DateCreated],
+        C.[DateUpdated]
+    FROM [dbo].[Country] AS C
+    INNER JOIN [dbo].[Region] AS R ON C.[ID] = R.[CountryID]
     WHERE R.[ID] = @RegionId;
 
 END

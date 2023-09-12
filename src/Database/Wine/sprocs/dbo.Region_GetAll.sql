@@ -3,21 +3,53 @@
 GO
 
 ALTER PROCEDURE [dbo].[Region_GetAll]
-
+    @Page INT = 1,
+    @PageSize INT = 10
 AS
 BEGIN
 
+    DECLARE @Offset INT;
+
+    IF(@Page = 1)
+    BEGIN 
+        SELECT @Offset = 0;
+    END
+    ELSE
+    BEGIN
+        SELECT @Offset = (@PageSize * (@Page - 1));
+    END
+
+    DECLARE @TotalPages INT, @TotalRecords INT;
+
+    SELECT @TotalPages = CEILING(CAST(COUNT(R.[ID]) AS FLOAT)/@PageSize) 
+    FROM [dbo].[Region] R;
+
+    SELECT @TotalRecords = COUNT(R.[ID])
+    FROM [dbo].[Region] AS R
+    LEFT JOIN [dbo].[Country] AS C ON R.[CountryId] = C.[ID];
+
+    /*Paging info*/
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages], @TotalRecords [TotalRecords];
+
+    /*Data*/
     SELECT
         R.[ID],
-        R.[CountryID],
         R.[Name],
         R.[IsoCode],
         R.[Note],
         R.[Longitude],
         R.[Latitude],
         R.[DateCreated],
-        R.[DateUpdated]
+        R.[DateUpdated],
+        C.[ID],
+        C.[Name],
+        C.[IsoCode],
+        C.[Note],
+        C.[DateCreated],
+        C.[DateUpdated]
     FROM [dbo].[Region] AS R
-    ORDER BY R.[Name] ASC;
+    LEFT JOIN [dbo].[Country] AS C ON R.[CountryId] = C.[ID]
+    ORDER BY R.[Name] ASC
+    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 END

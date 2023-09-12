@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -11,21 +12,27 @@ namespace WineAPI.Controllers
     public class VineyardEstateController : Controller
     {
         private readonly IVineyardEstateService _vineyardEstateService;
-        private readonly IMapper _vineyardEstateMapper;
+        private readonly IMapper _mapper;
 
-        public VineyardEstateController(IVineyardEstateService vineyardEstateService, IMapper vineyardEstateMapper)
+        public VineyardEstateController(
+            IVineyardEstateService vineyardEstateService, 
+            IMapper mapper)
         {
             _vineyardEstateService = vineyardEstateService;
-            _vineyardEstateMapper = vineyardEstateMapper;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            var vineyardEstates = await _vineyardEstateService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _vineyardEstateMapper.Map<IEnumerable<DataContract.Producer>>(vineyardEstates);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok(outboundRegions);
+            var vineyardEstates = await _vineyardEstateService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
+
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.VineyardEstate>>>(vineyardEstates));
         }
 
         [HttpGet("{vineyardEstateId}")]
@@ -37,15 +44,18 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundVineyardEstate = _vineyardEstateMapper.Map<DataContract.VineyardEstate>(vineyardEstate);
-
-            return Ok(outboundVineyardEstate);
+            return Ok(_mapper.Map<DataContract.VineyardEstate>(vineyardEstate));
         }
 
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.VineyardEstateCreate vineyardEstate)
         {
-            var domainVineyardEstate = _vineyardEstateMapper.Map<VineyardEstate>(vineyardEstate);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainVineyardEstate = _mapper.Map<VineyardEstate>(vineyardEstate);
             var validationResult = await _vineyardEstateService.Insert(domainVineyardEstate).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
@@ -60,7 +70,12 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.VineyardEstate vineyardEstate)
         {
-            var domainVineyardEstate = _vineyardEstateMapper.Map<VineyardEstate>(vineyardEstate);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainVineyardEstate = _mapper.Map<VineyardEstate>(vineyardEstate);
 
             var validationResult = await _vineyardEstateService.Update(domainVineyardEstate).ConfigureAwait(false);
             if (validationResult.IsValid)

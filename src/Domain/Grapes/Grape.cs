@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Grapes;
 
 namespace Domain
 {
@@ -8,8 +9,6 @@ namespace Domain
 
         public string Name { get; set; }
 
-        public int GrapeColourId { get; set; }
-
         public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }
@@ -17,5 +16,7 @@ namespace Domain
         public DateTime DateUpdated { get; set; }
 
         public bool IsNew => Id == default;
+
+        public GrapeColour Colour { get; set; }
     }
 }

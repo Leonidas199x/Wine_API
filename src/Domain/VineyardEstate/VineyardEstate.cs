@@ -10,12 +10,14 @@ namespace Domain.VineyardEstate
 
         public string Note { get; set; }
 
-        public decimal Longitude { get; set; }
+        public decimal? Longitude { get; set; }
 
-        public decimal Latitude { get; set; }
+        public decimal? Latitude { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         public DateTime DateUpdated { get; set; }
+
+        public bool IsNew => Id == default;
     }
 }

@@ -6,11 +6,11 @@ namespace Domain.Countries
 {
     public interface ICountryRepository
     {
-        Task<IEnumerable<CountryLookup>> GetCountryLookup();
+        Task<IEnumerable<CountryLookup>> GetLookup();
 
         Task<Country> Get(int countryId);
 
-        Task<IEnumerable<Country>> GetAll();
+        Task<PagedList<IEnumerable<Country>>> GetAll(int page, int pageSize);
 
         Task<IEnumerable<Country>> GetByName(string name);
 
@@ -21,5 +21,7 @@ namespace Domain.Countries
         Task<ValidationResult> Insert(Country country);
 
         Task<ValidationResult> Update(Country country);
+
+        Task<PagedList<IEnumerable<Country>>> Search(CountrySearch search, int page, int pageSize);
     }
 }

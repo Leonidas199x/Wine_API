@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace WineAPI
 {
@@ -12,6 +13,14 @@ namespace WineAPI
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                 .ConfigureLogging(logging =>
+                 {
+                     logging.AddEventLog(settings =>
+                     {
+                         settings.SourceName = EventViewerInformation.Source;
+                         settings.LogName = EventViewerInformation.Log;
+                     });
+                 })
                 .UseStartup<Startup>()
                 .Build();
     }

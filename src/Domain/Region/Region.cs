@@ -10,13 +10,13 @@ namespace Domain.Region
 
         public string IsoCode { get; set; }
 
-        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
         public string Note { get; set; }
 
-        public decimal Longitude { get; set; }
+        public decimal? Longitude { get; set; }
 
-        public decimal Latitude { get; set; }
+        public decimal? Latitude { get; set; }
 
         public DateTime DateCreated { get; set; }
 

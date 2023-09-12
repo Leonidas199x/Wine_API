@@ -3,18 +3,39 @@
 GO
 
 ALTER PROCEDURE [dbo].[Grape_GetAll]
+    @Page INT = 1,
+    @PageSize INT = 10
 AS
 BEGIN
+
+    DECLARE @Offset INT;
+
+    IF(@Page = 1)
+    BEGIN 
+        SELECT @Offset = 0;
+    END
+    ELSE
+    BEGIN
+        SELECT @Offset = (@PageSize * (@Page - 1));
+    END
+
+    DECLARE @TotalPages INT;
+
+    SELECT @TotalPages = CEILING(CAST(COUNT(G.[ID]) AS FLOAT)/@PageSize) 
+    FROM [dbo].[Grape] G;
+
+    /*Paging info*/
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
 
     SELECT
         G.[ID],
         G.[Name],
-        G.[GrapeColourID],
-        GC.[Colour],
         G.[Note],
         G.[DateCreated],
-        G.[DateUpdated]
-    FROM [dbo].[Grape] AS	G
-    LEFT JOIN [dbo].[GrapeColour] AS GC ON G.[GrapeColourID] = GC.[ID];
+        G.[DateUpdated],
+        GC.[ID],
+        GC.[Colour]
+    FROM [dbo].[Grape] AS G
+    INNER JOIN [dbo].[GrapeColour] AS GC ON G.[GrapeColourId] = GC.[ID];
 
 END

@@ -16,13 +16,27 @@ namespace Domain.Producer
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Producer>> GetAll()
+        public async Task<PagedList<IEnumerable<Producer>>> GetAll(int page, int pageSize)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<Producer>(
-                "[dbo].[Producer_GetAll]",
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+            PagedList<IEnumerable<Producer>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                 "[dbo].[Producer_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<Producer>>>();
+                pagingInfo.Data = await multi.ReadAsync<Producer>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<Producer> Get(int Id)

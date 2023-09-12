@@ -8,7 +8,7 @@
         FOREIGN KEY REFERENCES [Retailer]([ID]),
     [Date] DATE NOT NULL,
     [Quantity] TINYINT NOT NULL,
-    [Notes] NVARCHAR(MAX) NULL,
+    [Note] NVARCHAR(MAX) NULL,
     [DateCreated] DATETIME2(3) NOT NULL,
     [DateUpdated] DATETIME2(3) NOT NULL
 );

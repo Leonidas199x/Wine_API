@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -11,21 +12,25 @@ namespace WineAPI.Controllers
     public class WineRegionController : Controller
     {
         private readonly IWineRegionService _wineRegionService;
-        private readonly IMapper _wineRegionMapper;
+        private readonly IMapper _mapper;
 
-        public WineRegionController(IWineRegionService wineRegionService, IMapper wineRegionMapper)
+        public WineRegionController(IWineRegionService wineRegionService, IMapper mapper)
         {
             _wineRegionService = wineRegionService;
-            _wineRegionMapper = wineRegionMapper;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            var wineRegions = await _wineRegionService.GetAll().ConfigureAwait(false);
-            var outboundRegions = _wineRegionMapper.Map<IEnumerable<DataContract.WineRegion>>(wineRegions);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok(outboundRegions);
+            var wineRegions = await _wineRegionService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
+
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.WineRegion>>>(wineRegions));
         }
 
         [HttpGet("{wineRegionId}")]
@@ -37,15 +42,18 @@ namespace WineAPI.Controllers
                 return NotFound();
             }
 
-            var outboundRegion = _wineRegionMapper.Map<DataContract.WineRegion>(wineRegion);
-
-            return Ok(outboundRegion);
+            return Ok(_mapper.Map<DataContract.WineRegion>(wineRegion));
         }
 
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.WineRegionCreate wineRegion)
         {
-            var domainWineRegion = _wineRegionMapper.Map<WineRegion>(wineRegion);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainWineRegion = _mapper.Map<WineRegion>(wineRegion);
             var validationResult = await _wineRegionService.Insert(domainWineRegion).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
@@ -60,7 +68,12 @@ namespace WineAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] DataContract.WineRegion wineRegion)
         {
-            var domainRegion = _wineRegionMapper.Map<WineRegion>(wineRegion);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainRegion = _mapper.Map<WineRegion>(wineRegion);
 
             var validationResult = await _wineRegionService.Update(domainRegion).ConfigureAwait(false);
             if (validationResult.IsValid)

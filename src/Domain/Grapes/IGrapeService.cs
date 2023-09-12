@@ -6,15 +6,20 @@ namespace Domain.Grapes
 {
     public interface IGrapeService
     {
+        #region grape
         Task<Grape> Get(int grapeId);
 
-        Task<IEnumerable<Grape>> GetAll();
+        Task<PagedList<IEnumerable<Grape>>> GetAll(int page, int pageSize);
 
         Task<ValidationResult> InsertGrape(Grape grape);
 
         Task<ValidationResult> UpdateGrape(Grape grape);
 
-        Task<IEnumerable<GrapeColour>> GetAllColours();
+        Task<ValidationResult> DeleteGrape(int grapeId);
+        #endregion
+
+        #region GrapeColour
+        Task<PagedList<IEnumerable<GrapeColour>>> GetAllColours(int page, int pageSize);
 
         Task<GrapeColour> GetGrapeColour(int id);
 
@@ -23,5 +28,6 @@ namespace Domain.Grapes
         Task DeleteGrapeColour(int grapeColourId);
 
         Task<ValidationResult> UpdateGrapeColour(GrapeColour grapeColour);
+        #endregion
     }
 }
