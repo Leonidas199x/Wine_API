@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[VinyardEstate]
+﻿CREATE TABLE [dbo].[VineyardEstate]
 (
     [ID] INT IDENTITY(1,1) NOT NULL
         PRIMARY KEY,
