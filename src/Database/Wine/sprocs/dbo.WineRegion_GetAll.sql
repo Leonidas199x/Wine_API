@@ -19,13 +19,16 @@ BEGIN
         SELECT @Offset = (@PageSize * (@Page - 1));
     END
 
-    DECLARE @TotalPages INT;
-    
-    SELECT @TotalPages = CEILING(CAST(COUNT(WT.[ID]) AS FLOAT)/@PageSize) 
-    FROM [dbo].[WineRegion] WT;
+    DECLARE @TotalPages INT, @TotalRecords INT;
+
+    SELECT @TotalPages = CEILING(CAST(COUNT(WR.[ID]) AS FLOAT)/@PageSize) 
+    FROM [dbo].[WineRegion] AS WR;
+
+    SELECT @TotalRecords = COUNT(WR.[ID])
+    FROM [dbo].[WineRegion] AS WR;
 
     /*Paging info*/
-    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages], @TotalRecords [TotalRecords];
 
     SELECT
         WR.[ID],
