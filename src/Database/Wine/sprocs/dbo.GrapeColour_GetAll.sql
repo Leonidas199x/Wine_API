@@ -19,13 +19,16 @@ BEGIN
         SELECT @Offset = (@PageSize * (@Page - 1));
     END
 
-    DECLARE @TotalPages INT;
+    DECLARE @TotalPages INT, @TotalRecords INT;
     
     SELECT @TotalPages = CEILING(CAST(COUNT(GC.[ID]) AS FLOAT)/@PageSize) 
-    FROM [dbo].[GrapeColour] GC;
+    FROM [dbo].[GrapeColour] AS GC;
+
+    SELECT @TotalRecords = COUNT(GC.[ID])
+    FROM [dbo].[GrapeColour] AS GC;
 
     /*Paging info*/
-    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages], @TotalRecords [TotalRecords];
 
     SET NOCOUNT ON;
 
