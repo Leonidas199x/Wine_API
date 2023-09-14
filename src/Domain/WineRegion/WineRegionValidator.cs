@@ -10,7 +10,7 @@ namespace Domain.WineRegion
                 .NotEmpty()
                 .WithMessage("Name is required");
 
-            RuleFor(x => x.RegionId)
+            RuleFor(x => x.Region.Id)
                 .NotEmpty()
                 .WithMessage("RegionId is required");
         }
