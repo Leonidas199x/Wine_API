@@ -42,9 +42,13 @@ BEGIN
         R.[Note],
         R.[Latitude],
         R.[Longitude],
+        R.[DateCreated],
+        R.[DateUpdated],
         C.[ID],
         C.[Name],
-        C.[IsoCode]
+        C.[IsoCode],
+        C.[DateCreated],
+        C.[DateUpdated]
     FROM [dbo].[WineRegion] AS WR
     INNER JOIN [dbo].[Region] AS R ON R.[ID] = WR.[RegionId]
     INNER JOIN [dbo].[Country] AS C ON C.[ID] = R.[CountryId]
