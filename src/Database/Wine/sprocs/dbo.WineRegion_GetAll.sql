@@ -33,11 +33,21 @@ BEGIN
     SELECT
         WR.[ID],
         WR.[Name],
-        WR.[RegionId],
         WR.[Note],
         WR.[DateCreated],
-        WR.[DateUpdated]
+        WR.[DateUpdated],
+        R.[ID],
+        R.[Name],
+        R.[IsoCode],
+        R.[Note],
+        R.[Latitude],
+        R.[Longitude],
+        C.[ID],
+        C.[Name],
+        C.[IsoCode]
     FROM [dbo].[WineRegion] AS WR
+    INNER JOIN [dbo].[Region] AS R ON R.[ID] = WR.[RegionId]
+    INNER JOIN [dbo].[Country] AS C ON C.[ID] = R.[CountryId]
     ORDER BY WR.[Name] ASC
     OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
