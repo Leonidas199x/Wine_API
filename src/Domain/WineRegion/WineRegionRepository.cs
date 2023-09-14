@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Dapper;
 using FluentValidation.Results;
@@ -33,7 +34,9 @@ namespace Domain.WineRegion
                 .ConfigureAwait(false))
             {
                 pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<WineRegion>>>();
-                pagingInfo.Data = await multi.ReadAsync<WineRegion>();
+
+                var regions = multi.Read<WineRegion, Region.Region, Country, WineRegion>(AddRegion, splitOn: "ID");
+                pagingInfo.Data = regions;
             }
 
             return pagingInfo;
@@ -57,7 +60,7 @@ namespace Domain.WineRegion
         {
             var parameters = new DynamicParameters();
             parameters.Add("@Name", wineRegion.Name, DbType.String, ParameterDirection.Input);
-            parameters.Add("@RegionId", wineRegion.RegionId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@RegionId", wineRegion.Region.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@CountryID", wineRegion.Note, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
@@ -77,7 +80,7 @@ namespace Domain.WineRegion
             var parameters = new DynamicParameters();
             parameters.Add("@ID", wineRegion.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Name", wineRegion.Name, DbType.String, ParameterDirection.Input);
-            parameters.Add("@RegionId", wineRegion.RegionId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@RegionId", wineRegion.Region.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Note", wineRegion.Note, DbType.String, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
@@ -104,6 +107,21 @@ namespace Domain.WineRegion
                 parameters,
                 commandType: CommandType.StoredProcedure)
                 .ConfigureAwait(false);
+        }
+
+        private WineRegion AddRegion(WineRegion wineRegion, Region.Region region, Country country)
+        {
+            if (wineRegion != null && region != null)
+            {
+                wineRegion.Region = region;
+            }
+
+            if (region != null && country != null) 
+            {
+                region.Country = country;
+            }
+
+            return wineRegion;
         }
     }
 }
