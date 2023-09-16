@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataContract;
 
 namespace Domain.Mappings
 {
@@ -81,6 +82,10 @@ namespace Domain.Mappings
             #region Vineyard estate
             CreateMap<VineyardEstate.VineyardEstate, DataContract.VineyardEstate>().ReverseMap();
             CreateMap<DataContract.VineyardEstateCreate, VineyardEstate.VineyardEstate>();
+            #endregion
+
+            #region WineHeader
+            CreateMap<WineHeader, DataContract.WineHeader>().ReverseMap();
             #endregion
         }
     }
