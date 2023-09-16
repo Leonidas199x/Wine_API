@@ -7,19 +7,19 @@ namespace DataContract
     {
         public int Id { get; set; }
 
-        public int ProducerId { get; set; }
+        public string Description { get; set; }
 
-        public int RegionId { get; set; }
+        public Producer Producer { get; set; }
+
+        public Region Region { get; set; }
 
         public int Vintage { get; set; }
 
-        public int QualityControlId { get; set; }
+        public QualityControl QualityControl { get; set; }
 
-        public int VineyardEstateId { get; set; }
+        public VineyardEstate VineyardEstate { get; set; }
 
-        public int WineTypeId { get; set; }
-
-        public string Description { get; set; }
+        public WineType WineType { get; set; }
 
         public decimal Abv { get; set; }
 
@@ -27,7 +27,7 @@ namespace DataContract
 
         public int InventoryLevel { get; set; }
 
-        public int ExclusiveRetailerId { get; set; }
+        public Retailer ExclusiveRetailer { get; set; }
 
         public DateTime DateCreated { get; set; }
 

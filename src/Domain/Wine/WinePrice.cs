@@ -6,8 +6,6 @@ namespace Domain.Wine
     {
         public int Id { get; set; }
 
-        public int WineId { get; set; }
-
         public DateTime EffectiveDate { get; set; }
 
         public decimal FullPrice { get; set; }

@@ -6,9 +6,7 @@ namespace DataContract
     {
         public int Id { get; set; }
 
-        public int WineId { get; set; }
-
-        public int RetailerId { get; set; }
+        public Retailer Retailer { get; set; }
 
         public DateTime Date { get; set; }
 

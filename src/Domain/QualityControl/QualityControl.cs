@@ -10,7 +10,7 @@ namespace Domain.QualityControl
 
         public string Note { get; set; }
 
-        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
         public DateTime DateCreated { get; set; }
 

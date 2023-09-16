@@ -8,19 +8,19 @@ namespace Domain.Wine
     {
         public int Id { get; set; }
 
-        public int ProducerId { get; set; }
+        public string Description { get; set; }
 
-        public int RegionId { get; set; }
+        public Producer.Producer Producer { get; set; }
+
+        public Region.Region Region { get; set; }
 
         public int Vintage { get; set; }
 
-        public int QualityControlId { get; set; }
+        public QualityControl.QualityControl QualityControl { get; set; }
 
-        public int VineyardEstateId { get; set; }
+        public VineyardEstate.VineyardEstate VineyardEstate { get; set; }
 
-        public int WineTypeId { get; set; }
-
-        public string Description { get; set; }
+        public WineType.WineType WineType { get; set; }
 
         public decimal Abv { get; set; }
 
@@ -28,7 +28,7 @@ namespace Domain.Wine
 
         public int InventoryLevel { get; set; }
 
-        public int ExclusiveRetailerId { get; set; }
+        public Retailer.Retailer ExclusiveRetailer { get; set; }
 
         public DateTime DateCreated { get; set; }
 
