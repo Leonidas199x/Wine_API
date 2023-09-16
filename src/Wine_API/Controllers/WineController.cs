@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Domain.Wine;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -17,8 +19,21 @@ namespace WineAPI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var vineyardEstates = await _wineService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
+
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.WineHeader>>>(vineyardEstates));
+        }
+
         [HttpGet("{wineId}")]
-        public async Task<IActionResult> GetWine(int wineId)
+        public async Task<IActionResult> Get(int wineId)
         {
             var wine = await _wineService.Get(wineId).ConfigureAwait(false);
             if (wine == null)

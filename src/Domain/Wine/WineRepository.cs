@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Domain.Rating;
+using System.Collections.Generic;
 
 namespace Domain.Wine
 {
@@ -13,6 +14,29 @@ namespace Domain.Wine
         public WineRepository(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        public async Task<PagedList<IEnumerable<WineHeader>>> GetAll(int page, int pageSize)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
+            var connection = new SqlConnection(_connectionString);
+
+            PagedList<IEnumerable<WineHeader>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
+                 "[dbo].[Wine_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<WineHeader>>>();
+                pagingInfo.Data = await multi.ReadAsync<WineHeader>();
+            }
+
+            return pagingInfo;
         }
 
         public async Task<Wine> Get(int Id)

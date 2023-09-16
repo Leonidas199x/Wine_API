@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Domain.Wine
 {
@@ -9,6 +10,11 @@ namespace Domain.Wine
         public WineService(IWineRepository wineRepository)
         {
             _wineRepository = wineRepository;
+        }
+
+        public async Task<PagedList<IEnumerable<WineHeader>>> GetAll(int page, int pageSize)
+        {
+            return await _wineRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Wine> Get(int Id)
