@@ -24,7 +24,7 @@ BEGIN
     SELECT @TotalPages = CEILING(CAST(COUNT(WT.[ID]) AS FLOAT)/@PageSize) 
     FROM [dbo].[WineType] AS WT;
 
-    SELECT @TotalPages = COUNT(WT.[ID])
+    SELECT @TotalRecords = COUNT(WT.[ID])
     FROM [dbo].[WineType] AS WT;
 
     /*Paging info*/
