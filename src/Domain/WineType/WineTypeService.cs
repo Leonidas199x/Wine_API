@@ -28,7 +28,7 @@ namespace Domain.WineType
 
         public async Task<ValidationResult> Insert(WineType wineType)
         {
-            var validationResult = _wineTypeValidator.Validate(wineType);
+            var validationResult = await _wineTypeValidator.ValidateAsync(wineType).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -39,7 +39,7 @@ namespace Domain.WineType
 
         public async Task<ValidationResult> Update(WineType wineType)
         {
-            var validationResult = _wineTypeValidator.Validate(wineType);
+            var validationResult = await _wineTypeValidator.ValidateAsync(wineType).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
