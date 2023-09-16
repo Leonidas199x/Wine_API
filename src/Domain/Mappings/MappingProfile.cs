@@ -85,7 +85,7 @@ namespace Domain.Mappings
             #endregion
 
             #region WineHeader
-            CreateMap<WineHeader, DataContract.WineHeader>().ReverseMap();
+            CreateMap<Wine.WineHeader, DataContract.WineHeader>().ReverseMap();
             #endregion
         }
     }
