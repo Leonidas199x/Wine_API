@@ -59,7 +59,7 @@ namespace Domain.QualityControl
             var parameters = new DynamicParameters();
             parameters.Add("@Name", qualityControl.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@Note", qualityControl.Note, DbType.String, ParameterDirection.Input);
-            parameters.Add("@CountryID", qualityControl.CountryId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CountryID", qualityControl.Country.Id, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -79,7 +79,7 @@ namespace Domain.QualityControl
             parameters.Add("@QualityControlId", qualityControl.Id, DbType.String, ParameterDirection.Input);
             parameters.Add("@Name", qualityControl.Name, DbType.String, ParameterDirection.Input);
             parameters.Add("@Note", qualityControl.Note, DbType.String, ParameterDirection.Input);
-            parameters.Add("@CountryId", qualityControl.CountryId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@CountryId", qualityControl.Country.Id, DbType.Int32, ParameterDirection.Input);
 
             using (var connection = new SqlConnection(_connectionString))
             {

@@ -23,10 +23,10 @@ namespace Domain.QualityControl
                 .MaximumLength(50)
                 .WithMessage("Name cannot be more that 50 characters");
 
-            RuleFor(x => x.CountryId)
+            RuleFor(x => x.Country.Id)
                 .MustAsync(async (qualityControl, context, cancellation) =>
                 {
-                    return await CountryExists(qualityControl.CountryId)
+                    return await CountryExists(qualityControl.Country.Id)
                     .ConfigureAwait(false);
                 })
                 .WithMessage("Country does not exists");
@@ -34,7 +34,7 @@ namespace Domain.QualityControl
             RuleFor(x => x)
                 .MustAsync(async (qualityControl, context, cancellation) =>
                 {
-                    return await Exists(qualityControl.Name, qualityControl.CountryId)
+                    return await Exists(qualityControl.Name, qualityControl.Country.Id)
                     .ConfigureAwait(false);
                 })
                 .WithMessage("Quality Control with that name and country already exists"); ;
@@ -43,7 +43,7 @@ namespace Domain.QualityControl
         private async Task<bool> Exists(string name, int countryId)
         {
             var qualityControl = await _qualityControlRepository.GetByNameAndCountry(name, countryId).ConfigureAwait(false);
-            return !qualityControl.Any(x => x.Name == name && x.CountryId == countryId);
+            return !qualityControl.Any(x => x.Name == name && x.Country.Id == countryId);
         }
 
         private async Task<bool> CountryExists(int countryId)
