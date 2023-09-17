@@ -10,17 +10,7 @@ namespace Domain.Wine
 
         public string Description { get; set; }
 
-        public Producer.Producer Producer { get; set; }
-
-        public Region.Region Region { get; set; }
-
         public int Vintage { get; set; }
-
-        public QualityControl.QualityControl QualityControl { get; set; }
-
-        public VineyardEstate.VineyardEstate VineyardEstate { get; set; }
-
-        public WineType.WineType WineType { get; set; }
 
         public decimal Abv { get; set; }
 
@@ -28,11 +18,21 @@ namespace Domain.Wine
 
         public int InventoryLevel { get; set; }
 
-        public Retailer.Retailer ExclusiveRetailer { get; set; }
-
         public DateTime DateCreated { get; set; }
 
         public DateTime DateUpdated { get; set; }
+
+        public Producer.Producer Producer { get; set; }
+
+        public Region.Region Region { get; set; }
+
+        public QualityControl.QualityControl QualityControl { get; set; }
+
+        public VineyardEstate.VineyardEstate VineyardEstate { get; set; }
+
+        public WineType.WineType WineType { get; set; }
+
+        public Retailer.Retailer ExclusiveRetailer { get; set; }
 
         public IEnumerable<WineRating> Ratings { get; set; }
 
