@@ -4,16 +4,26 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Domain.Rating;
 using System.Collections.Generic;
+using Domain.Grapes;
+using Domain.Region;
+using System.Linq;
 
 namespace Domain.Wine
 {
     public class WineRepository : IWineRepository
     {
         private readonly string _connectionString;
+        private readonly IGrapeRepository _grapeRepository;
+        private readonly IRegionRepository _regionRepository;
 
-        public WineRepository(string connectionString)
+        public WineRepository(
+            string connectionString, 
+            IGrapeRepository grapeRepository, 
+            IRegionRepository regionRepository)
         {
             _connectionString = connectionString;
+            _grapeRepository = grapeRepository;
+            _regionRepository = regionRepository;
         }
 
         public async Task<PagedList<IEnumerable<WineHeader>>> GetAll(int page, int pageSize)
@@ -55,10 +65,16 @@ namespace Domain.Wine
             {
                 wine = await multi.ReadSingleOrDefaultAsync<Wine>();
 
-                if(wine != null)
+                if (wine != null)
                 {
+                    wine.Producer = await multi.ReadFirstOrDefaultAsync<Producer.Producer>();
+                    wine.Region = multi.Read<Region.Region, Country, Region.Region>(_regionRepository.AddCountry, splitOn: "ID").FirstOrDefault();
+                    wine.QualityControl = await multi.ReadFirstOrDefaultAsync<QualityControl.QualityControl>();
+                    wine.VineyardEstate = await multi.ReadFirstOrDefaultAsync<VineyardEstate.VineyardEstate>();
+                    wine.WineType = await multi.ReadFirstOrDefaultAsync<WineType.WineType>();
+                    wine.ExclusiveRetailer = await multi.ReadFirstOrDefaultAsync<Retailer.Retailer>();
                     wine.Ratings = await multi.ReadAsync<WineRating>();
-                    wine.Grapes = await multi.ReadAsync<Grape>();
+                    wine.Grapes = multi.Read<Grape, GrapeColour, Grape>(_grapeRepository.AddGrapeColour, splitOn: "ID");
                     wine.Prices = await multi.ReadAsync<WinePrice>();
                     wine.Issues = await multi.ReadAsync<Issue.Issue>();
                     wine.Receipts = await multi.ReadAsync<Receipt.Receipt>();
