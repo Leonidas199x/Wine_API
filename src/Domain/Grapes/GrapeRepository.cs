@@ -242,7 +242,7 @@ namespace Domain.Grapes
 
         #endregion
 
-        private Grape AddGrapeColour(Grape grape, GrapeColour grapeColour)
+        public Grape AddGrapeColour(Grape grape, GrapeColour grapeColour)
         {
             if (grape != null && grapeColour != null)
             {

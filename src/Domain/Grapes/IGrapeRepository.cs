@@ -29,5 +29,7 @@ namespace Domain.Grapes
         Task<ValidationResult> UpdateGrapeColour(GrapeColour grapeColour);
 
         Task<IEnumerable<GrapeColour>> GetByColour(string colour);
+
+        Grape AddGrapeColour(Grape grape, GrapeColour grapeColour);
     }
 }

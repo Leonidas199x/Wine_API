@@ -166,7 +166,7 @@ namespace Domain.Region
                 .ConfigureAwait(false);
         }
 
-        private Region AddCountry(Region region, Country country)
+        public Region AddCountry(Region region, Country country)
         {
             if (region != null && country != null)
             {

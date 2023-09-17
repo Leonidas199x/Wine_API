@@ -21,5 +21,7 @@ namespace Domain.Region
         Task<ValidationResult> Update(Region region);
 
         Task Delete(int regionId);
+
+        Region AddCountry(Region region, Country country);
     }
 }
