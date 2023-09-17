@@ -30,7 +30,10 @@ namespace WineAPI
             services.AddTransient<IStopperTypeRepository>(x => new StopperTypeRepository(dbConnectionString));
             services.AddTransient<IWineTypeRepository>(x => new WineTypeRepository(dbConnectionString));
             services.AddTransient<IRetailerRepository>(x => new RetailerRepository(dbConnectionString));
-            services.AddTransient<IWineRepository>(x => new WineRepository(dbConnectionString));
+            services.AddTransient<IWineRepository>(x => new WineRepository(
+                                                                            dbConnectionString, 
+                                                                            x.GetRequiredService<IGrapeRepository>(), 
+                                                                            x.GetRequiredService<IRegionRepository>()));
             services.AddTransient<IRetailerWineRepository>(x => new RetailerWineRepository(dbConnectionString));
         }
         public static void RegisterUserServices(this IServiceCollection services) 
