@@ -10,23 +10,111 @@ BEGIN
     /*Wine*/
     SELECT 
         W.[ID],
-        W.[ProducerID],
-        W.[RegionID],
-        W.[Vintage],
-        W.[QualityControlID],
-        W.[VinyardEstateID],
-        W.[WineTypeID],
         W.[Description],
+        W.[Vintage],
         W.[ABV],
         W.[Importer],
         W.[InventoryLevel],
-        W.[ExclusiveToRetailerID],
         W.[DateCreated],
         W.[DateUpdated]
     FROM [dbo].[Wine] AS W
     WHERE W.[ID] = @WineID;
 
-    /*Rating*/
+    /*Producer*/
+    SELECT
+        P.[ID],
+        P.[Name],
+        P.[Note],
+        P.[DateCreated],
+        P.[DateUpdated]
+    FROM [dbo].[Producer] AS P
+    INNER JOIN [dbo].[Wine] AS W ON W.[ProducerID] = P.[ID]
+    WHERE W.[ID] = @WineID;
+
+    /*Region*/
+    SELECT
+        R.[ID],
+        R.[Name],
+        R.[IsoCode],
+        R.[Note],
+        R.[Longitude],
+        R.[Latitude],
+        R.[DateCreated],
+        R.[DateUpdated],
+        C.[ID],
+        C.[Name],
+        C.[IsoCode],
+        C.[Note],
+        C.[DateCreated],
+        C.[DateUpdated]
+    FROM [dbo].[Region] AS R
+    INNER JOIN [dbo].[Country] AS C ON R.[CountryID] = C.[ID]
+    INNER JOIN [dbo].[Wine] AS W ON W.[RegionID] = R.[ID]
+    WHERE W.[ID] = @WineID;
+
+    /*QualityControl*/
+    SELECT
+        QC.[ID],
+        QC.[Name],
+        QC.[Note],
+        QC.[DateCreated],
+        QC.[DateUpdated],
+        C.[ID],
+        C.[Name],
+        C.[IsoCode],
+        C.[Note],
+        C.[DateCreated],
+        C.[DateUpdated]
+    FROM [dbo].[QualityControl] AS QC
+    INNER JOIN [dbo].[Country] AS C ON C.[ID] = QC.[CountryID]
+    INNER JOIN [dbo].[Wine] AS W ON W.[QualityControlID] = QC.[ID]
+    WHERE W.[ID] = @WineID;
+
+    /*Vineyard Estate*/
+    SELECT
+        VE.[ID],
+        VE.[Name],
+        VE.[Note],
+        VE.[Longitude],
+        VE.[Latitude],
+        VE.[DateCreated],
+        VE.[DateUpdated]
+    FROM [dbo].[VineyardEstate] AS VE
+    INNER JOIN [dbo].[Wine] AS W ON W.[VinyardEstateID] = VE.[ID]
+    WHERE W.[ID] = @WineID;
+
+    /*Wine Type*/
+    SELECT
+        WT.[ID],
+        WT.[Name],
+        WT.[Note],
+        WT.[DateCreated],
+        WT.[DateUpdated]
+    FROM [dbo].[WineType] AS WT
+    INNER JOIN [dbo].[Wine] AS W ON W.[WineTypeID] = WT.[ID]
+    WHERE W.[ID] = @WineID;
+
+    /*Retailer*/
+    SELECT
+        R.[ID],
+        R.[Name],
+        R.[MinimumPurchaseQuantity],
+        R.[IncrementQuantity],
+        R.[GenericDiscountPercentage],
+        R.[GenericDiscountName],
+        R.[WebsiteUrl],
+        R.[WebsiteRating],
+        R.[OrderRating],
+        R.[DeliveryRating],
+        R.[MaxCustomerRating],
+        R.[Note],
+        R.[DateCreated],
+        R.[DateUpdated]
+    FROM [dbo].[Retailer] AS R
+    INNER JOIN [dbo].[Wine] AS W ON W.[ExclusiveToRetailerID] = R.[ID]
+    WHERE W.[ID] = @WineID;
+
+    /*Ratings*/
     SELECT
         R.[Id],
         R.[DrinkerId],
@@ -40,11 +128,11 @@ BEGIN
     SELECT
         G.[ID],
         G.[Name],
-        G.[GrapeColourID],
-        GC.[Colour],
         G.[Note],
         G.[DateCreated],
-        G.[DateUpdated]
+        G.[DateUpdated],
+        GC.[ID],
+        GC.[Colour]
     FROM [dbo].[GrapeWineBridge] GW
     INNER JOIN [dbo].[Grape] G ON G.[Id] = GW.[GrapeId]
     LEFT JOIN [dbo].[GrapeColour] GC ON G.[GrapeColourID] = GC.[ID]
