@@ -44,7 +44,7 @@ namespace WineAPI.Controllers
 
             var qualityControllers = await _qualityControlService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
 
-            return Ok(_mapper.Map<IEnumerable<DataContract.QualityControl>>(qualityControllers));
+            return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.QualityControl>>>(qualityControllers));
         }
 
         [HttpPost]
