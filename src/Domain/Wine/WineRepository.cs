@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using Domain.Rating;
 using System.Collections.Generic;
 using Domain.Grapes;
 using Domain.Region;
@@ -77,8 +76,8 @@ namespace Domain.Wine
                     wine.VineyardEstate = await multi.ReadFirstOrDefaultAsync<VineyardEstate.VineyardEstate>();
                     wine.WineType = await multi.ReadFirstOrDefaultAsync<WineType.WineType>();
                     wine.ExclusiveRetailer = await multi.ReadFirstOrDefaultAsync<Retailer.Retailer>();
-                    wine.Ratings = await multi.ReadAsync<WineRating>();
-                    wine.Grapes = multi.Read<Grape, GrapeColour, Grape>(_grapeRepository.AddGrapeColour, splitOn: "ID");
+                    wine.Ratings = multi.Read<Rating.WineRating, Drinker.Drinker, Rating.WineRating>(AddDrinker, splitOn: "ID");
+                    wine.Grapes = multi.Read<Grape, Grapes.GrapeColour, Grape>(_grapeRepository.AddGrapeColour, splitOn: "ID");
                     wine.Prices = await multi.ReadAsync<WinePrice>();
                     wine.Issues = await multi.ReadAsync<Issue.Issue>();
                     wine.Receipts = await multi.ReadAsync<Receipt.Receipt>();
@@ -86,6 +85,16 @@ namespace Domain.Wine
             }
 
             return wine;
+        }
+
+        private Rating.WineRating AddDrinker(Rating.WineRating rating, Drinker.Drinker drinker)
+        {
+            if (rating != null && drinker != null)
+            {
+                rating.Drinker = drinker;
+            }
+
+            return rating;
         }
     }
 }
