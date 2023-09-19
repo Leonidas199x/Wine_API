@@ -20,8 +20,11 @@ BEGIN
     END
 
     DECLARE @TotalPages INT, @TotalRecords INT;
-    
+
     SELECT @TotalPages = CEILING(CAST(COUNT(QC.[ID]) AS FLOAT)/@PageSize) 
+    FROM [dbo].[QualityControl] QC;
+
+    SELECT @TotalRecords = COUNT(QC.[ID])
     FROM [dbo].[QualityControl] QC;
 
     /*Paging info*/
