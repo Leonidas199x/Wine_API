@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using DataContract;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Data;
@@ -136,7 +135,7 @@ namespace Domain.QualityControl
             return new ValidationResult();
         }
 
-        private QualityControl AddCountry(QualityControl qualityControl, Country country)
+        public QualityControl AddCountry(QualityControl qualityControl, Country country)
         {
             if (qualityControl != null && country != null)
             {

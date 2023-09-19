@@ -17,5 +17,7 @@ namespace Domain.QualityControl
         Task<ValidationResult> Update(QualityControl qualityControl);
 
         Task<ValidationResult> Delete(int qualityControlId);
+
+        QualityControl AddCountry(QualityControl qualityControl, Country country);
     }
 }
