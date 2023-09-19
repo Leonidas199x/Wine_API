@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Domain.Grapes;
 using Domain.Region;
 using System.Linq;
+using Domain.QualityControl;
 
 namespace Domain.Wine
 {
@@ -15,15 +16,18 @@ namespace Domain.Wine
         private readonly string _connectionString;
         private readonly IGrapeRepository _grapeRepository;
         private readonly IRegionRepository _regionRepository;
+        private readonly IQualityControlRepository _qualityControlRepository;
 
         public WineRepository(
-            string connectionString, 
-            IGrapeRepository grapeRepository, 
-            IRegionRepository regionRepository)
+            string connectionString,
+            IGrapeRepository grapeRepository,
+            IRegionRepository regionRepository,
+            IQualityControlRepository qualityControlRepository)
         {
             _connectionString = connectionString;
             _grapeRepository = grapeRepository;
             _regionRepository = regionRepository;
+            _qualityControlRepository = qualityControlRepository;
         }
 
         public async Task<PagedList<IEnumerable<WineHeader>>> GetAll(int page, int pageSize)
@@ -69,7 +73,7 @@ namespace Domain.Wine
                 {
                     wine.Producer = await multi.ReadFirstOrDefaultAsync<Producer.Producer>();
                     wine.Region = multi.Read<Region.Region, Country, Region.Region>(_regionRepository.AddCountry, splitOn: "ID").FirstOrDefault();
-                    wine.QualityControl = await multi.ReadFirstOrDefaultAsync<QualityControl.QualityControl>();
+                    wine.QualityControl = multi.Read<QualityControl.QualityControl, Country, QualityControl.QualityControl>(_qualityControlRepository.AddCountry, splitOn: "ID").FirstOrDefault();
                     wine.VineyardEstate = await multi.ReadFirstOrDefaultAsync<VineyardEstate.VineyardEstate>();
                     wine.WineType = await multi.ReadFirstOrDefaultAsync<WineType.WineType>();
                     wine.ExclusiveRetailer = await multi.ReadFirstOrDefaultAsync<Retailer.Retailer>();
