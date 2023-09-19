@@ -12,15 +12,19 @@ BEGIN
         QC.[Name],
         QC.[Note],
         QC.[DateCreated],
-        QC.[DateUpdated], 
+        QC.[DateUpdated]
+    FROM [dbo].[QualityControl] AS QC
+    WHERE QC.[ID] = @QualityControlId;
+
+    SELECT
         C.[ID],
         C.[Name],
         C.[IsoCode],
         C.[Note],
         C.[DateCreated],
         C.[DateUpdated]
-    FROM [dbo].[QualityControl] AS QC
-    INNER JOIN [dbo].[Country] AS C ON QC.[CountryID] = C.[ID]
+    FROM [dbo].[Country] AS C
+    INNER JOIN [dbo].[QualityControl] AS QC ON C.[ID] = QC.[CountryID]
     WHERE QC.[ID] = @QualityControlId;
 
 END
