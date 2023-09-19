@@ -79,7 +79,8 @@ namespace WineAPI.Controllers
                 .Map<QualityControl>(qualityControl);
 
             var validationResult = await _qualityControlService
-                .Update(domainQualityControl).ConfigureAwait(false);
+                                            .Update(domainQualityControl)
+                                            .ConfigureAwait(false);
             if (validationResult.IsValid)
             {
                 return NoContent();
