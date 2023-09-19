@@ -71,7 +71,7 @@ namespace Domain.QualityControl
             var connection = new SqlConnection(_connectionString);
 
             using (var multi = await connection.QueryMultipleAsync(
-                "[dbo].[QualityControl_GetAll]",
+                "[dbo].[QualityControl_GetByNameAndCountryId]",
                  parameters,
                  commandType: CommandType.StoredProcedure)
                 .ConfigureAwait(false))
