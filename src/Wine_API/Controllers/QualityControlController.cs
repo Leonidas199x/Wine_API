@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WineAPI.Models;
 
 namespace WineAPI.Controllers
 {
@@ -34,9 +35,14 @@ namespace WineAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PagingInformation info)
         {
-            var qualityControllers = await _qualityControlService.GetAll().ConfigureAwait(false);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var qualityControllers = await _qualityControlService.GetAll(info.Page, info.PageSize).ConfigureAwait(false);
 
             return Ok(_mapper.Map<IEnumerable<DataContract.QualityControl>>(qualityControllers));
         }

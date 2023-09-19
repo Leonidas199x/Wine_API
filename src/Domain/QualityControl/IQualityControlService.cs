@@ -6,7 +6,7 @@ namespace Domain.QualityControl
 {
     public interface IQualityControlService
     {
-        Task<IEnumerable<QualityControl>> GetAll();
+        Task<PagedList<IEnumerable<QualityControl>>> GetAll(int page, int pageSize);
 
         Task<QualityControl> Get(int id);
 

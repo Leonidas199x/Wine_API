@@ -18,9 +18,9 @@ namespace Domain.QualityControl
             _qualityControlValidator = qualityControlValidator;
         }
 
-        public async Task<IEnumerable<QualityControl>> GetAll()
+        public async Task<PagedList<IEnumerable<QualityControl>>> GetAll(int page, int pageSize)
         {
-            return await _qualityControlRepository.GetAll().ConfigureAwait(false);
+            return await _qualityControlRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<QualityControl> Get(int id)
