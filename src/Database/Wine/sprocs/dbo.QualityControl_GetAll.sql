@@ -19,22 +19,28 @@ BEGIN
         SELECT @Offset = (@PageSize * (@Page - 1));
     END
 
-    DECLARE @TotalPages INT;
+    DECLARE @TotalPages INT, @TotalRecords INT;
     
     SELECT @TotalPages = CEILING(CAST(COUNT(QC.[ID]) AS FLOAT)/@PageSize) 
     FROM [dbo].[QualityControl] QC;
 
     /*Paging info*/
-    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages];
+    SELECT @Page [Page], @PageSize [PageSize], @TotalPages [TotalPages], @TotalRecords [TotalRecords];
 
     SELECT
         QC.[ID],
         QC.[Name],
         QC.[Note],
-        QC.[CountryId],
         QC.[DateCreated],
-        QC.[DateUpdated]
+        QC.[DateUpdated],
+        C.[ID],
+        C.[Name],
+        C.[IsoCode],
+        C.[Note],
+        C.[DateCreated],
+        C.[DateUpdated]
     FROM [dbo].[QualityControl] AS QC
+    INNER JOIN [dbo].[Country] AS C ON QC.[CountryID] = C.[ID]
     ORDER BY QC.[Name] ASC
     OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
