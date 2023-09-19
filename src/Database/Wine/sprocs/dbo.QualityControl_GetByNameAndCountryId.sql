@@ -12,10 +12,16 @@ BEGIN
         QC.[ID],
         QC.[Name],
         QC.[Note],
-        QC.[CountryId],
         QC.[DateCreated],
-        QC.[DateUpdated]
+        QC.[DateUpdated],
+        C.[ID],
+        C.[Name],
+        C.[IsoCode],
+        C.[Note],
+        C.[DateCreated],
+        C.[DateUpdated]
     FROM [dbo].[QualityControl] AS QC
+    INNER JOIN [dbo].[Country] AS C ON C.[ID] = QC.[CountryID]
     WHERE QC.[Name] = @Name
         AND QC.[CountryId] = @CountryId;
 
