@@ -33,7 +33,8 @@ namespace WineAPI
             services.AddTransient<IWineRepository>(x => new WineRepository(
                                                                             dbConnectionString, 
                                                                             x.GetRequiredService<IGrapeRepository>(), 
-                                                                            x.GetRequiredService<IRegionRepository>()));
+                                                                            x.GetRequiredService<IRegionRepository>(),
+                                                                            x.GetRequiredService<IQualityControlRepository>()));
             services.AddTransient<IRetailerWineRepository>(x => new RetailerWineRepository(dbConnectionString));
         }
         public static void RegisterUserServices(this IServiceCollection services) 
