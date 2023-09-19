@@ -117,11 +117,13 @@ BEGIN
     /*Ratings*/
     SELECT
         R.[Id],
-        R.[DrinkerId],
         R.[WineId],
         R.[Rating],
-        R.[Note]
-    FROM [dbo].[Rating] R
+        R.[Note],
+        D.[ID],
+        D.[Name]
+    FROM [dbo].[Rating] AS R
+    INNER JOIN [dbo].[Drinker] AS D ON D.[ID] = R.[DrinkerId]
     WHERE R.[WineId] = @WineID;
 
     /*Grapes*/
