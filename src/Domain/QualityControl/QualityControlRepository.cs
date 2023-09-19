@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DataContract;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Data;
@@ -16,13 +17,30 @@ namespace Domain.QualityControl
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<QualityControl>> GetAll()
+        public async Task<PagedList<IEnumerable<QualityControl>>> GetAll(int page, int pageSize)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Page", page, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+
             var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<QualityControl>(
+            PagedList<IEnumerable<QualityControl>> pagingInfo;
+
+            using (var multi = await connection.QueryMultipleAsync(
                 "[dbo].[QualityControl_GetAll]",
-                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                pagingInfo = await multi.ReadSingleOrDefaultAsync<PagedList<IEnumerable<QualityControl>>>();
+
+                var qualityControls = multi.Read<QualityControl, Country, QualityControl>(AddCountry, splitOn: "ID");
+
+                pagingInfo.Data = qualityControls;
+            }
+
+            return pagingInfo;
         }
 
         public async Task<QualityControl> Get(int Id)
@@ -30,13 +48,19 @@ namespace Domain.QualityControl
             var parameters = new DynamicParameters();
             parameters.Add("@QualityControlId", Id, DbType.Int32, ParameterDirection.Input);
 
+            QualityControl qualityControl;
             using var connection = new SqlConnection(_connectionString);
-
-            return await connection.QuerySingleOrDefaultAsync<QualityControl>(
-                "[dbo].[QualityControl_GetById]",
+            using (var multi = await connection.QueryMultipleAsync(
+               "[dbo].[QualityControl_GetById]",
                 parameters,
                 commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+               .ConfigureAwait(false))
+            {
+                qualityControl = await multi.ReadSingleOrDefaultAsync<QualityControl>();
+                qualityControl.Country = await multi.ReadSingleOrDefaultAsync<Country>();
+            }
+
+            return qualityControl;
         }
 
         public async Task<IEnumerable<QualityControl>> GetByNameAndCountry(string name, int countryId)
@@ -45,13 +69,16 @@ namespace Domain.QualityControl
             parameters.Add("@Name", name, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryId", countryId, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = new SqlConnection(_connectionString);
+            var connection = new SqlConnection(_connectionString);
 
-            return await connection.QueryAsync<QualityControl>(
-                "[dbo].[QualityControl_GetByNameAndCountryId]",
-                parameters,
-                commandType: CommandType.StoredProcedure)
-                .ConfigureAwait(false);
+            using (var multi = await connection.QueryMultipleAsync(
+                "[dbo].[QualityControl_GetAll]",
+                 parameters,
+                 commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false))
+            {
+                return multi.Read<QualityControl, Country, QualityControl>(AddCountry, splitOn: "ID");
+            }
         }
 
         public async Task<ValidationResult> Insert(QualityControl qualityControl)
@@ -107,6 +134,16 @@ namespace Domain.QualityControl
                 .ConfigureAwait(false);
 
             return new ValidationResult();
+        }
+
+        private QualityControl AddCountry(QualityControl qualityControl, Country country)
+        {
+            if (qualityControl != null && country != null)
+            {
+                qualityControl.Country = country;
+            }
+
+            return qualityControl;
         }
     }
 }
