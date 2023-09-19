@@ -30,7 +30,9 @@ namespace Domain.QualityControl
 
         public async Task<ValidationResult> Insert(QualityControl qualityControl)
         {
-            var validationResult = _qualityControlValidator.Validate(qualityControl);
+            var validationResult = await _qualityControlValidator
+                                            .ValidateAsync(qualityControl)
+                                            .ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -41,7 +43,9 @@ namespace Domain.QualityControl
 
         public async Task<ValidationResult> Update(QualityControl qualityControl)
         {
-            var validationResult = _qualityControlValidator.Validate(qualityControl);
+            var validationResult = await _qualityControlValidator
+                                            .ValidateAsync(qualityControl)
+                                            .ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
