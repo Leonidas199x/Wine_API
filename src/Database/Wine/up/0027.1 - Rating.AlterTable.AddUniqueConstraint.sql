@@ -1,0 +1,1 @@
+﻿ALTER TABLE [dbo].[Rating] ADD CONSTRAINT UQ_Unique_WineId_DrinkerId UNIQUE ([WineId], [DrinkerId]);
