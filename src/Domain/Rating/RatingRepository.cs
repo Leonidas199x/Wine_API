@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 
 namespace Domain.Rating
 {
@@ -29,6 +30,26 @@ namespace Domain.Rating
             {
                 return multi.Read<WineRating, Drinker.Drinker, WineRating>(AddDrinker, splitOn: "ID");
             }
+        }
+
+        public async Task<ValidationResult> Insert(WineRating rating)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@DrinkerId", rating.Drinker.Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@WineId", rating.WineId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Rating", rating.Rating, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Note", rating.Note, DbType.String, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.QueryAsync(
+                    "[dbo].[Rating_Insert]",
+                    parameters,
+                    commandType: CommandType.StoredProcedure)
+                    .ConfigureAwait(false);
+            }
+
+            return new ValidationResult();
         }
 
         private WineRating AddDrinker(WineRating rating, Drinker.Drinker drinker)
