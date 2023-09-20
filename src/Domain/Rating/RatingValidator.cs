@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domain.Drinker;
+using FluentValidation;
 using System.Threading.Tasks;
 
 namespace Domain.Rating
@@ -6,10 +7,12 @@ namespace Domain.Rating
     public class RatingValidator : AbstractValidator<WineRating>
     {
         private readonly IRatingRepository _ratingRepository;
+        private readonly IDrinkerRepository _drinkerRepository;
 
-        public RatingValidator(IRatingRepository ratingRepository) 
+        public RatingValidator(IRatingRepository ratingRepository, IDrinkerRepository drinkerRepository) 
         {
             _ratingRepository = ratingRepository;
+            _drinkerRepository = drinkerRepository;
 
             RuleFor(x => x.Rating)
                 .NotEmpty()
@@ -34,16 +37,31 @@ namespace Domain.Rating
             RuleFor(x => x.WineId)
                 .MustAsync(async (rating, context, cancellation) =>
                 {
-                    return await RatingExists(rating)
-                    .ConfigureAwait(false);
+                    return await RatingExists(rating).ConfigureAwait(false);
                 })
                 .WithMessage("A rating for the specified wine, with the specified drinker already exists");
+
+            RuleFor(x => x.Drinker.Id)
+                .MustAsync(async (drinker, context, cancellation) =>
+                {
+                    return await DrinkerExists(drinker).ConfigureAwait(false);
+                })
+                .WithMessage("The specified drinker does not exists");
         }
 
         private async Task<bool> RatingExists(WineRating rating)
         {
             var result = await _ratingRepository
                                     .GetByWineIdAndDrinkerId(rating.WineId, rating.Drinker.Id)
+                                    .ConfigureAwait(false);
+
+            return result == null;
+        }
+
+        private async Task<bool> DrinkerExists(WineRating rating)
+        {
+            var result = await _drinkerRepository
+                                    .Get(rating.Drinker.Id)
                                     .ConfigureAwait(false);
 
             return result != null;
