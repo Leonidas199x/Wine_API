@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Rating;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,6 +30,27 @@ namespace WineAPI.Controllers
             var ratings = await _ratingService.GetByWineId(wineId).ConfigureAwait(false);
 
             return Ok(_mapper.Map<IEnumerable<DataContract.WineRating>>(ratings));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] DataContract.WineRating rating)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainRating = _mapper.Map<WineRating>(rating);
+
+            var validationResult = await _ratingService.Insert(domainRating).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
         }
     }
 }
