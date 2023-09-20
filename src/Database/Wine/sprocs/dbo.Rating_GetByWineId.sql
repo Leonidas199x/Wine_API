@@ -10,6 +10,7 @@ BEGIN
     SELECT 
         R.[ID],
         R.[WineId],
+        R.[Rating],
         R.[Note],
         D.[ID],
         D.[Name]
