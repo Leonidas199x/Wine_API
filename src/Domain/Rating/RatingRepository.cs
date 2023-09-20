@@ -32,6 +32,20 @@ namespace Domain.Rating
             }
         }
 
+        public async Task<WineRating> GetByWineIdAndDrinkerId(int wineId, int drinkerId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@WineId", wineId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@DrinkerId", drinkerId, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+            return await connection.QuerySingleOrDefaultAsync<WineRating>(
+                "[dbo].[Rating_GetByWineIdAndDrinkerId]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(WineRating rating)
         {
             var parameters = new DynamicParameters();
