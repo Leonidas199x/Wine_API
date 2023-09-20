@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
 
+        public int WineId { get; set; }
+
         public Drinker.Drinker Drinker { get; set; }
 
         public int Rating { get; set; }
