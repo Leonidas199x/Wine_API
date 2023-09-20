@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation.Results;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Domain.Rating
@@ -6,5 +7,7 @@ namespace Domain.Rating
     public interface IRatingService
     {
         Task<IEnumerable<WineRating>> GetByWineId(int wineId);
+
+        Task<ValidationResult> Insert(WineRating rating);
     }
 }
