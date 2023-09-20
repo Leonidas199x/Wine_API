@@ -47,7 +47,7 @@ namespace WineAPI
         {
             var builder = services.AddMvc();
 
-            //Add fluent validtion
+            //Add fluent validation
             builder.AddFluentValidation(fv =>
                 fv.RegisterValidatorsFromAssemblyContaining<RegionValidator>()
             .RegisterValidatorsFromAssemblyContaining<Startup>());
