@@ -54,6 +54,7 @@ namespace WineAPI
             services.AddTransient<IRetailerService, RetailerService>();
             services.AddTransient<IWineService, WineService>();
             services.AddTransient<IRetailerWineService, RetailerWineService>();
+            services.AddTransient<IRatingService, RatingService>();
         }
     }
 }
