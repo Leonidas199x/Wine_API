@@ -8,7 +8,7 @@
     <Product>WIne API</Product>
     <Description>Data classes used by the Wine API</Description>
     <Copyright>Spiral_Out</Copyright>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
   </PropertyGroup>
 
 </Project>
