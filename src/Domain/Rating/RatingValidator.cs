@@ -51,6 +51,11 @@ namespace Domain.Rating
 
         private async Task<bool> RatingExists(WineRating rating)
         {
+            if (!rating.IsNew)
+            {
+                return true;
+            }
+
             var result = await _ratingRepository
                                     .GetByWineIdAndDrinkerId(rating.WineId, rating.Drinker.Id)
                                     .ConfigureAwait(false);
