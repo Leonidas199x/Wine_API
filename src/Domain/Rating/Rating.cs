@@ -11,5 +11,7 @@
         public int Rating { get; set; }
 
         public string Note { get; set; }
+
+        public bool IsNew => Id == default;
     }
 }
