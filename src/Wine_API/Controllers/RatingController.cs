@@ -73,5 +73,19 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpDelete("{ratingId}")]
+        public async Task<IActionResult> Delete(int ratingId)
+        {
+            var qualityControl = await _ratingService.Get(ratingId).ConfigureAwait(false);
+            if (qualityControl == null)
+            {
+                return NotFound();
+            }
+
+            await _ratingService.Delete(ratingId).ConfigureAwait(false);
+
+            return NoContent();
+        }
     }
 }

@@ -10,8 +10,12 @@ namespace Domain.Rating
 
         Task<WineRating> GetByWineIdAndDrinkerId(int wineId, int drinkerId);
 
+        Task<WineRating> Get(int ratingId);
+
         Task<ValidationResult> Insert(WineRating rating);
 
         Task<ValidationResult> Update(WineRating rating);
+
+        Task<ValidationResult> Delete(int ratingId);
     }
 }

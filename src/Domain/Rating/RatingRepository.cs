@@ -32,6 +32,27 @@ namespace Domain.Rating
             }
         }
 
+        public async Task<WineRating> Get(int ratingId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", ratingId, DbType.Int32, ParameterDirection.Input);
+
+            WineRating rating;
+            using var connection = new SqlConnection(_connectionString);
+            using (var multi = await connection.QueryMultipleAsync(
+               "[dbo].[Rating_GetById]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+               .ConfigureAwait(false))
+            {
+                rating = await multi.ReadSingleOrDefaultAsync<WineRating>();
+                rating.Drinker = await multi.ReadSingleOrDefaultAsync<Drinker.Drinker>();
+            }
+
+            return rating;
+
+        }
+
         public async Task<WineRating> GetByWineIdAndDrinkerId(int wineId, int drinkerId)
         {
             var parameters = new DynamicParameters();
@@ -83,6 +104,22 @@ namespace Domain.Rating
                     commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
             }
+
+            return new ValidationResult();
+        }
+
+        public async Task<ValidationResult> Delete(int ratingId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", ratingId, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            await connection.QueryAsync<WineRating>(
+                "[dbo].[Rating_Delete]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
 
             return new ValidationResult();
         }

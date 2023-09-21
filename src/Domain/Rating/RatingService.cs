@@ -16,6 +16,11 @@ namespace Domain.Rating
             _ratingValidator = ratingValidator;
         }
 
+        public async Task<WineRating> Get(int ratingId)
+        {
+            return await _ratingRepository.Get(ratingId).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<WineRating>> GetByWineId(int wineId)
         {
             return await _ratingRepository.GetByWineId(wineId).ConfigureAwait(false);
@@ -45,6 +50,11 @@ namespace Domain.Rating
             }
 
             return await _ratingRepository.Update(rating).ConfigureAwait(false);
+        }
+
+        public async Task<ValidationResult> Delete(int ratingId)
+        {
+            return await _ratingRepository.Delete(ratingId).ConfigureAwait(false);
         }
     }
 }
