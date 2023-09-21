@@ -52,5 +52,26 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] DataContract.WineRating rating)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainRating = _mapper.Map<WineRating>(rating);
+
+            var validationResult = await _ratingService.Update(domainRating).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
+        }
     }
 }

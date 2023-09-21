@@ -33,5 +33,18 @@ namespace Domain.Rating
 
             return await _ratingRepository.Insert(rating).ConfigureAwait(false);
         }
+
+        public async Task<ValidationResult> Update(WineRating rating)
+        {
+            var validationResult = await _ratingValidator
+                                            .ValidateAsync(rating)
+                                            .ConfigureAwait(false);
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
+            return await _ratingRepository.Update(rating).ConfigureAwait(false);
+        }
     }
 }

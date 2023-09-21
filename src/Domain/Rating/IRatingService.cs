@@ -9,5 +9,7 @@ namespace Domain.Rating
         Task<IEnumerable<WineRating>> GetByWineId(int wineId);
 
         Task<ValidationResult> Insert(WineRating rating);
+
+        Task<ValidationResult> Update(WineRating rating);
     }
 }
