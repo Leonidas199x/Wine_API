@@ -39,6 +39,7 @@ namespace Domain.Issue
 
             return await connection.QueryAsync<Issue>(
                                         "[dbo].[Issue_GetByWineId]",
+                                        parameters,
                                         commandType: CommandType.StoredProcedure)
                                     .ConfigureAwait(false);
         }
