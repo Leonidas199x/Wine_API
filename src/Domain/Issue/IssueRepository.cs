@@ -66,6 +66,7 @@ namespace Domain.Issue
         public async Task<ValidationResult> Update(Issue issue)
         {
             var parameters = new DynamicParameters();
+            parameters.Add("@Id", issue.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@WineId", issue.WineId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Date", issue.Date, DbType.Date, ParameterDirection.Input);
             parameters.Add("@Quantity", issue.Quantity, DbType.Int32, ParameterDirection.Input);
