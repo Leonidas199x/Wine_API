@@ -1,6 +1,7 @@
 ﻿using Domain.Countries;
 using Domain.Drinker;
 using Domain.Grapes;
+using Domain.Issue;
 using Domain.Producer;
 using Domain.QualityControl;
 using Domain.Rating;
@@ -38,6 +39,7 @@ namespace WineAPI
                                                                             x.GetRequiredService<IQualityControlRepository>()));
             services.AddTransient<IRetailerWineRepository>(x => new RetailerWineRepository(dbConnectionString));
             services.AddTransient<IRatingRepository>(x => new RatingRepository(dbConnectionString));
+            services.AddTransient<IIssueRepository>(x => new IssueRepository(dbConnectionString));
         }
         public static void RegisterUserServices(this IServiceCollection services) 
         {
@@ -55,6 +57,7 @@ namespace WineAPI
             services.AddTransient<IWineService, WineService>();
             services.AddTransient<IRetailerWineService, RetailerWineService>();
             services.AddTransient<IRatingService, RatingService>();
+            services.AddTransient<IIssueService, IssueService>();
         }
     }
 }
