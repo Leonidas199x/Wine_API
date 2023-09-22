@@ -86,5 +86,19 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpDelete("{issueId}")]
+        public async Task<IActionResult> Delete(int issueId)
+        {
+            var issue = await _issueService.Get(issueId).ConfigureAwait(false);
+            if (issue == null)
+            {
+                return NotFound();
+            }
+
+            await _issueService.Delete(issueId).ConfigureAwait(false);
+
+            return NoContent();
+        }
     }
 }

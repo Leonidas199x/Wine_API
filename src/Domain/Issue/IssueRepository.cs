@@ -82,5 +82,19 @@ namespace Domain.Issue
 
             return new ValidationResult();
         }
+
+        public async Task Delete(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            await connection.QueryAsync<Issue>(
+                "[dbo].[Issue_Delete]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+        }
     }
 }

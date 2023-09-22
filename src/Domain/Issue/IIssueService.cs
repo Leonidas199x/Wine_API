@@ -13,5 +13,7 @@ namespace Domain.Issue
         Task<ValidationResult> Update(Issue issue);
 
         Task<ValidationResult> Insert(Issue issue);
+
+        Task Delete(int issueId);
     }
 }

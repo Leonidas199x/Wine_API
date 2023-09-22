@@ -49,5 +49,10 @@ namespace Domain.Issue
 
             return await _issueRepository.Insert(issue).ConfigureAwait(false);
         }
+
+        public async Task Delete(int issueId)
+        {
+            await _issueRepository.Delete(issueId).ConfigureAwait(false);
+        }
     }
 }
