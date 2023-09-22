@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace WineAPI.Controllers
 {
+    [Route("[controller]")]
     public class IssueController : Controller
     {
         private readonly IIssueService _issueService;
