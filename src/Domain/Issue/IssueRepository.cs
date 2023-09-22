@@ -19,7 +19,7 @@ namespace Domain.Issue
         public async Task<Issue> Get(int Id)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@IssueId", Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Id", Id, DbType.Int32, ParameterDirection.Input);
 
             using var connection = new SqlConnection(_connectionString);
 
