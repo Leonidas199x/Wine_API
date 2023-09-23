@@ -12,6 +12,8 @@ namespace Domain.Retailer
 
         Task<Retailer> GetByName(string name);
 
+        Task<IEnumerable<RetailerLookup>> GetLookup();
+
         Task<ValidationResult> Insert(Retailer retailer);
 
         Task<ValidationResult> Update(Retailer retailer);

@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -66,6 +65,15 @@ namespace Domain.Retailer
                 parameters,
                 commandType: CommandType.StoredProcedure)
                 .ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<RetailerLookup>> GetLookup()
+        {
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<RetailerLookup>(
+                "[dbo].[Retailer_Lookup]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
         }
 
         public async Task<ValidationResult> Insert(Retailer retailer)

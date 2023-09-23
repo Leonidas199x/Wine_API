@@ -10,6 +10,8 @@ namespace Domain.Retailer
 
         Task<Retailer> Get(int id);
 
+        Task<IEnumerable<RetailerLookup>> GetLookup();
+
         Task<ValidationResult> Insert(Retailer retailer);
 
         Task<ValidationResult> Update(Retailer retailer);

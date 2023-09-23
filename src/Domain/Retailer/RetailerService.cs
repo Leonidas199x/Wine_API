@@ -26,6 +26,11 @@ namespace Domain.Retailer
             return await _retailerRepository.Get(id).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<RetailerLookup>> GetLookup()
+        {
+            return await _retailerRepository.GetLookup().ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(Retailer retailer)
         {
             var validationResult = _reatilerValidator.Validate(retailer);
