@@ -10,6 +10,8 @@ namespace Domain.QualityControl
 
         Task<QualityControl> Get(int id);
 
+        Task<IEnumerable<QualityControlLookup>> GetLookup();
+
         Task<ValidationResult> Insert(QualityControl qualityControl);
 
         Task<ValidationResult> Update(QualityControl qualityControl);

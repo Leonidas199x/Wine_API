@@ -50,6 +50,7 @@ namespace Domain.Mappings
             #region QualityControl
             CreateMap<QualityControl.QualityControl, DataContract.QualityControl>().ReverseMap();
             CreateMap<QualityControl.QualityControl, DataContract.QualityControlCreate>().ReverseMap();
+            CreateMap<QualityControl.QualityControlLookup, DataContract.QualityControlLookup>().ReverseMap();
             #endregion
 
             #region StopperType

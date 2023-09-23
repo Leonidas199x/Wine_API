@@ -28,6 +28,11 @@ namespace Domain.QualityControl
             return await _qualityControlRepository.Get(id).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<QualityControlLookup>> GetLookup()
+        {
+            return await _qualityControlRepository.GetLookup().ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(QualityControl qualityControl)
         {
             var validationResult = await _qualityControlValidator

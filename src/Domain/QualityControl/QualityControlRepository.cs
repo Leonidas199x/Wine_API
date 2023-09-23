@@ -62,6 +62,15 @@ namespace Domain.QualityControl
             return qualityControl;
         }
 
+        public async Task<IEnumerable<QualityControlLookup>> GetLookup()
+        {
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<QualityControlLookup>(
+                "[dbo].[QualityControl_Lookup]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<QualityControl>> GetByNameAndCountry(string name, int countryId)
         {
             var parameters = new DynamicParameters();

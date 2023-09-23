@@ -47,6 +47,14 @@ namespace WineAPI.Controllers
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.QualityControl>>>(qualityControllers));
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _qualityControlService.GetLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.QualityControlLookup>>(lookup));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.QualityControlCreate qualityControl)
         {

@@ -12,6 +12,8 @@ namespace Domain.QualityControl
 
         Task<IEnumerable<QualityControl>> GetByNameAndCountry(string name, int countryId);
 
+        Task<IEnumerable<QualityControlLookup>> GetLookup();
+
         Task<ValidationResult> Insert(QualityControl qualityControl);
 
         Task<ValidationResult> Update(QualityControl qualityControl);
