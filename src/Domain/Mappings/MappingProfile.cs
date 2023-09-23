@@ -83,6 +83,7 @@ namespace Domain.Mappings
             #region Vineyard estate
             CreateMap<VineyardEstate.VineyardEstate, DataContract.VineyardEstate>().ReverseMap();
             CreateMap<DataContract.VineyardEstateCreate, VineyardEstate.VineyardEstate>();
+            CreateMap<VineyardEstate.VineyardEstateLookup, DataContract.VineyardEstateLookup>().ReverseMap();
             #endregion
 
             #region WineHeader

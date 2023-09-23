@@ -12,6 +12,8 @@ namespace Domain.VineyardEstate
 
         Task<VineyardEstate> GetByName(string name);
 
+        Task<IEnumerable<VineyardEstateLookup>> GetLookup();
+
         Task<ValidationResult> Insert(VineyardEstate vineyardEstate);
 
         Task<ValidationResult> Update(VineyardEstate vineyardEstate);

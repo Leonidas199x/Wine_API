@@ -67,6 +67,15 @@ namespace Domain.VineyardEstate
                 .ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<VineyardEstateLookup>> GetLookup()
+        {
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<VineyardEstateLookup>(
+                "[dbo].[VineyardEstate_Lookup]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(VineyardEstate vineyardEstate)
         {
             var parameters = new DynamicParameters();

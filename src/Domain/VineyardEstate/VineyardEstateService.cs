@@ -26,6 +26,11 @@ namespace Domain.VineyardEstate
             return await _vineyardEstateRepository.Get(vineyardEstateid).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<VineyardEstateLookup>> GetLookup()
+        {
+            return await _vineyardEstateRepository.GetLookup().ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(VineyardEstate vineyardEstate)
         {
             var validationResult = _vineyardEstateValdator.Validate(vineyardEstate);

@@ -10,6 +10,8 @@ namespace Domain.VineyardEstate
 
         Task<VineyardEstate> Get(int vineyardEstateid);
 
+        Task<IEnumerable<VineyardEstateLookup>> GetLookup();
+
         Task<ValidationResult> Insert(VineyardEstate vineyardEstate);
 
         Task<ValidationResult> Update(VineyardEstate vineyardEstate);
