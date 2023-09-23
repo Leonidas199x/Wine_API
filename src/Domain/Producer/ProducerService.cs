@@ -26,6 +26,11 @@ namespace Domain.Producer
             return await _producerRepository.Get(Id).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<ProducerLookup>> GetLookup()
+        {
+            return await _producerRepository.GetLookup().ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(Producer producer)
         {
             var validationResult = _producerValidator.Validate(producer);

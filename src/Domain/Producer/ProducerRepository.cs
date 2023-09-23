@@ -53,6 +53,15 @@ namespace Domain.Producer
                 .ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<ProducerLookup>> GetLookup()
+        {
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<ProducerLookup>(
+                "[dbo].[Producer_Lookup]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(Producer producer)
         {
             var parameters = new DynamicParameters();

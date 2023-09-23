@@ -39,6 +39,7 @@ namespace Domain.Mappings
             #region Producer
             CreateMap<Producer.Producer, DataContract.Producer>().ReverseMap();
             CreateMap<Producer.Producer, DataContract.ProducerCreate>().ReverseMap();
+            CreateMap<Producer.ProducerLookup, DataContract.ProducerLookup>().ReverseMap();
             #endregion
 
             #region Drinker

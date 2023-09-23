@@ -47,6 +47,14 @@ namespace WineAPI.Controllers
             return Ok(_mapper.Map<DataContract.Producer>(producer));
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _producerService.GetLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.ProducerLookup>>(lookup));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.ProducerCreate producer)
         {

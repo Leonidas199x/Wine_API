@@ -10,6 +10,8 @@ namespace Domain.Producer
 
         Task<Producer> Get(int Id);
 
+        Task<IEnumerable<ProducerLookup>> GetLookup();
+
         Task<ValidationResult> Insert(Producer producer);
 
         Task<ValidationResult> Update(Producer producer);
