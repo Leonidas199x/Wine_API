@@ -12,6 +12,8 @@ namespace Domain.WineType
 
         Task<WineType> GetByName(string name);
 
+        Task<IEnumerable<WineTypeLookup>> GetLookup();
+
         Task<ValidationResult> Insert(WineType wineType);
 
         Task<ValidationResult> Update(WineType wineType);

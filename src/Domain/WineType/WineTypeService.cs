@@ -26,6 +26,11 @@ namespace Domain.WineType
             return await _wineTypeRepository.Get(id).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<WineTypeLookup>> GetLookup()
+        {
+            return await _wineTypeRepository.GetLookup().ConfigureAwait(false);
+        }
+
         public async Task<ValidationResult> Insert(WineType wineType)
         {
             var validationResult = await _wineTypeValidator.ValidateAsync(wineType).ConfigureAwait(false);

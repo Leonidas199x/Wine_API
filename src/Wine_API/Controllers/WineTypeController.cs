@@ -45,6 +45,14 @@ namespace WineAPI.Controllers
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.WineType>>>(wineTypes));
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _wineTypeService.GetLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.WineTypeLookup>>(lookup));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] DataContract.WineTypeCreate wineType)
         {
