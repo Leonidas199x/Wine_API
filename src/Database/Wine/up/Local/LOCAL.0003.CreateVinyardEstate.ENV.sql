@@ -1,4 +1,4 @@
-﻿INSERT INTO [dbo].[VinyardEstate]
+﻿INSERT INTO [dbo].[VineyardEstate]
 (
     [Name],
     [DateCreated],
