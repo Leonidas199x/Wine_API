@@ -28,6 +28,7 @@ BEGIN
         @Note,
         @Longitude,
         @Latitude,
+        @RunDate,
         @RunDate
     )
 
