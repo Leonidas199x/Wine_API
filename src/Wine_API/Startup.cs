@@ -3,24 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Domain.Countries;
-using Domain.Grapes;
 using WineAPI.Models;
 using Microsoft.Extensions.Hosting;
 using System;
 using FluentValidation.AspNetCore;
 using Domain.Mappings;
 using Domain.Region;
-using Domain.WineRegion;
-using Domain.Producer;
-using Domain.VineyardEstate;
-using Domain.Drinker;
-using Domain.QualityControl;
-using Domain.StopperType;
-using Domain.WineType;
-using Domain.Retailer;
-using Domain.Wine;
-using Domain.RetailerWine;
 using System.Diagnostics;
 
 namespace WineAPI
