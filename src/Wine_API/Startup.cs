@@ -9,7 +9,7 @@ using System;
 using FluentValidation.AspNetCore;
 using Domain.Mappings;
 using Domain.Region;
-using System.Diagnostics;
+using System.Reflection;
 
 namespace WineAPI
 {
@@ -24,6 +24,7 @@ namespace WineAPI
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -93,6 +94,7 @@ namespace WineAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
+                c.RoutePrefix = string.Empty;
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wine API");
             });
         }
