@@ -10,6 +10,8 @@ using FluentValidation.AspNetCore;
 using Domain.Mappings;
 using Domain.Region;
 using System.Reflection;
+using System.Diagnostics;
+using FluentValidation;
 
 namespace WineAPI
 {
@@ -37,9 +39,9 @@ namespace WineAPI
             var builder = services.AddMvc();
 
             //Add fluent validation
-            builder.AddFluentValidation(fv =>
-                fv.RegisterValidatorsFromAssemblyContaining<RegionValidator>()
-            .RegisterValidatorsFromAssemblyContaining<Startup>());
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddFluentValidationClientsideAdapters();
+            builder.Services.AddValidatorsFromAssembly(typeof(RegionValidator).Assembly);
 
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
