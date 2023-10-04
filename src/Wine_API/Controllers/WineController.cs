@@ -46,7 +46,7 @@ namespace WineAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(DataContract.WineCreate wine)
+        public async Task<IActionResult> Post([FromBody] DataContract.WineCreate wine)
         {
             if (!ModelState.IsValid)
             {
