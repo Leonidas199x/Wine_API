@@ -4,7 +4,7 @@
         PRIMARY KEY,
     [ProducerID] INT NULL
         FOREIGN KEY REFERENCES [Producer]([ID]),
-    [RegionID] INT NULL
+    [RegionID] INT NOT NULL
         FOREIGN KEY REFERENCES [Region]([ID]),
     [Vintage] INT NULL,
     [QualityControlID] INT NULL
@@ -13,8 +13,8 @@
         FOREIGN KEY REFERENCES [VineyardEstate]([ID]),
     [WineTypeID] INT NULL
         FOREIGN KEY REFERENCES [WineType]([ID]),
-    [Description] NVARCHAR(100) NULL,
-    [ABV] DECIMAL(4, 2) NULL,
+    [Description] NVARCHAR(100) NOT NULL,
+    [ABV] DECIMAL(4, 2) NOT NULL,
     [Importer] NVARCHAR(25) NULL,
     [InventoryLevel] TINYINT NULL,
     [ExclusiveToRetailerID] INT NULL,
