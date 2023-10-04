@@ -53,8 +53,8 @@ namespace WineAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var domainVineyardEstate = _mapper.Map<Domain.Wine.WineCreate>(wine);
-            var validationResult = await _wineService.Insert(domainVineyardEstate).ConfigureAwait(false);
+            var domainWine = _mapper.Map<Domain.Wine.WineCreate>(wine);
+            var validationResult = await _wineService.Insert(domainWine).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
                 return NoContent();
