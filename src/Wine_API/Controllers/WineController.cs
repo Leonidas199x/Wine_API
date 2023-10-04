@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using DataContract;
-using Domain.VineyardEstate;
 using Domain.Wine;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
