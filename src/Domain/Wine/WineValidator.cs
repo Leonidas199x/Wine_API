@@ -9,8 +9,10 @@ namespace Domain.Wine
         private readonly int _descriptionLength = 100;
         private readonly IWineRepository _wineRepository;
 
-        public WineValidator()
+        public WineValidator(IWineRepository wineRepository)
         {
+            _wineRepository = wineRepository;
+
             RuleFor(x => x.Description)
                 .NotEmpty()
                 .NotNull()
