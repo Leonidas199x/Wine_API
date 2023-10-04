@@ -33,7 +33,7 @@ namespace Domain.Drinker
 
         public async Task<ValidationResult> Insert(Drinker drinker)
         {
-            var validationResult = _drinkerValidator.Validate(drinker);
+            var validationResult = await _drinkerValidator.ValidateAsync(drinker);
             if (!validationResult.IsValid)
             {
                 return validationResult;
