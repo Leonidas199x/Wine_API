@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using DataContract;
+using Domain.VineyardEstate;
 using Domain.Wine;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -42,6 +45,26 @@ namespace WineAPI.Controllers
             }
 
             return Ok(_mapper.Map<DataContract.Wine>(wine));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(DataContract.WineCreate wine)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainVineyardEstate = _mapper.Map<Domain.Wine.WineCreate>(wine);
+            var validationResult = await _wineService.Insert(domainVineyardEstate).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
         }
     }
 }
