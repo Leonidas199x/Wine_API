@@ -7,6 +7,7 @@ using Domain.Grapes;
 using Domain.Region;
 using System.Linq;
 using Domain.QualityControl;
+using FluentValidation.Results;
 
 namespace Domain.Wine
 {
@@ -85,6 +86,47 @@ namespace Domain.Wine
             }
 
             return wine;
+        }
+
+        public async Task<ValidationResult> Insert(WineCreate wine)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Description", wine.Description, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Importer", wine.Importer, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Abv", wine.Abv, DbType.Decimal, ParameterDirection.Input);
+            parameters.Add("@RegionId", wine.RegionId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ProducerId", wine.ProducerId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@QualityControlId", wine.QualityControlId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@VineyardEstateId", wine.VineyardEstateId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@WineTypeId", wine.WineTypeId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@InventoryLevel", wine.InventoryLevel, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@ExclusiveToRetailerId", wine.ExclusiveToRetailerId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Vintage", wine.Vintage, DbType.Int32, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.QueryAsync(
+                    "[dbo].[Wine_Insert]",
+                    parameters,
+                    commandType: CommandType.StoredProcedure)
+                    .ConfigureAwait(false);
+            }
+
+            return new ValidationResult();
+        }
+
+        public async Task<WineCreate> GetByDescription(string description)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Description", description, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QuerySingleOrDefaultAsync<WineCreate>(
+                "[dbo].[Wine_GetByDescription]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
         }
 
         private Rating.WineRating AddDrinker(Rating.WineRating rating, Drinker.Drinker drinker)
