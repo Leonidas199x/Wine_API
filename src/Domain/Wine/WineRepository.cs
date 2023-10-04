@@ -118,7 +118,7 @@ namespace Domain.Wine
         public async Task<WineCreate> GetByDescription(string description)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@Description", description, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Description", description, DbType.String, ParameterDirection.Input);
 
             using var connection = new SqlConnection(_connectionString);
 
