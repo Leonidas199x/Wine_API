@@ -56,7 +56,7 @@ namespace Domain.VineyardEstate
         public async Task<VineyardEstate> GetByName(string name)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@Name", name, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Name", name, DbType.String, ParameterDirection.Input);
 
             using var connection = new SqlConnection(_connectionString);
 
