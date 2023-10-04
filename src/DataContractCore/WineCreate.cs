@@ -16,7 +16,7 @@
 
         public int WineTypeId { get; set; }
 
-        public int Abv { get; set; }
+        public decimal Abv { get; set; }
 
         public string Importer { get; set; }
 
