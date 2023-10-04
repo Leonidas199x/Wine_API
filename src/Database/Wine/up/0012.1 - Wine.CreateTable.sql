@@ -11,7 +11,7 @@
         FOREIGN KEY REFERENCES [QualityControl]([ID]),
     [VinyardEstateID] INT NULL
         FOREIGN KEY REFERENCES [VineyardEstate]([ID]),
-    [WineTypeID] INT NULL
+    [WineTypeID] INT NOT NULL
         FOREIGN KEY REFERENCES [WineType]([ID]),
     [Description] NVARCHAR(100) NOT NULL,
     [ABV] DECIMAL(4, 2) NOT NULL,
