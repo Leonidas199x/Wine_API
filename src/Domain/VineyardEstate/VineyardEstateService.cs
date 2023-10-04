@@ -33,7 +33,7 @@ namespace Domain.VineyardEstate
 
         public async Task<ValidationResult> Insert(VineyardEstate vineyardEstate)
         {
-            var validationResult = _vineyardEstateValdator.Validate(vineyardEstate);
+            var validationResult = await _vineyardEstateValdator.ValidateAsync(vineyardEstate);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -44,7 +44,7 @@ namespace Domain.VineyardEstate
 
         public async Task<ValidationResult> Update(VineyardEstate vineyardEstate)
         {
-            var validationResult = _vineyardEstateValdator.Validate(vineyardEstate);
+            var validationResult = await _vineyardEstateValdator.ValidateAsync(vineyardEstate);
             if (!validationResult.IsValid)
             {
                 return validationResult;
