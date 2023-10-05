@@ -10,7 +10,7 @@ namespace Domain.Wine
 
         Task<Wine> Get(int Id);
 
-        Task<ValidationResult> Insert(WineCreate wine);
+        Task<(ValidationResult, int)> Insert(WineCreate wine);
 
         Task<WineCreate> GetByDescription(string description);
     }

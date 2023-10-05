@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataContract;
 using Domain.Wine;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
@@ -54,10 +55,15 @@ namespace WineAPI.Controllers
             }
 
             var domainWine = _mapper.Map<Domain.Wine.WineCreate>(wine);
-            var validationResult = await _wineService.Insert(domainWine).ConfigureAwait(false);
+            var (validationResult, insertedId) = await _wineService.Insert(domainWine).ConfigureAwait(false);
             if (validationResult.IsValid)
             {
-                return NoContent();
+                var createdWine = new WineCreated
+                {
+                    WineId = insertedId,
+                };
+
+                return Ok(createdWine);
             }
 
             validationResult.AddToModelState(ModelState, string.Empty);

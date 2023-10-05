@@ -10,6 +10,6 @@ namespace Domain.Wine
 
         Task<PagedList<IEnumerable<WineHeader>>> GetAll(int page, int pageSize);
 
-        Task<ValidationResult> Insert(WineCreate wine);
+        Task<(ValidationResult, int)> Insert(WineCreate wine);
     }
 }

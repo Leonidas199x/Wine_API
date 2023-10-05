@@ -26,12 +26,12 @@ namespace Domain.Wine
             return await _wineRepository.Get(Id).ConfigureAwait(false);
         }
 
-        public async Task<ValidationResult> Insert(WineCreate wine)
+        public async Task<(ValidationResult, int)> Insert(WineCreate wine)
         {
             var validationResult = await _wineValidator.ValidateAsync(wine);
             if (!validationResult.IsValid)
             {
-                return validationResult;
+                return (validationResult, default);
             }
 
             return await _wineRepository.Insert(wine).ConfigureAwait(false);

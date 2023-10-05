@@ -88,7 +88,7 @@ namespace Domain.Wine
             return wine;
         }
 
-        public async Task<ValidationResult> Insert(WineCreate wine)
+        public async Task<(ValidationResult, int)> Insert(WineCreate wine)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@Description", wine.Description, DbType.String, ParameterDirection.Input);
@@ -103,16 +103,17 @@ namespace Domain.Wine
             parameters.Add("@ExclusiveToRetailerId", wine.ExclusiveToRetailerId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Vintage", wine.Vintage, DbType.Int32, ParameterDirection.Input);
 
+            int wineId;
             using (var connection = new SqlConnection(_connectionString))
             {
-                await connection.QueryAsync(
+                wineId = await connection.QuerySingleOrDefaultAsync<int>(
                     "[dbo].[Wine_Insert]",
                     parameters,
                     commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
             }
 
-            return new ValidationResult();
+            return (new ValidationResult(), wineId);
         }
 
         public async Task<WineCreate> GetByDescription(string description)
