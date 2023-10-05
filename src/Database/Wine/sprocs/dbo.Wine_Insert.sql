@@ -13,7 +13,8 @@ ALTER PROCEDURE [dbo].[Wine_Insert]
     @Abv DECIMAL(4,2),
     @Importer NVARCHAR(25),
     @InventoryLevel INT,
-    @ExclusiveToRetailerId INT
+    @ExclusiveToRetailerId INT,
+    @WineId INT OUTPUT
 AS
 BEGIN
     INSERT INTO [dbo].[Wine]
@@ -48,5 +49,7 @@ BEGIN
         GETDATE(),
         GETDATE()
     );
+
+    SET @WineId = SCOPE_IDENTITY();
 
 END
