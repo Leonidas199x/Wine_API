@@ -23,6 +23,9 @@ namespace Domain.Mappings
             CreateMap<DataContract.GrapeCreate, Grape>();
             CreateMap<Grapes.GrapeColour, DataContract.GrapeColour>().ReverseMap();
             CreateMap<DataContract.GrapeColourCreate, Grapes.GrapeColour>();
+            CreateMap<DataContract.GrapeCreate, Grape>()
+                .ForPath(dest => dest.Colour.Id, opt => opt.MapFrom(x => x.GrapeColourId))
+                .ReverseMap();
             #endregion
 
             #region Region
