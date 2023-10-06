@@ -72,7 +72,7 @@ namespace Domain.Grapes
 
         public async Task<ValidationResult> InsertGrapeColour(GrapeColour grapeColour)
         {
-            var validationResult = _grapeColourValidator.Validate(grapeColour);
+            var validationResult = await _grapeColourValidator.ValidateAsync(grapeColour).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -88,7 +88,7 @@ namespace Domain.Grapes
 
         public async Task<ValidationResult> UpdateGrapeColour(GrapeColour grapeColour)
         {
-            var validationResult = _grapeColourValidator.Validate(grapeColour);
+            var validationResult = await _grapeColourValidator.ValidateAsync(grapeColour).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
