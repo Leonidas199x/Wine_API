@@ -46,6 +46,26 @@ namespace WineAPI.Controllers
             return Ok(_mapper.Map<DataContract.Wine>(wine));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] DataContract.WineUpdate wine)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var domainWine = _mapper.Map<Domain.Wine.WineUpdate>(wine);
+            var validationResult = await _wineService.Update(domainWine).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DataContract.WineCreate wine)
         {
