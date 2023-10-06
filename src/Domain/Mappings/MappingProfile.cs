@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DataContract;
 
 namespace Domain.Mappings
 {
@@ -75,6 +74,7 @@ namespace Domain.Mappings
             CreateMap<Wine.WinePrice, DataContract.WinePrice>().ReverseMap();
             CreateMap<Issue.Issue, DataContract.Issue>().ReverseMap();
             CreateMap<DataContract.WineCreate, Wine.WineCreate>().ReverseMap();
+            CreateMap<DataContract.WineUpdate, Wine.WineUpdate>().ReverseMap();
             #endregion
 
             #region Retailer Wine
