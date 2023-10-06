@@ -45,7 +45,7 @@ namespace Domain.Grapes
 
         public async Task<ValidationResult> UpdateGrape(Grape grape)
         {
-            var validationResult = _grapeValidator.Validate(grape);
+            var validationResult = await _grapeValidator.ValidateAsync(grape).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
