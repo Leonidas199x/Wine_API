@@ -37,10 +37,6 @@ namespace DataContract
 
         public IEnumerable<Grape> Grapes { get; set; }
 
-        public IEnumerable<WinePrice> Prices { get; set; }
-
         public IEnumerable<Issue> Issues { get; set; }
-
-        public IEnumerable<Receipt> Receipts { get; set; }
     }
 }

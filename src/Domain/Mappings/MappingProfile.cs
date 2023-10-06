@@ -71,7 +71,6 @@ namespace Domain.Mappings
 
             #region Wine
             CreateMap<Wine.Wine, DataContract.Wine>().ReverseMap();
-            CreateMap<Wine.WinePrice, DataContract.WinePrice>().ReverseMap();
             CreateMap<Issue.Issue, DataContract.Issue>().ReverseMap();
             CreateMap<DataContract.WineCreate, Wine.WineCreate>().ReverseMap();
             CreateMap<DataContract.WineUpdate, Wine.WineUpdate>().ReverseMap();
