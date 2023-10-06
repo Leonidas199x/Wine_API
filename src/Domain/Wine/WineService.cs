@@ -9,11 +9,16 @@ namespace Domain.Wine
     {
         private readonly IWineRepository _wineRepository;
         private readonly IValidator<WineCreate> _wineValidator;
+        private readonly IValidator<WineUpdate> _wineUpdateValidator;
 
-        public WineService(IWineRepository wineRepository, IValidator<WineCreate> wineValidator)
+        public WineService(
+            IWineRepository wineRepository, 
+            IValidator<WineCreate> wineValidator,
+            IValidator<WineUpdate> wineUpdateValidator)
         {
             _wineRepository = wineRepository;
             _wineValidator = wineValidator;
+            _wineUpdateValidator = wineUpdateValidator;
         }
 
         public async Task<PagedList<IEnumerable<WineHeader>>> GetAll(int page, int pageSize)
@@ -28,7 +33,7 @@ namespace Domain.Wine
 
         public async Task<ValidationResult> Update(WineUpdate wine)
         {
-            var validationResult = await _wineValidator.ValidateAsync(wine);
+            var validationResult = _wineUpdateValidator.Validate(wine);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -46,6 +51,11 @@ namespace Domain.Wine
             }
 
             return await _wineRepository.Insert(wine).ConfigureAwait(false);
+        }
+
+        public async Task<ValidationResult> Delete(int id)
+        {
+            return await _wineRepository.Delete(id).ConfigureAwait(false);
         }
     }
 }

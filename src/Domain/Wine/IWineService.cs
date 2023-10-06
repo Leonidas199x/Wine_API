@@ -13,5 +13,7 @@ namespace Domain.Wine
         Task<(ValidationResult, int)> Insert(WineCreate wine);
 
         Task<ValidationResult> Update(WineUpdate wine);
+
+        Task<ValidationResult> Delete(int id);
     }
 }

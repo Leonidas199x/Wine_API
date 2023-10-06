@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataContract;
+using Domain.Drinker;
 using Domain.Wine;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
@@ -84,6 +85,26 @@ namespace WineAPI.Controllers
                 };
 
                 return Ok(createdWine);
+            }
+
+            validationResult.AddToModelState(ModelState, string.Empty);
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpDelete("{wineId}")]
+        public async Task<IActionResult> Delete(int wineId)
+        {
+            var wine = await _wineService.Get(wineId).ConfigureAwait(false);
+            if (wine == null)
+            {
+                return NotFound();
+            }
+
+            var validationResult = await _wineService.Delete(wineId).ConfigureAwait(false);
+            if (validationResult.IsValid)
+            {
+                return NoContent();
             }
 
             validationResult.AddToModelState(ModelState, string.Empty);

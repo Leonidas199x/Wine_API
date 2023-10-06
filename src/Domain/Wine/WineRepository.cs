@@ -79,9 +79,7 @@ namespace Domain.Wine
                     wine.ExclusiveRetailer = await multi.ReadFirstOrDefaultAsync<Retailer.Retailer>();
                     wine.Ratings = multi.Read<Rating.WineRating, Drinker.Drinker, Rating.WineRating>(AddDrinker, splitOn: "ID");
                     wine.Grapes = multi.Read<Grape, Grapes.GrapeColour, Grape>(_grapeRepository.AddGrapeColour, splitOn: "ID");
-                    wine.Prices = await multi.ReadAsync<WinePrice>();
                     wine.Issues = await multi.ReadAsync<Issue.Issue>();
-                    wine.Receipts = await multi.ReadAsync<Receipt.Receipt>();
                 }
             }
 
@@ -156,6 +154,23 @@ namespace Domain.Wine
                 parameters,
                 commandType: CommandType.StoredProcedure)
                 .ConfigureAwait(false);
+        }
+
+        public async Task<ValidationResult> Delete(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id, DbType.Int32, ParameterDirection.Input);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.QueryAsync<Country>(
+                "[dbo].[Wine_Delete]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+                .ConfigureAwait(false);
+            }
+
+            return new ValidationResult();
         }
 
         private Rating.WineRating AddDrinker(Rating.WineRating rating, Drinker.Drinker drinker)
