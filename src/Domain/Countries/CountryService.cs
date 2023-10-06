@@ -50,7 +50,7 @@ namespace Domain.Countries
 
         public async Task<ValidationResult> Insert(Country country)
         {
-            var validationResult = _countryValidator.Validate(country);
+            var validationResult = await _countryValidator.ValidateAsync(country).ConfigureAwait(false);
             if(!validationResult.IsValid)
             {
                 return validationResult;
@@ -61,7 +61,7 @@ namespace Domain.Countries
 
         public async Task<ValidationResult> Update(Country country)
         {
-            var validationResult = _countryValidator.Validate(country);
+            var validationResult = await _countryValidator.ValidateAsync(country).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
