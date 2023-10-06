@@ -2,8 +2,8 @@
 (
     [ID] INT IDENTITY(1,1) NOT NULL
         PRIMARY KEY,
-    [WineOne] INT NOT NULL
+    [WineId] INT NOT NULL
         FOREIGN KEY REFERENCES [Wine]([ID]),
-    [WineTwo] INT NOT NULL
+    [SimilarWineId] INT NOT NULL
         FOREIGN KEY REFERENCES [Wine]([ID])
 );
