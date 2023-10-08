@@ -1,0 +1,1 @@
+﻿CREATE UNIQUE NONCLUSTERED INDEX UQ_Unique_GrapeWineBridge ON [dbo].[GrapeWineBridge] ([WineId], [GrapeId]);
