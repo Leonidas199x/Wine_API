@@ -3,7 +3,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Domain.Grapes;
 using Domain.Region;
 using System.Linq;
 using Domain.QualityControl;
@@ -14,18 +13,15 @@ namespace Domain.Wine
     public class WineRepository : IWineRepository
     {
         private readonly string _connectionString;
-        private readonly IGrapeRepository _grapeRepository;
         private readonly IRegionRepository _regionRepository;
         private readonly IQualityControlRepository _qualityControlRepository;
 
         public WineRepository(
             string connectionString,
-            IGrapeRepository grapeRepository,
             IRegionRepository regionRepository,
             IQualityControlRepository qualityControlRepository)
         {
             _connectionString = connectionString;
-            _grapeRepository = grapeRepository;
             _regionRepository = regionRepository;
             _qualityControlRepository = qualityControlRepository;
         }

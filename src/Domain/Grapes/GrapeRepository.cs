@@ -137,7 +137,7 @@ namespace Domain.Grapes
             return new ValidationResult();
         }
 
-        public async Task<IEnumerable<WineGrape>> GetGrapes(int wineId)
+        public async Task<IEnumerable<WineGrape>> GetByWineId(int wineId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@WineId", wineId, DbType.Int32, ParameterDirection.Input);

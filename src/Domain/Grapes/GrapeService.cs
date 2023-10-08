@@ -100,7 +100,7 @@ namespace Domain.Grapes
 
         public async Task<IEnumerable<WineGrape>> GetByWineId(int wineId)
         {
-            return await _grapeRepository.GetGrapes(wineId).ConfigureAwait(false);
+            return await _grapeRepository.GetByWineId(wineId).ConfigureAwait(false);
         }
     }
 }

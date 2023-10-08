@@ -112,7 +112,7 @@ namespace WineAPI.Controllers
         [HttpGet("WineId/{wineId}")]
         public async Task<IActionResult> GetByWineId(int wineId)
         {
-            var grapes = await _grapeService.GetGrapes(wineId).ConfigureAwait(false);
+            var grapes = await _grapeService.GetByWineId(wineId).ConfigureAwait(false);
             if (grapes == null)
             {
                 return NotFound();

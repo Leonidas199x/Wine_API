@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using Domain.Wine;
+using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,6 +22,8 @@ namespace Domain.Grapes
         Task<PagedList<IEnumerable<GrapeColour>>> GetAllColours(int page, int pageSize);
 
         Task<GrapeColour> GetGrapeColour(int Id);
+
+        Task<IEnumerable<WineGrape>> GetByWineId(int wineId);
 
         Task<ValidationResult> InsertGrapeColour(GrapeColour grapeColour);
 
