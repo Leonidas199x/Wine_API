@@ -28,7 +28,7 @@ namespace Domain.StopperType
 
         public async Task<ValidationResult> Insert(StopperType stopperType)
         {
-            var validationResult = _stopperTypeValidator.Validate(stopperType);
+            var validationResult = await _stopperTypeValidator.ValidateAsync(stopperType).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -39,7 +39,7 @@ namespace Domain.StopperType
 
         public async Task<ValidationResult> Update(StopperType stopperType)
         {
-            var validationResult = _stopperTypeValidator.Validate(stopperType);
+            var validationResult = await _stopperTypeValidator.ValidateAsync(stopperType).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
