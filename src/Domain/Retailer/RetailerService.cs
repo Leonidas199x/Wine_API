@@ -8,12 +8,12 @@ namespace Domain.Retailer
     public class RetailerService : IRetailerService
     {
         private readonly IRetailerRepository _retailerRepository;
-        private readonly IValidator<Retailer> _reatilerValidator;
+        private readonly IValidator<Retailer> _retailerValidator;
 
-        public RetailerService(IRetailerRepository retailerRepository, IValidator<Retailer> reatilerValidator)
+        public RetailerService(IRetailerRepository retailerRepository, IValidator<Retailer> retailerValidator)
         {
             _retailerRepository = retailerRepository;
-            _reatilerValidator = reatilerValidator;
+            _retailerValidator = retailerValidator;
         }
 
         public async Task<PagedList<IEnumerable<Retailer>>> GetAll(int page, int pageSize)
@@ -33,7 +33,7 @@ namespace Domain.Retailer
 
         public async Task<ValidationResult> Insert(Retailer retailer)
         {
-            var validationResult = _reatilerValidator.Validate(retailer);
+            var validationResult = await _retailerValidator.ValidateAsync(retailer).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
@@ -44,7 +44,7 @@ namespace Domain.Retailer
 
         public async Task<ValidationResult> Update(Retailer retailer)
         {
-            var validationResult = _reatilerValidator.Validate(retailer);
+            var validationResult = await _retailerValidator.ValidateAsync(retailer).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
