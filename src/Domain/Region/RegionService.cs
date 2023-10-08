@@ -33,7 +33,7 @@ namespace Domain.Region
 
         public async Task<ValidationResult> Insert(Region region)
         {
-            var validationResult = _regionValidator.Validate(region);
+            var validationResult = await _regionValidator.ValidateAsync(region).ConfigureAwait(false);
             if(!validationResult.IsValid)
             {
                 return validationResult;
@@ -44,7 +44,7 @@ namespace Domain.Region
 
         public async Task<ValidationResult> Update(Region region)
         {
-            var validationResult = _regionValidator.Validate(region);
+            var validationResult = await _regionValidator.ValidateAsync(region).ConfigureAwait(false);
             if (!validationResult.IsValid)
             {
                 return validationResult;
