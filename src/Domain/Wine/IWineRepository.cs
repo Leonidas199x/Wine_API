@@ -17,5 +17,7 @@ namespace Domain.Wine
         Task<ValidationResult> Update(WineUpdate wine);
 
         Task<ValidationResult> Delete(int id);
+
+        Task<IEnumerable<WineGrape>> GetGrapes(int wineId);
     }
 }

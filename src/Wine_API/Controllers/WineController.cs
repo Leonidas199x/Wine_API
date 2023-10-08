@@ -110,5 +110,18 @@ namespace WineAPI.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpGet]
+        [Route("grape")]
+        public async Task<IActionResult> GetGrapes(int wineId)
+        {
+            var grapes = await _wineService.GetGrapes(wineId).ConfigureAwait(false);
+            if (grapes == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.WineGrape>>(grapes));
+        }
     }
 }
