@@ -113,6 +113,7 @@ namespace Domain.Region
         {
             var parameters = new DynamicParameters();
             parameters.Add("@RegionName", region.Name, DbType.String, ParameterDirection.Input);
+            parameters.Add("@IsoCode", region.IsoCode, DbType.String, ParameterDirection.Input);
             parameters.Add("@RegionNote", region.Note, DbType.String, ParameterDirection.Input);
             parameters.Add("@CountryID", region.Country.Id, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Longitude", region.Longitude, DbType.Decimal, ParameterDirection.Input);
