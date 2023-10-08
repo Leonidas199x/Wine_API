@@ -10,6 +10,8 @@ namespace Domain.Grapes
         #region grape
         Task<Grape> Get(int grapeId);
 
+        Task<IEnumerable<GrapeLookup>> GetLookup();
+
         Task<PagedList<IEnumerable<Grape>>> GetAll(int page, int pageSize);
 
         Task<ValidationResult> InsertGrape(Grape grape);

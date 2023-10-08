@@ -18,6 +18,15 @@ namespace Domain.Grapes
         }
 
         #region Grape
+
+        public async Task<IEnumerable<GrapeLookup>> GetLookup()
+        {
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<GrapeLookup>(
+                "[dbo].[Grape_Lookup]",
+                commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }
         public async Task<PagedList<IEnumerable<Grape>>> GetAll(int page, int pageSize)
         {
             var parameters = new DynamicParameters();

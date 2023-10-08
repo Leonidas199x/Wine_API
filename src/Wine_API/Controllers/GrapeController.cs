@@ -36,6 +36,14 @@ namespace WineAPI.Controllers
             return Ok(_mapper.Map<DataContract.PagedList<IEnumerable<DataContract.Grape>>>(grapes));
         }
 
+        [HttpGet("lookup")]
+        public async Task<IActionResult> GetLookup()
+        {
+            var lookup = await _grapeService.GetLookup().ConfigureAwait(false);
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.GrapeLookup>>(lookup));
+        }
+
         [HttpGet("{grapeId}")]
         public async Task<IActionResult> Get(int grapeId)
         { 

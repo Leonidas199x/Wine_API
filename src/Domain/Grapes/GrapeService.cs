@@ -28,6 +28,11 @@ namespace Domain.Grapes
             return await _grapeRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<GrapeLookup>> GetLookup()
+        {
+            return await _grapeRepository.GetLookup().ConfigureAwait(false);
+        }
+
         public async Task<Grape> Get(int grapeId)
         {
             return await _grapeRepository.Get(grapeId).ConfigureAwait(false);
