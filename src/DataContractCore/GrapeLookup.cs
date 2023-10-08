@@ -2,8 +2,8 @@
 {
     public class GrapeLookup
     {
-        public int GrapeId { get; set; }
+        public int Id { get; set; }
 
-        public string GrapeName { get; set; }
+        public string Name { get; set; }
     }
 }
