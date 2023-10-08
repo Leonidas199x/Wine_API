@@ -108,7 +108,6 @@ namespace WineAPI.Controllers
             return NoContent();
         }
 
-        [HttpGet]
         [HttpGet("WineId/{wineId}")]
         public async Task<IActionResult> GetByWineId(int wineId)
         {
