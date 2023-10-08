@@ -78,7 +78,7 @@ namespace Domain.Wine
                     wine.WineType = await multi.ReadFirstOrDefaultAsync<WineType.WineType>();
                     wine.ExclusiveRetailer = await multi.ReadFirstOrDefaultAsync<Retailer.Retailer>();
                     wine.Ratings = multi.Read<Rating.WineRating, Drinker.Drinker, Rating.WineRating>(AddDrinker, splitOn: "ID");
-                    wine.Grapes = multi.Read<Grape, Grapes.GrapeColour, Grape>(_grapeRepository.AddGrapeColour, splitOn: "ID");
+                    wine.Grapes = multi.Read<WineGrape, Grape, WineGrape>(AddGrape, splitOn: "ID");
                     wine.Issues = await multi.ReadAsync<Issue.Issue>();
                 }
             }

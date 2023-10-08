@@ -128,16 +128,17 @@ BEGIN
 
     /*Grapes*/
     SELECT
+        GW.[ID],
+        GW.[WineId],
+        GW.[GrapeId],
         G.[ID],
         G.[Name],
+        G.[GrapeColourID],
         G.[Note],
         G.[DateCreated],
-        G.[DateUpdated],
-        GC.[ID],
-        GC.[Colour]
+        G.[DateUpdated]
     FROM [dbo].[GrapeWineBridge] GW
     INNER JOIN [dbo].[Grape] G ON G.[Id] = GW.[GrapeId]
-    LEFT JOIN [dbo].[GrapeColour] GC ON G.[GrapeColourID] = GC.[ID]
     WHERE GW.[WineId] = @WineID;
 
     /*Issues*/

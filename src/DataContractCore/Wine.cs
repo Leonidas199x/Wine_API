@@ -35,7 +35,7 @@ namespace DataContract
 
         public IEnumerable<WineRating> Ratings { get; set; }
 
-        public IEnumerable<Grape> Grapes { get; set; }
+        public IEnumerable<WineGrape> Grapes { get; set; }
 
         public IEnumerable<Issue> Issues { get; set; }
     }
