@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domain.Wine;
+using FluentValidation;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -95,6 +96,11 @@ namespace Domain.Grapes
             }
 
             return await _grapeRepository.UpdateGrapeColour(grapeColour).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<WineGrape>> GetByWineId(int wineId)
+        {
+            return await _grapeRepository.GetGrapes(wineId).ConfigureAwait(false);
         }
     }
 }

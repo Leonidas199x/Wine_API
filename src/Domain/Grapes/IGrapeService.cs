@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using Domain.Wine;
+using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace Domain.Grapes
         Task<ValidationResult> UpdateGrape(Grape grape);
 
         Task<ValidationResult> DeleteGrape(int grapeId);
+
+        Task<IEnumerable<WineGrape>> GetByWineId(int wineId);
         #endregion
 
         #region GrapeColour

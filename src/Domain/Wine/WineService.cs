@@ -57,10 +57,5 @@ namespace Domain.Wine
         {
             return await _wineRepository.Delete(id).ConfigureAwait(false);
         }
-
-        public async Task<IEnumerable<WineGrape>> GetGrapes(int wineId)
-        {
-            return await _wineRepository.GetGrapes(wineId).ConfigureAwait(false);
-        }
     }
 }

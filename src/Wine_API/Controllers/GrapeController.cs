@@ -107,6 +107,19 @@ namespace WineAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpGet]
+        [HttpGet("WineId/{wineId}")]
+        public async Task<IActionResult> GetByWineId(int wineId)
+        {
+            var grapes = await _grapeService.GetGrapes(wineId).ConfigureAwait(false);
+            if (grapes == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<IEnumerable<DataContract.WineGrape>>(grapes));
+        }
         #endregion
 
         #region colour

@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
+using Domain.Wine;
 using FluentValidation.Results;
 
 namespace Domain.Grapes
@@ -135,6 +136,22 @@ namespace Domain.Grapes
 
             return new ValidationResult();
         }
+
+        public async Task<IEnumerable<WineGrape>> GetGrapes(int wineId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@WineId", wineId, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = new SqlConnection(_connectionString);
+            using (var multi = await connection.QueryMultipleAsync(
+               "[dbo].[Wine_GetGrapeByWineId]",
+                parameters,
+                commandType: CommandType.StoredProcedure)
+               .ConfigureAwait(false))
+            {
+                return multi.Read<WineGrape, Grape, WineGrape>(AddGrape, splitOn: "ID");
+            }
+        }
         #endregion
 
         #region Grape Colour
@@ -250,6 +267,16 @@ namespace Domain.Grapes
             }
 
             return grape;
+        }
+
+        private WineGrape AddGrape(WineGrape wineGrape, Grape grape)
+        {
+            if (wineGrape != null && grape != null)
+            {
+                wineGrape.GrapeName = grape.Name;
+            }
+
+            return wineGrape;
         }
     }
 }
