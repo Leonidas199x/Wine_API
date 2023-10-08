@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using DataContract;
-using Domain.Drinker;
 using Domain.Wine;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
